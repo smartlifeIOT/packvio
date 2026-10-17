@@ -791,3 +791,72 @@ Decisions that depart from the brand guide or the brief, with the reason. Read b
   to rebuild. It is a copy, not a `--delete` sync — `deploy/nginx/htpasswd` is
   generated on the server and is not in the repo, and wiping it stops nginx from
   starting at all.
+
+- **The edge has two modes, because this server already runs another application.**
+  `docker-compose.prod.yml` used to publish `80:80` and `443:443` outright. The
+  first deploy to the shared box failed at the very last step:
+
+      failed to bind host port 0.0.0.0:80/tcp: address already in use
+
+  A host port can be bound once, and DocGen's nginx on the same server already
+  had it. The collision is at Docker's port-publishing layer, *before* nginx
+  runs, so nothing inside the nginx config could have fixed it. There are three
+  real answers — give Packvio its own IP, move the other application, or put one
+  proxy in front of both — and the third is the only one that does not touch
+  DocGen's deployment.
+
+  So `EDGE_MODE` (in the server's `.env`, default `standalone`) selects which
+  template `deploy/nginx/docker-entrypoint.sh` renders:
+
+  - **`standalone`** — exactly the old behaviour. Packvio's nginx owns :80/:443,
+    terminates TLS, and its certbot issues and renews. Correct on a host where
+    Packvio is the only application; needs no new variables set.
+  - **`behind-proxy`** — Packvio's nginx serves plain HTTP on
+    `EDGE_HTTP_PUBLISH` (`127.0.0.1:8080`), and the nginx that already holds
+    :80/:443 proxies this hostname to it using the server block in
+    `deploy/nginx/front-proxy/packvio.conf.example`.
+
+  Four things in that split are load-bearing, and three of them are mistakes
+  that would have shipped as a working-looking site:
+
+  1. **The locations moved into `snippets/site.conf`.** Both templates include
+     it, so the Basic Auth gate, the Salla webhook exception, the `/api/v1/`
+     split and the cache policy cannot drift between modes. Only the TLS
+     envelope differs, which is the only thing that should.
+  2. **No HTTPS redirect in behind-proxy mode, and this is not an omission.**
+     The front proxy terminates TLS and forwards over HTTP, so a `301` to
+     `https://` sends the browser back around the same circle — an infinite
+     redirect, not a misconfiguration you notice in the logs. The front proxy
+     does that redirect, once.
+  3. **`set_real_ip_from` in `nginx.conf`, or the RFQ rate limit silently
+     becomes global.** Docker NATs the loopback hop, so without it every
+     request reaches this nginx from the bridge gateway, `proxy.conf`'s
+     `X-Forwarded-For $remote_addr` writes that one address, and *every
+     enquiry on the site shares one per-IP bucket* — the fifth of the hour
+     throttles every buyer. Only private ranges are trusted, which is what
+     lets the directives live in `nginx.conf` unconditionally: in standalone
+     mode a public client matches none of them and an invented
+     `X-Forwarded-For` is ignored, so they are inert rather than a hole.
+     Verified both ways round: a forwarded `203.0.113.7` arrives at the app as
+     exactly that one address, and a client-injected `1.2.3.4, 203.0.113.7`
+     still arrives as `203.0.113.7` alone, so a caller cannot mint a fresh
+     rate-limit identity per request.
+  4. **`$packvio_forwarded_proto` / `_port` replace `$scheme` / `$server_port`
+     in `proxy.conf`.** Behind the proxy, TLS ends there and this hop is plain
+     HTTP, so `$scheme` reports `http` for a visitor who is on HTTPS and
+     `$server_port` reports 80. Both are maps in `nginx.conf` that fall back to
+     the direct values, so one `proxy.conf` is correct in both modes.
+
+  Also: certbot **idles** in behind-proxy mode with a log line saying why, and
+  the certificate for this hostname belongs to the front proxy's certbot —
+  only the process holding :80 can answer an HTTP-01 challenge. Do not point
+  both at the same name. And `deploy.sh` now checks the edge ports in
+  **preflight**, because the alternative is discovering the conflict after
+  several minutes of Docker build, in a daemon error that names a container id
+  rather than the process holding the port.
+
+  The example front-proxy block deliberately sets no security headers, no CSP
+  and no `auth_basic`. Packvio's own nginx sends all of them per-location; a
+  second CSP header means the browser enforces the **intersection** of the two
+  policies, and a second password would sit in front of the webhook exception
+  and meet Salla with a 401 it cannot answer.

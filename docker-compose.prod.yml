@@ -180,14 +180,36 @@ services:
     <<: [*restart, *logging]
     environment:
       PACKVIO_DOMAIN: ${PACKVIO_DOMAIN}
+      # standalone (default) — this nginx owns :80/:443 and terminates TLS.
+      # behind-proxy          — plain HTTP on a loopback port, TLS owned by an
+      #                         nginx already running on this host.
+      # Picks which template docker-entrypoint.sh renders. See env.prod.example.
+      PACKVIO_EDGE_MODE: ${EDGE_MODE:-standalone}
       # Only PACKVIO_-prefixed names are substituted into the config templates.
       # Without this filter envsubst would also eat nginx's own $host,
       # $remote_addr and $upstream_addr, producing a config full of empty
       # strings that still starts.
       NGINX_ENVSUBST_FILTER: '^PACKVIO_'
     ports:
-      - '80:80'
-      - '443:443'
+      # NOT hardcoded 80/443, and that is the point. A host port can be bound
+      # once; if another application on this box already owns :80, Docker
+      # refuses to start this container with
+      #
+      #   failed to bind host port 0.0.0.0:80/tcp: address already in use
+      #
+      # before nginx even runs, so no nginx setting can fix it. Setting
+      # EDGE_MODE=behind-proxy and EDGE_HTTP_PUBLISH=127.0.0.1:8080 in .env
+      # moves this stack behind the nginx that already holds the port.
+      #
+      # The default reproduces the previous behaviour exactly, so a host where
+      # Packvio is the only application needs none of these variables.
+      - '${EDGE_HTTP_PUBLISH:-80}:80'
+      # In behind-proxy mode nothing listens on container :443 and this mapping
+      # is an idle loopback listener. Left in rather than made conditional
+      # because compose cannot omit a list entry — a connection to it is
+      # refused, which is the honest answer. Point it somewhere harmless:
+      # EDGE_HTTPS_PUBLISH=127.0.0.1:8443.
+      - '${EDGE_HTTPS_PUBLISH:-443}:443'
     volumes:
       - ./deploy/nginx/templates:/etc/nginx/templates:ro
       - ./deploy/nginx/snippets:/etc/nginx/snippets:ro
@@ -207,6 +229,14 @@ services:
       start_period: 10s
 
   # -------------------------------------------------------------------------
+  # Renewal only, and ONLY in standalone mode. In behind-proxy mode the front
+  # proxy holds port 80, which is the only thing that can answer an HTTP-01
+  # challenge, so the certificate for this hostname is issued and renewed by
+  # that proxy's certbot and this service has nothing to do. It idles with a log
+  # line saying so rather than looping on a renewal that would always fail —
+  # and rather than being removed, because the two modes share one file and a
+  # missing service is harder to find than an idle one.
+  #
   # Renewal only. The FIRST certificate is issued by deploy/scripts/init-letsencrypt.sh,
   # because nginx will not start without a certificate file to open and certbot
   # cannot answer an ACME challenge without nginx running — a loop that has to be
@@ -222,8 +252,17 @@ services:
     volumes:
       - certbot-conf:/etc/letsencrypt
       - certbot-www:/var/www/certbot
+    environment:
+      EDGE_MODE: ${EDGE_MODE:-standalone}
     entrypoint: /bin/sh
-    command: -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot --quiet; sleep 12h & wait $${!}; done'
+    # `sleep infinity` rather than exiting: restart is unless-stopped, so a
+    # container that exits 0 would be restarted immediately and log the same
+    # line forever.
+    # A folded block scalar, not a plain one. The message below contains a
+    # ": " sequence, which YAML reads as a mapping inside a plain scalar and
+    # rejects the whole file over — `>-` makes the value literal text.
+    command: >-
+      -c 'if [ "$${EDGE_MODE:-standalone}" != "standalone" ]; then echo "certbot idle - EDGE_MODE=$${EDGE_MODE}. The front proxy on this host owns port 80 and therefore the certificate for this name. Nothing to renew here."; sleep infinity; fi; trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot --quiet; sleep 12h & wait $${!}; done'
     networks: [internal]
 
   # -------------------------------------------------------------------------

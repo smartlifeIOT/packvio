@@ -1,0 +1,111 @@
+# Packvio, as a virtual host on the nginx that already owns ports 80 and 443.
+#
+# WHERE THIS GOES: on the server, into the config of the OTHER application's
+# nginx — not into this stack. Typically /etc/nginx/conf.d/ on the host, or a
+# bind-mounted conf.d of that stack's nginx container. It is kept in this repo
+# anyway, because it is Packvio's routing contract and the one place it could
+# live where nobody would ever find it is somebody else's repository.
+#
+# PREREQUISITES
+#   1. Packvio is deployed with EDGE_MODE=behind-proxy and
+#      EDGE_HTTP_PUBLISH=127.0.0.1:8080 in its .env.
+#   2. DNS: packvio.smart-life.sa resolves to this server.
+#   3. A certificate for packvio.smart-life.sa exists, issued by THIS nginx's
+#      certbot — only the process holding port 80 can answer an HTTP-01
+#      challenge. If that stack uses the webroot plugin:
+#
+#        certbot certonly --webroot -w /var/www/certbot \
+#          -d packvio.smart-life.sa --email you@example.com --agree-tos
+#
+#      and reload this nginx afterwards. Add the name to that stack's renewal
+#      the same way its own hostname is handled; do NOT point Packvio's certbot
+#      at it, or two processes will renew the same certificate.
+#
+# Replace packvio.smart-life.sa throughout if the hostname differs, and 8080 if
+# EDGE_HTTP_PUBLISH differs.
+
+# ---------------------------------------------------------------------------
+# Port 80 — ACME, then redirect. The redirect lives HERE and nowhere else:
+# Packvio's own nginx deliberately has none in behind-proxy mode, because a
+# redirect behind a terminating proxy is an infinite loop.
+# ---------------------------------------------------------------------------
+server {
+    listen 80;
+    listen [::]:80;
+    server_name packvio.smart-life.sa;
+
+    # Must stay ahead of the redirect and must not require auth. Point `root`
+    # at whatever webroot this nginx's certbot actually writes into.
+    location ^~ /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+        default_type "text/plain";
+    }
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+# ---------------------------------------------------------------------------
+# Port 443 — terminate TLS, hand everything to Packvio's nginx.
+# ---------------------------------------------------------------------------
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
+    server_name packvio.smart-life.sa;
+
+    ssl_certificate     /etc/letsencrypt/live/packvio.smart-life.sa/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/packvio.smart-life.sa/privkey.pem;
+
+    # Deliberately NOT here: Strict-Transport-Security, X-Frame-Options,
+    # Content-Security-Policy, X-Robots-Tag, Cache-Control. Packvio's own nginx
+    # sends all of them, per-location, and they reach the browser through this
+    # proxy untouched. Adding a second copy of any of them here produces two
+    # headers on one response, and for CSP two headers means the INTERSECTION
+    # of the two policies is enforced — which is how a working site starts
+    # blocking its own scripts for a reason that appears nowhere in its config.
+    #
+    # Also deliberately absent: auth_basic. Packvio's nginx runs the staging
+    # gate, including the exception that leaves the Salla webhook path open. A
+    # second password here would sit in front of that exception and Salla's
+    # deliveries would meet a 401 they cannot answer.
+
+    # The RFQ body plus a long message. Must be at least as large as the
+    # client_max_body_size inside Packvio's nginx (2m) or this proxy rejects
+    # the request first, with its own 413 and no trace in Packvio's logs.
+    client_max_body_size 2m;
+
+    location / {
+        proxy_pass http://127.0.0.1:8080;
+        proxy_http_version 1.1;
+
+        # Host preserved, so Packvio's nginx and both apps see the real
+        # hostname rather than 127.0.0.1.
+        proxy_set_header Host $host;
+
+        # THE CLIENT IP. Packvio's nginx trusts private ranges via
+        # set_real_ip_from and recovers the real client from this header; the
+        # API's per-IP RFQ rate limit depends on it. Send nothing here and every
+        # submission on the site shares one bucket, which looks like a working
+        # deploy until the fifth enquiry of the hour is rejected.
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        # https, not $scheme — $scheme is correct here but stating it literally
+        # makes the contract obvious, and this block only ever serves TLS.
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Port 443;
+
+        # Keep-alive to the upstream.
+        proxy_set_header Connection '';
+
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+
+        # Let Packvio's own error pages through rather than replacing them.
+        proxy_intercept_errors off;
+    }
+}

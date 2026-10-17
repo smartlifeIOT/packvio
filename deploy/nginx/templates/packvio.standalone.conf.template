@@ -1,0 +1,77 @@
+# Packvio staging — STANDALONE edge. This nginx owns ports 80 and 443 on the
+# host and terminates TLS itself, with certificates from the certbot service
+# beside it.
+#
+# Rendered at container start by /docker-entrypoint.sh when PACKVIO_EDGE_MODE is
+# `standalone` (the default), which substitutes ${PACKVIO_DOMAIN} and nothing
+# else. Every other $name below is an nginx runtime variable and must survive to
+# nginx untouched.
+#
+# USE THE OTHER MODE IF ANOTHER APPLICATION ON THIS HOST ALREADY OWNS PORT 80.
+# Two containers cannot bind the same host port, and the second one to start
+# fails with "address already in use" — see packvio.behind-proxy.conf.template
+# and EDGE_MODE in deploy/env.prod.example.
+
+# ---------------------------------------------------------------------------
+# Port 80 — ACME challenges, and a redirect for everything else.
+# ---------------------------------------------------------------------------
+server {
+    listen 80;
+    listen [::]:80;
+    server_name ${PACKVIO_DOMAIN};
+
+    # MUST come before the redirect and MUST NOT require auth. Let's Encrypt
+    # validates by fetching this path over plain HTTP from several places at
+    # once; a 301 to HTTPS is survivable, but a 401 is not, and the certificate
+    # simply never issues. `^~` stops nginx from considering any regex location
+    # for this prefix.
+    location ^~ /.well-known/acme-challenge/ {
+        auth_basic off;
+        root /var/www/certbot;
+        default_type "text/plain";
+    }
+
+    # Container-local liveness for compose's healthcheck. Answered here rather
+    # than proxied so it stays true while an upstream is restarting, and stays
+    # off the TLS server so it does not need a certificate.
+    location = /healthz {
+        auth_basic off;
+        access_log off;
+        add_header Content-Type text/plain;
+        return 200 "ok\n";
+    }
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+# ---------------------------------------------------------------------------
+# Port 443 — the site.
+# ---------------------------------------------------------------------------
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
+    server_name ${PACKVIO_DOMAIN};
+
+    ssl_certificate     /etc/letsencrypt/live/${PACKVIO_DOMAIN}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${PACKVIO_DOMAIN}/privkey.pem;
+    ssl_trusted_certificate /etc/letsencrypt/live/${PACKVIO_DOMAIN}/chain.pem;
+
+    # OCSP stapling: nginx fetches the revocation proof itself and hands it to
+    # the client, so the browser does not have to make its own round trip to the
+    # CA before rendering anything.
+    ssl_stapling on;
+    ssl_stapling_verify on;
+    resolver 127.0.0.11 valid=30s;
+    resolver_timeout 5s;
+
+    # HSTS is in snippets/security-headers.conf, with every other header, and
+    # NOT here. Declared at this level it is inherited by no location that sets
+    # an add_header of its own — which is all of them. See the note in that file.
+
+    # The Basic Auth gate, the webhook exception, the routing and the cache
+    # policy — shared with the behind-proxy mode so the two cannot drift.
+    include /etc/nginx/snippets/site.conf;
+}

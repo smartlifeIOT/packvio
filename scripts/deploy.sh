@@ -109,6 +109,44 @@ DISK=$(df -Pm "$DEPLOY" | awk 'NR==2{print $4}')
 echo "   ${DISK}MB free on the deploy volume"
 [ "$DISK" -lt 4000 ] && echo "   ${Y}!${N} under 4GB free — docker builds may fail. 'docker system prune -f' frees layer cache."
 
+# ---- edge ports ---------------------------------------------------------
+# Checked HERE, before several minutes of Docker build, because a port conflict
+# is otherwise discovered by `up -d` at the very end and reported by the daemon
+# as a container-networking error that names a container id and not the thing
+# actually holding the port.
+EDGE_MODE="${EDGE_MODE:-standalone}"
+echo "   edge mode: $EDGE_MODE"
+for publish in "${EDGE_HTTP_PUBLISH:-80}" "${EDGE_HTTPS_PUBLISH:-443}"; do
+  # "127.0.0.1:8080" -> 8080, "80" -> 80.
+  p="${publish##*:}"
+  # Our own nginx holding the port is the expected steady state — `up -d`
+  # recreates it — so only a DIFFERENT container counts as a conflict.
+  other=$(docker ps --format '{{.Names}}\t{{.Ports}}' 2>/dev/null \
+            | grep -E ":$p->" | grep -v '^packvio-nginx' | cut -f1 | tr '\n' ' ' || true)
+  if [ -n "$other" ]; then
+    fail "host port $p is already published by: $other
+
+   Two containers cannot bind one host port, so this deploy would fail at the
+   last step with 'address already in use'. Put Packvio behind the nginx that
+   already owns the port — in $DEPLOY/.env:
+
+       EDGE_MODE=behind-proxy
+       EDGE_HTTP_PUBLISH=127.0.0.1:8080
+       EDGE_HTTPS_PUBLISH=127.0.0.1:8443
+
+   then add deploy/nginx/front-proxy/packvio.conf.example to that nginx's
+   config and reload it. See the comments in deploy/env.prod.example."
+  fi
+  # A non-container listener — a system nginx, Apache — shows up here instead.
+  if command -v ss >/dev/null 2>&1; then
+    host_holder=$(ss -tlnpH "( sport = :$p )" 2>/dev/null \
+                    | grep -v 'docker-proxy' | head -1 | sed -E 's/.*users:\(\("([^"]+)".*/\1/' || true)
+    if [ -n "$host_holder" ]; then
+      echo "   ${Y}!${N} port $p also has a non-Docker listener: $host_holder"
+    fi
+  fi
+done
+
 # ---- fetch --------------------------------------------------------------
 if [ "$SKIP_BUILD" != "1" ]; then
   say "Fetching $BRANCH"
@@ -173,7 +211,14 @@ mkdir -p "$DEPLOY/deploy/nginx" "$DEPLOY/deploy/scripts"
 # Everything nginx bind-mounts or might rebuild from. NOT a --delete sync:
 # deploy/nginx/htpasswd is generated on the server and is not in the repo, and
 # wiping it would stop nginx from starting at all.
-for item in templates snippets Dockerfile nginx.conf docker-entrypoint.sh; do
+# Stale templates are removed first. `cp -r templates` copies INTO an existing
+# directory of that name, so a renamed template would otherwise leave the old
+# one behind — and two templates both declaring a server for $PACKVIO_DOMAIN is
+# a conflicting-server-name warning and a site served by whichever nginx read
+# first. Safe to delete because nothing here is generated on the server; that is
+# true only of htpasswd, which is why this is not a --delete sync of the folder.
+rm -f "$DEPLOY/deploy/nginx/templates"/*.template
+for item in templates snippets front-proxy Dockerfile nginx.conf docker-entrypoint.sh; do
   [ -e "$SRC/deploy/nginx/$item" ] && cp -r "$SRC/deploy/nginx/$item" "$DEPLOY/deploy/nginx/"
 done
 cp "$SRC"/deploy/scripts/*.sh "$DEPLOY/deploy/scripts/"
