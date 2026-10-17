@@ -1,0 +1,56 @@
+# dependencies
+node_modules/
+.claude/
+.pnp/
+.pnp.js
+
+# builds
+dist/
+build/
+.next/
+# Any alternate Next build dir (NEXT_DIST_DIR). `.next-build` is the documented one
+# for building while dev is running; the wildcard also covers the throwaway dirs a
+# before/after performance comparison needs, which are full builds and must never
+# reach a commit.
+.next-*/
+out/
+*.tsbuildinfo
+
+# env — real secrets never committed
+.env
+.env.*
+!.env.example
+
+# logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# testing / coverage
+coverage/
+.nyc_output/
+
+# editors & OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# misc
+.cache/
+.turbo/
+.vercel
+
+# deployment
+# deploy.config holds the server address, the SSH key path and a GitHub token.
+# deploy.config.example is the committed template. Keep it that way.
+deploy.config
+
+# The htpasswd file server-setup.sh generates for staging Basic Auth. It is a
+# bcrypt hash of a real credential and belongs on the server, not in the repo.
+deploy/nginx/htpasswd

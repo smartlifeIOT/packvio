@@ -1,0 +1,1487 @@
+{
+ "$comment": "Product photography extracted from the Packvio catalogue cards (Google Drive export, Oct 2026). Filenames in the source were UUIDs, so each card was read and its printed CODE used to match the catalogue. 'card' is the full catalogue card, trimmed of its page margin and squared on the card's own tint; 'shot' is an AUTOMATED crop of just the product photograph and has NOT been reviewed by a human. The seed makes 'card' the primary image; swap PRIMARY_VARIANT in seeds/product-images.ts to flip it. A further 9 products carry a REPRESENTATIVE image under 'representative': a sibling's photograph, used because the card shows that product family and the exact variant was never shot separately. Their alt text says so, and the seed records them distinctly so they can be replaced the moment a real photo exists. 53 products still have none — see CLAUDE.md.",
+ "primaryVariant": "card",
+ "images": {
+  "t1-1": {
+   "card": "/products/t1-1-card.webp",
+   "shot": "/products/t1-1-shot.webp",
+   "background": "#D8E8F8",
+   "codesOnCard": [
+    "WT-CB36"
+   ]
+  },
+  "t1-2": {
+   "card": "/products/t1-2-card.webp",
+   "shot": "/products/t1-2-shot.webp",
+   "background": "#D8E8F0",
+   "codesOnCard": [
+    "PCS/08"
+   ]
+  },
+  "t1-3": {
+   "card": "/products/t1-3-card.webp",
+   "shot": null,
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "PPC/400",
+    "PPC/500"
+   ]
+  },
+  "t1-4": {
+   "card": "/products/t1-4-card.webp",
+   "shot": "/products/t1-4-shot.webp",
+   "background": "#E0F0F0",
+   "codesOnCard": [
+    "HB/13KR"
+   ]
+  },
+  "t1-5": {
+   "card": "/products/t1-5-card.webp",
+   "shot": "/products/t1-5-shot.webp",
+   "background": "#D8E8F0",
+   "codesOnCard": [
+    "PCS/12"
+   ]
+  },
+  "t1-6": {
+   "card": "/products/t1-6-card.webp",
+   "shot": "/products/t1-6-shot.webp",
+   "background": "#D8F0F0",
+   "codesOnCard": [
+    "SIL/F/08PP"
+   ]
+  },
+  "t10-1": {
+   "card": "/products/t10-1-card.webp",
+   "shot": "/products/t10-1-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "BBL/F/NTD/PP"
+   ]
+  },
+  "t10-2": {
+   "card": "/products/t10-2-card.webp",
+   "shot": "/products/t10-2-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "PP/90B"
+   ]
+  },
+  "t10-3": {
+   "card": "/products/t10-3-card.webp",
+   "shot": "/products/t10-3-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "CC/12PP"
+   ]
+  },
+  "t10-4": {
+   "card": "/products/t10-4-card.webp",
+   "shot": "/products/t10-4-shot.webp",
+   "background": "#D8E8F0",
+   "codesOnCard": [
+    "SBL/1500 OPS",
+    "SBL/1500 PP"
+   ]
+  },
+  "t10-5": {
+   "card": "/products/t10-5-card.webp",
+   "shot": "/products/t10-5-shot.webp",
+   "background": "#E0E8F0",
+   "codesOnCard": [
+    "ST/700KR"
+   ]
+  },
+  "t10-6": {
+   "card": "/products/t10-6-card.webp",
+   "shot": "/products/t10-6-shot.webp",
+   "background": "#D8E8F0",
+   "codesOnCard": [
+    "SKR/26B",
+    "SKRPL/26B"
+   ]
+  },
+  "t11-1": {
+   "card": "/products/t11-1-card.webp",
+   "shot": "/products/t11-1-shot.webp",
+   "background": "#E0F0F8",
+   "codesOnCard": [
+    "DCL/04W",
+    "DCL/04B"
+   ]
+  },
+  "t11-2": {
+   "card": "/products/t11-2-card.webp",
+   "shot": "/products/t11-2-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "CCL/F/08PET"
+   ]
+  },
+  "t11-3": {
+   "card": "/products/t11-3-card.webp",
+   "shot": "/products/t11-3-shot.webp",
+   "background": "#E0F0F8",
+   "codesOnCard": [
+    "WT-KSS08",
+    "WT-KSS12"
+   ]
+  },
+  "t11-4": {
+   "card": "/products/t11-4-card.webp",
+   "shot": "/products/t11-4-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "SIL/F/20PP"
+   ]
+  },
+  "t11-5": {
+   "card": "/products/t11-5-card.webp",
+   "shot": "/products/t11-5-shot.webp",
+   "background": "#E0F0F0",
+   "codesOnCard": [
+    "WT-CB19K"
+   ]
+  },
+  "t11-6": {
+   "card": "/products/t11-6-card.webp",
+   "shot": "/products/t11-6-shot.webp",
+   "background": "#E0E8F0",
+   "codesOnCard": [
+    "CCL/F/12PET"
+   ]
+  },
+  "t12-1": {
+   "card": "/products/t12-1-card.webp",
+   "shot": "/products/t12-1-shot.webp",
+   "background": "#E0F0F8",
+   "codesOnCard": [
+    "SKR/12W",
+    "SKRPL/08W"
+   ]
+  },
+  "t12-2": {
+   "card": "/products/t12-2-card.webp",
+   "shot": "/products/t12-2-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "ET-95SN"
+   ]
+  },
+  "t12-3": {
+   "card": "/products/t12-3-card.webp",
+   "shot": "/products/t12-3-shot.webp",
+   "background": "#D8E8F0",
+   "codesOnCard": [
+    "PCS/04"
+   ]
+  },
+  "t12-4": {
+   "card": "/products/t12-4-card.webp",
+   "shot": "/products/t12-4-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "PB/ALU-350ML"
+   ]
+  },
+  "t12-5": {
+   "card": "/products/t12-5-card.webp",
+   "shot": "/products/t12-5-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "CCL/F/14PET"
+   ]
+  },
+  "t12-6": {
+   "card": "/products/t12-6-card.webp",
+   "shot": "/products/t12-6-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "CCL/D/12PET-H"
+   ]
+  },
+  "t13-1": {
+   "card": "/products/t13-1-card.webp",
+   "shot": "/products/t13-1-shot.webp",
+   "background": "#D8E8F8",
+   "codesOnCard": [
+    "SKR/16W",
+    "SKRPL/16W"
+   ]
+  },
+  "t13-2": {
+   "card": "/products/t13-2-card.webp",
+   "shot": "/products/t13-2-shot.webp",
+   "background": "#D8E8F8",
+   "codesOnCard": [
+    "WT-CB22K"
+   ]
+  },
+  "t13-3": {
+   "card": "/products/t13-3-card.webp",
+   "shot": "/products/t13-3-shot.webp",
+   "background": "#E0F0F8",
+   "codesOnCard": [
+    "DCL/08W",
+    "DCL/08B"
+   ]
+  },
+  "t13-4": {
+   "card": "/products/t13-4-card.webp",
+   "shot": "/products/t13-4-shot.webp",
+   "background": "#E0F0F0",
+   "codesOnCard": [
+    "LB/XXSKR"
+   ]
+  },
+  "t13-5": {
+   "card": "/products/t13-5-card.webp",
+   "shot": "/products/t13-5-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "CCL/D/12PET"
+   ]
+  },
+  "t13-6": {
+   "card": "/products/t13-6-card.webp",
+   "shot": "/products/t13-6-shot.webp",
+   "background": "#E0F0F0",
+   "codesOnCard": [
+    "ST/900KR"
+   ]
+  },
+  "t14-1": {
+   "card": "/products/t14-1-card.webp",
+   "shot": "/products/t14-1-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "CCL/D/12PET"
+   ]
+  },
+  "t14-2": {
+   "card": "/products/t14-2-card.webp",
+   "shot": "/products/t14-2-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "SIL/F/142PP"
+   ]
+  },
+  "t14-3": {
+   "card": "/products/t14-3-card.webp",
+   "shot": "/products/t14-3-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "CCL/D/12PET-H"
+   ]
+  },
+  "t14-4": {
+   "card": "/products/t14-4-card.webp",
+   "shot": "/products/t14-4-shot.webp",
+   "background": "#D8E8F0",
+   "codesOnCard": [
+    "SB/1000KR"
+   ]
+  },
+  "t14-5": {
+   "card": "/products/t14-5-card.webp",
+   "shot": "/products/t14-5-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "SIL/F/1500OPS"
+   ]
+  },
+  "t14-6": {
+   "card": "/products/t14-6-card.webp",
+   "shot": "/products/t14-6-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "FT/6KR",
+    "FT/6W"
+   ]
+  },
+  "t15-1": {
+   "card": "/products/t15-1-card.webp",
+   "shot": null,
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "U-CC/12PET",
+    "U-CC/16PET"
+   ]
+  },
+  "t15-2": {
+   "card": "/products/t15-2-card.webp",
+   "shot": "/products/t15-2-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "WT-CB36K"
+   ]
+  },
+  "t15-3": {
+   "card": "/products/t15-3-card.webp",
+   "shot": "/products/t15-3-shot.webp",
+   "background": "#B8E0E8",
+   "codesOnCard": [
+    "DCL/08W",
+    "DCL/08B"
+   ]
+  },
+  "t15-4": {
+   "card": "/products/t15-4-card.webp",
+   "shot": "/products/t15-4-shot.webp",
+   "background": "#B8E0E8",
+   "codesOnCard": [
+    "DCL/12W",
+    "DCL/12B"
+   ]
+  },
+  "t2-1": {
+   "card": "/products/t2-1-card.webp",
+   "shot": "/products/t2-1-shot.webp",
+   "background": "#E0F0F0",
+   "codesOnCard": [
+    "FT/4KR",
+    "FT/4W"
+   ]
+  },
+  "t2-2": {
+   "card": "/products/t2-2-card.webp",
+   "shot": "/products/t2-2-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "CCL/F/08PET"
+   ]
+  },
+  "t2-3": {
+   "card": "/products/t2-3-card.webp",
+   "shot": "/products/t2-3-shot.webp",
+   "background": "#D8E8F0",
+   "codesOnCard": [
+    "PB-500ML"
+   ]
+  },
+  "t2-4": {
+   "card": "/products/t2-4-card.webp",
+   "shot": "/products/t2-4-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "ET-95SN"
+   ]
+  },
+  "t2-5": {
+   "card": "/products/t2-5-card.webp",
+   "shot": "/products/t2-5-shot.webp",
+   "background": "#E0F0F8",
+   "codesOnCard": [
+    "SB/1100KR"
+   ]
+  },
+  "t2-6": {
+   "card": "/products/t2-6-card.webp",
+   "shot": "/products/t2-6-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "P250",
+    "PL250"
+   ]
+  },
+  "t3-1": {
+   "card": "/products/t3-1-card.webp",
+   "shot": "/products/t3-1-shot.webp",
+   "background": "#D8E8F0",
+   "codesOnCard": [
+    "SB/750KR"
+   ]
+  },
+  "t3-2": {
+   "card": "/products/t3-2-card.webp",
+   "shot": "/products/t3-2-shot.webp",
+   "background": "#E0F0F0",
+   "codesOnCard": [
+    "DCL/12W",
+    "DCL/12B"
+   ]
+  },
+  "t3-3": {
+   "card": "/products/t3-3-card.webp",
+   "shot": "/products/t3-3-shot.webp",
+   "background": "#E0F0F0",
+   "codesOnCard": [
+    "WT-CB32K"
+   ]
+  },
+  "t3-4": {
+   "card": "/products/t3-4-card.webp",
+   "shot": "/products/t3-4-shot.webp",
+   "background": "#E0F0F0",
+   "codesOnCard": [
+    "WT-CB25K"
+   ]
+  },
+  "t3-5": {
+   "card": "/products/t3-5-card.webp",
+   "shot": "/products/t3-5-shot.webp",
+   "background": "#D0E8F0",
+   "codesOnCard": [
+    "SKR/12B",
+    "SKRPL/08B"
+   ]
+  },
+  "t3-6": {
+   "card": "/products/t3-6-card.webp",
+   "shot": "/products/t3-6-shot.webp",
+   "background": "#E0F0F8",
+   "codesOnCard": [
+    "PB/ALU-450ML"
+   ]
+  },
+  "t4-1": {
+   "card": "/products/t4-1-card.webp",
+   "shot": "/products/t4-1-shot.webp",
+   "background": "#D0E8F0",
+   "codesOnCard": [
+    "WT-CB36"
+   ]
+  },
+  "t4-2": {
+   "card": "/products/t4-2-card.webp",
+   "shot": null,
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "CCL/D/120PS"
+   ]
+  },
+  "t4-3": {
+   "card": "/products/t4-3-card.webp",
+   "shot": "/products/t4-3-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "CC/10PET"
+   ]
+  },
+  "t4-4": {
+   "card": "/products/t4-4-card.webp",
+   "shot": "/products/t4-4-shot.webp",
+   "background": "#E0F0F8",
+   "codesOnCard": [
+    "PB-400ML"
+   ]
+  },
+  "t4-5": {
+   "card": "/products/t4-5-card.webp",
+   "shot": "/products/t4-5-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "CCL/F/12PET"
+   ]
+  },
+  "t4-6": {
+   "card": "/products/t4-6-card.webp",
+   "shot": "/products/t4-6-shot.webp",
+   "background": "#D8E8F0",
+   "codesOnCard": [
+    "SKR/16KR",
+    "SKRPL/16KR"
+   ]
+  },
+  "t5-1": {
+   "card": "/products/t5-1-card.webp",
+   "shot": "/products/t5-1-shot.webp",
+   "background": "#D0E8F0",
+   "codesOnCard": [
+    "CCL/D/12PET"
+   ]
+  },
+  "t5-2": {
+   "card": "/products/t5-2-card.webp",
+   "shot": "/products/t5-2-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "CC/16PET"
+   ]
+  },
+  "t5-3": {
+   "card": "/products/t5-3-card.webp",
+   "shot": "/products/t5-3-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "CCL/F/12PET"
+   ]
+  },
+  "t5-4": {
+   "card": "/products/t5-4-card.webp",
+   "shot": "/products/t5-4-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "CC/02PET",
+    "CCL/F/02PET",
+    "CC/0.75PET",
+    "CCL/F/0.75PET"
+   ]
+  },
+  "t5-5": {
+   "card": "/products/t5-5-card.webp",
+   "shot": "/products/t5-5-shot.webp",
+   "background": "#E0F0F0",
+   "codesOnCard": [
+    "CC/9PET"
+   ]
+  },
+  "t5-6": {
+   "card": "/products/t5-6-card.webp",
+   "shot": "/products/t5-6-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "CCL/F/12PET"
+   ]
+  },
+  "t6-1": {
+   "card": "/products/t6-1-card.webp",
+   "shot": "/products/t6-1-shot.webp",
+   "background": "#E0F0F0",
+   "codesOnCard": [
+    "CCL/D/14PET-H"
+   ]
+  },
+  "t6-2": {
+   "card": "/products/t6-2-card.webp",
+   "shot": "/products/t6-2-shot.webp",
+   "background": "#E0E8F0",
+   "codesOnCard": [
+    "SB/500KR"
+   ]
+  },
+  "t6-3": {
+   "card": "/products/t6-3-card.webp",
+   "shot": "/products/t6-3-shot.webp",
+   "background": "#D8E8F0",
+   "codesOnCard": [
+    "SB/1500KR"
+   ]
+  },
+  "t6-4": {
+   "card": "/products/t6-4-card.webp",
+   "shot": "/products/t6-4-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "PB-300ML"
+   ]
+  },
+  "t6-5": {
+   "card": "/products/t6-5-card.webp",
+   "shot": "/products/t6-5-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "CCL/F/120PS"
+   ]
+  },
+  "t6-6": {
+   "card": "/products/t6-6-card.webp",
+   "shot": "/products/t6-6-shot.webp",
+   "background": "#E0E8F0",
+   "codesOnCard": [
+    "SKR/26KR",
+    "SKRPL/26KR"
+   ]
+  },
+  "t7-1": {
+   "card": "/products/t7-1-card.webp",
+   "shot": "/products/t7-1-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "SIL/F/16PP"
+   ]
+  },
+  "t7-2": {
+   "card": "/products/t7-2-card.webp",
+   "shot": "/products/t7-2-shot.webp",
+   "background": "#E0F0F8",
+   "codesOnCard": [
+    "CC/12PET"
+   ]
+  },
+  "t7-3": {
+   "card": "/products/t7-3-card.webp",
+   "shot": "/products/t7-3-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "TC-115-PS-LSPN-PRL",
+    "TC-115-PS-LSPN-CG",
+    "TC-115-PS-LSPN-BBRY",
+    "TC-115-PS-LSPN-SF",
+    "TC-115-PS-LSPN-LG",
+    "TC-115-PS-LSPN-BBG",
+    "TC-115-PS-LSPN-LVNR"
+   ]
+  },
+  "t7-4": {
+   "card": "/products/t7-4-card.webp",
+   "shot": "/products/t7-4-shot.webp",
+   "background": "#E0E8F0",
+   "codesOnCard": [
+    "ST/1200KR"
+   ]
+  },
+  "t7-5": {
+   "card": "/products/t7-5-card.webp",
+   "shot": "/products/t7-5-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "SIL/F/12PP"
+   ]
+  },
+  "t7-6": {
+   "card": "/products/t7-6-card.webp",
+   "shot": "/products/t7-6-shot.webp",
+   "background": "#E0F0F8",
+   "codesOnCard": [
+    "STI-178WOOD"
+   ]
+  },
+  "t8-1": {
+   "card": "/products/t8-1-card.webp",
+   "shot": "/products/t8-1-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "FT/5KR",
+    "FT/5W"
+   ]
+  },
+  "t8-2": {
+   "card": "/products/t8-2-card.webp",
+   "shot": "/products/t8-2-shot.webp",
+   "background": "#E0F0F8",
+   "codesOnCard": [
+    "SB/1300KR"
+   ]
+  },
+  "t8-3": {
+   "card": "/products/t8-3-card.webp",
+   "shot": "/products/t8-3-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "CC/16PP"
+   ]
+  },
+  "t8-4": {
+   "card": "/products/t8-4-card.webp",
+   "shot": "/products/t8-4-shot.webp",
+   "background": "#D8E8F0",
+   "codesOnCard": [
+    "ST/2100KR"
+   ]
+  },
+  "t8-5": {
+   "card": "/products/t8-5-card.webp",
+   "shot": "/products/t8-5-shot.webp",
+   "background": "#D8F0F0",
+   "codesOnCard": [
+    "DCL/04W",
+    "DCL/04B"
+   ]
+  },
+  "t8-6": {
+   "card": "/products/t8-6-card.webp",
+   "shot": "/products/t8-6-shot.webp",
+   "background": "#D8E8F0",
+   "codesOnCard": [
+    "ST/500KR"
+   ]
+  },
+  "t9-1": {
+   "card": "/products/t9-1-card.webp",
+   "shot": "/products/t9-1-shot.webp",
+   "background": "#D8E8F0",
+   "codesOnCard": [
+    "SBL/150 OPS",
+    "SBL/150 PP"
+   ]
+  },
+  "t9-2": {
+   "card": "/products/t9-2-card.webp",
+   "shot": "/products/t9-2-shot.webp",
+   "background": "#D8E8F0",
+   "codesOnCard": [
+    "SBL/1300 OPS",
+    "SBL/1300 PP"
+   ]
+  },
+  "t9-3": {
+   "card": "/products/t9-3-card.webp",
+   "shot": "/products/t9-3-shot.webp",
+   "background": "#E0F0F8",
+   "codesOnCard": [
+    "WT-PT-4",
+    "WT-PT-2"
+   ]
+  },
+  "t9-4": {
+   "card": "/products/t9-4-card.webp",
+   "shot": "/products/t9-4-shot.webp",
+   "background": "#D8E8F0",
+   "codesOnCard": [
+    "SKR/16B",
+    "SKRPL/16B"
+   ]
+  },
+  "t9-5": {
+   "card": "/products/t9-5-card.webp",
+   "shot": "/products/t9-5-shot.webp",
+   "background": "#D0E8F0",
+   "codesOnCard": [
+    "SKR/26W",
+    "SKRPL/26W"
+   ]
+  },
+  "t9-6": {
+   "card": "/products/t9-6-card.webp",
+   "shot": null,
+   "background": "#E0F0F0",
+   "codesOnCard": [
+    "CC/20PET"
+   ]
+  },
+  "w1-1": {
+   "card": "/products/w1-1-card.webp",
+   "shot": "/products/w1-1-shot.webp",
+   "background": "#E0F0F0",
+   "codesOnCard": [
+    "3/1-01",
+    "3/1-02",
+    "NPK230"
+   ]
+  },
+  "w1-2": {
+   "card": "/products/w1-2-card.webp",
+   "shot": "/products/w1-2-shot.webp",
+   "background": "#E0F0F0",
+   "codesOnCard": [
+    "LB/MKR"
+   ]
+  },
+  "w1-3": {
+   "card": "/products/w1-3-card.webp",
+   "shot": "/products/w1-3-shot.webp",
+   "background": "#C8E0F0",
+   "codesOnCard": []
+  },
+  "w1-4": {
+   "card": "/products/w1-4-card.webp",
+   "shot": "/products/w1-4-shot.webp",
+   "background": "#E0E8F0",
+   "codesOnCard": [
+    "PSC/20W",
+    "PSC/25W"
+   ]
+  },
+  "w2-1": {
+   "card": "/products/w2-1-card.webp",
+   "shot": "/products/w2-1-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "LB/XXSW",
+    "LB/XSW",
+    "LB/SW"
+   ]
+  },
+  "w2-2": {
+   "card": "/products/w2-2-card.webp",
+   "shot": "/products/w2-2-shot.webp",
+   "background": "#E0E8F8",
+   "codesOnCard": [
+    "PSC/04W",
+    "PSC/06W"
+   ]
+  },
+  "w2-3": {
+   "card": "/products/w2-3-card.webp",
+   "shot": "/products/w2-3-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "LB/LKR"
+   ]
+  },
+  "w2-4": {
+   "card": "/products/w2-4-card.webp",
+   "shot": "/products/w2-4-shot.webp",
+   "background": "#E0E8F0",
+   "codesOnCard": []
+  },
+  "w3-1": {
+   "card": "/products/w3-1-card.webp",
+   "shot": "/products/w3-1-shot.webp",
+   "background": "#E0F0F8",
+   "codesOnCard": [
+    "BRGB03"
+   ]
+  },
+  "w3-2": {
+   "card": "/products/w3-2-card.webp",
+   "shot": "/products/w3-2-shot.webp",
+   "background": "#E0E8F8",
+   "codesOnCard": [
+    "PSC/30W",
+    "PSC/35W"
+   ]
+  },
+  "w3-3": {
+   "card": "/products/w3-3-card.webp",
+   "shot": "/products/w3-3-shot.webp",
+   "background": "#E0F0F0",
+   "codesOnCard": [
+    "LB/XXSKR"
+   ]
+  },
+  "w3-4": {
+   "card": "/products/w3-4-card.webp",
+   "shot": "/products/w3-4-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "PBS/ALU-500ML",
+    "PBS/ALU-330L",
+    "PBS/ALU-330S"
+   ]
+  },
+  "w4-1": {
+   "card": "/products/w4-1-card.webp",
+   "shot": "/products/w4-1-shot.webp",
+   "background": "#D8E8F0",
+   "codesOnCard": [
+    "WT-CB19",
+    "WT-CB22",
+    "WT-CB25"
+   ]
+  },
+  "w4-2": {
+   "card": "/products/w4-2-card.webp",
+   "shot": "/products/w4-2-shot.webp",
+   "background": "#D8E8F0",
+   "codesOnCard": [
+    "BRGB01"
+   ]
+  },
+  "w4-3": {
+   "card": "/products/w4-3-card.webp",
+   "shot": "/products/w4-3-shot.webp",
+   "background": "#E8F0F0",
+   "codesOnCard": [
+    "FT1KR",
+    "FT1W",
+    "FT2KR",
+    "FT2W",
+    "FT3KR",
+    "FT3W"
+   ]
+  },
+  "w4-4": {
+   "card": "/products/w4-4-card.webp",
+   "shot": "/products/w4-4-shot.webp",
+   "background": "#C8D8E8",
+   "codesOnCard": []
+  },
+  "w5-1": {
+   "card": "/products/w5-1-card.webp",
+   "shot": "/products/w5-1-shot.webp",
+   "background": "#D0E0F0",
+   "codesOnCard": []
+  },
+  "w5-2": {
+   "card": "/products/w5-2-card.webp",
+   "shot": "/products/w5-2-shot.webp",
+   "background": "#E0E8F8",
+   "codesOnCard": [
+    "PSC/08W",
+    "PSC/12W"
+   ]
+  },
+  "w5-3": {
+   "card": "/products/w5-3-card.webp",
+   "shot": "/products/w5-3-shot.webp",
+   "background": "#D8E0F0",
+   "codesOnCard": []
+  },
+  "w5-4": {
+   "card": "/products/w5-4-card.webp",
+   "shot": "/products/w5-4-shot.webp",
+   "background": "#E0E8F8",
+   "codesOnCard": [
+    "PSC/14W",
+    "PSC/16W"
+   ]
+  },
+  "w6-1": {
+   "card": "/products/w6-1-card.webp",
+   "shot": "/products/w6-1-shot.webp",
+   "background": "#E0F0F0",
+   "codesOnCard": [
+    "LB/MW"
+   ]
+  },
+  "w6-2": {
+   "card": "/products/w6-2-card.webp",
+   "shot": "/products/w6-2-shot.webp",
+   "background": "#D8E8F0",
+   "codesOnCard": [
+    "BAKB02K"
+   ]
+  },
+  "w6-3": {
+   "card": "/products/w6-3-card.webp",
+   "shot": "/products/w6-3-shot.webp",
+   "background": "#D8E8F0",
+   "codesOnCard": [
+    "SQ-WRP25W",
+    "SQ-WRP36W",
+    "SQ-WRP25K",
+    "SQ-WRP36K",
+    "SQ-WRP25",
+    "SQ-WRP36",
+    "SQ-ALU05"
+   ]
+  },
+  "w6-4": {
+   "card": "/products/w6-4-card.webp",
+   "shot": "/products/w6-4-shot.webp",
+   "background": "#E0F0F0",
+   "codesOnCard": [
+    "LB/XSKR"
+   ]
+  },
+  "w7-1": {
+   "card": "/products/w7-1-card.webp",
+   "shot": "/products/w7-1-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "FILM-ROLL"
+   ]
+  },
+  "w7-2": {
+   "card": "/products/w7-2-card.webp",
+   "shot": "/products/w7-2-shot.webp",
+   "background": "#E8F0F8",
+   "codesOnCard": [
+    "SIL/F/04PET"
+   ]
+  },
+  "w7-3": {
+   "card": "/products/w7-3-card.webp",
+   "shot": "/products/w7-3-shot.webp",
+   "background": "#D0E0F0",
+   "codesOnCard": []
+  }
+ },
+ "products": {
+  "3/1-01": [
+   "w1-1"
+  ],
+  "3/1-02": [
+   "w1-1"
+  ],
+  "BAKB02K": [
+   "w6-2"
+  ],
+  "BBL/F/NTD/PP": [
+   "t10-1"
+  ],
+  "BRGB01": [
+   "w4-2"
+  ],
+  "BRGB03": [
+   "w3-1"
+  ],
+  "CC/0.75PET": [
+   "t5-4"
+  ],
+  "CC/02PET": [
+   "t5-4"
+  ],
+  "CC/10PET": [
+   "t4-3"
+  ],
+  "CC/12PET": [
+   "t7-2"
+  ],
+  "CC/12PP": [
+   "t10-3"
+  ],
+  "CC/16PET": [
+   "t5-2"
+  ],
+  "CC/16PP": [
+   "t8-3"
+  ],
+  "CC/20PET": [
+   "t9-6"
+  ],
+  "CC/9PET": [
+   "t5-5"
+  ],
+  "CCL/D/120PS": [
+   "t4-2"
+  ],
+  "CCL/D/12PET": [
+   "t13-5",
+   "t14-1",
+   "t5-1"
+  ],
+  "CCL/D/12PET-H": [
+   "t12-6",
+   "t14-3"
+  ],
+  "CCL/D/14PET-H": [
+   "t6-1"
+  ],
+  "CCL/F/0.75PET": [
+   "t5-4"
+  ],
+  "CCL/F/02PET": [
+   "t5-4"
+  ],
+  "CCL/F/08PET": [
+   "t11-2",
+   "t2-2"
+  ],
+  "CCL/F/120PS": [
+   "t6-5"
+  ],
+  "CCL/F/12PET": [
+   "t11-6",
+   "t4-5",
+   "t5-3",
+   "t5-6"
+  ],
+  "CCL/F/14PET": [
+   "t12-5"
+  ],
+  "DCL/04B": [
+   "t11-1",
+   "t8-5"
+  ],
+  "DCL/04W": [
+   "t11-1",
+   "t8-5"
+  ],
+  "DCL/08B": [
+   "t13-3",
+   "t15-3"
+  ],
+  "DCL/08W": [
+   "t13-3",
+   "t15-3"
+  ],
+  "DCL/12B": [
+   "t15-4",
+   "t3-2"
+  ],
+  "DCL/12W": [
+   "t15-4",
+   "t3-2"
+  ],
+  "ET-95SN": [
+   "t12-2",
+   "t2-4"
+  ],
+  "FILM-ROLL": [
+   "w7-1"
+  ],
+  "FT/4KR": [
+   "t2-1"
+  ],
+  "FT/4W": [
+   "t2-1"
+  ],
+  "FT/5KR": [
+   "t8-1"
+  ],
+  "FT/5W": [
+   "t8-1"
+  ],
+  "FT/6KR": [
+   "t14-6"
+  ],
+  "FT/6W": [
+   "t14-6"
+  ],
+  "FT1KR": [
+   "w4-3"
+  ],
+  "FT1W": [
+   "w4-3"
+  ],
+  "FT2KR": [
+   "w4-3"
+  ],
+  "FT2W": [
+   "w4-3"
+  ],
+  "FT3KR": [
+   "w4-3"
+  ],
+  "FT3W": [
+   "w4-3"
+  ],
+  "HB/13KR": [
+   "t1-4"
+  ],
+  "LB/LKR": [
+   "w2-3"
+  ],
+  "LB/MKR": [
+   "w1-2"
+  ],
+  "LB/MW": [
+   "w6-1"
+  ],
+  "LB/SW": [
+   "w2-1"
+  ],
+  "LB/XSKR": [
+   "w6-4"
+  ],
+  "LB/XSW": [
+   "w2-1"
+  ],
+  "LB/XXSKR": [
+   "t13-4",
+   "w3-3"
+  ],
+  "LB/XXSW": [
+   "w2-1"
+  ],
+  "NPK230": [
+   "w1-1"
+  ],
+  "P250": [
+   "t2-6"
+  ],
+  "PB-300ML": [
+   "t6-4"
+  ],
+  "PB-400ML": [
+   "t4-4"
+  ],
+  "PB-500ML": [
+   "t2-3"
+  ],
+  "PB/ALU-350ML": [
+   "t12-4"
+  ],
+  "PB/ALU-450ML": [
+   "t3-6"
+  ],
+  "PBS/ALU-330L": [
+   "w3-4"
+  ],
+  "PBS/ALU-330S": [
+   "w3-4"
+  ],
+  "PBS/ALU-500ML": [
+   "w3-4"
+  ],
+  "PCS/04": [
+   "t12-3"
+  ],
+  "PCS/08": [
+   "t1-2"
+  ],
+  "PCS/12": [
+   "t1-5"
+  ],
+  "PL250": [
+   "t2-6"
+  ],
+  "PP/90B": [
+   "t10-2"
+  ],
+  "PPC/400": [
+   "t1-3"
+  ],
+  "PPC/500": [
+   "t1-3"
+  ],
+  "PSC/04W": [
+   "w2-2"
+  ],
+  "PSC/06W": [
+   "w2-2"
+  ],
+  "PSC/08W": [
+   "w5-2"
+  ],
+  "PSC/12W": [
+   "w5-2"
+  ],
+  "PSC/14W": [
+   "w5-4"
+  ],
+  "PSC/16W": [
+   "w5-4"
+  ],
+  "PSC/20W": [
+   "w1-4"
+  ],
+  "PSC/25W": [
+   "w1-4"
+  ],
+  "PSC/30W": [
+   "w3-2"
+  ],
+  "PSC/35W": [
+   "w3-2"
+  ],
+  "SB/1000KR": [
+   "t14-4"
+  ],
+  "SB/1100KR": [
+   "t2-5"
+  ],
+  "SB/1300KR": [
+   "t8-2"
+  ],
+  "SB/1500KR": [
+   "t6-3"
+  ],
+  "SB/500KR": [
+   "t6-2"
+  ],
+  "SB/750KR": [
+   "t3-1"
+  ],
+  "SBL/1300 OPS": [
+   "t9-2"
+  ],
+  "SBL/1300 PP": [
+   "t9-2"
+  ],
+  "SBL/150 OPS": [
+   "t9-1"
+  ],
+  "SBL/150 PP": [
+   "t9-1"
+  ],
+  "SBL/1500 OPS": [
+   "t10-4"
+  ],
+  "SBL/1500 PP": [
+   "t10-4"
+  ],
+  "SIL/F/04PET": [
+   "w7-2"
+  ],
+  "SIL/F/08PP": [
+   "t1-6"
+  ],
+  "SIL/F/12PP": [
+   "t7-5"
+  ],
+  "SIL/F/142PP": [
+   "t14-2"
+  ],
+  "SIL/F/1500OPS": [
+   "t14-5"
+  ],
+  "SIL/F/16PP": [
+   "t7-1"
+  ],
+  "SIL/F/20PP": [
+   "t11-4"
+  ],
+  "SKR/12B": [
+   "t3-5"
+  ],
+  "SKR/12W": [
+   "t12-1"
+  ],
+  "SKR/16B": [
+   "t9-4"
+  ],
+  "SKR/16KR": [
+   "t4-6"
+  ],
+  "SKR/16W": [
+   "t13-1"
+  ],
+  "SKR/26B": [
+   "t10-6"
+  ],
+  "SKR/26KR": [
+   "t6-6"
+  ],
+  "SKR/26W": [
+   "t9-5"
+  ],
+  "SKRPL/08B": [
+   "t3-5"
+  ],
+  "SKRPL/08W": [
+   "t12-1"
+  ],
+  "SKRPL/16B": [
+   "t9-4"
+  ],
+  "SKRPL/16KR": [
+   "t4-6"
+  ],
+  "SKRPL/16W": [
+   "t13-1"
+  ],
+  "SKRPL/26B": [
+   "t10-6"
+  ],
+  "SKRPL/26KR": [
+   "t6-6"
+  ],
+  "SKRPL/26W": [
+   "t9-5"
+  ],
+  "SQ-ALU05": [
+   "w6-3"
+  ],
+  "SQ-WRP25": [
+   "w6-3"
+  ],
+  "SQ-WRP25K": [
+   "w6-3"
+  ],
+  "SQ-WRP25W": [
+   "w6-3"
+  ],
+  "SQ-WRP36": [
+   "w6-3"
+  ],
+  "SQ-WRP36K": [
+   "w6-3"
+  ],
+  "SQ-WRP36W": [
+   "w6-3"
+  ],
+  "ST/2100KR": [
+   "t8-4"
+  ],
+  "ST/500KR": [
+   "t8-6"
+  ],
+  "ST/700KR": [
+   "t10-5"
+  ],
+  "ST/900KR": [
+   "t13-6"
+  ],
+  "STI-178WOOD": [
+   "t7-6"
+  ],
+  "TC-115-PS-LSPN-BBG": [
+   "t7-3"
+  ],
+  "TC-115-PS-LSPN-BBRY": [
+   "t7-3"
+  ],
+  "TC-115-PS-LSPN-CG": [
+   "t7-3"
+  ],
+  "TC-115-PS-LSPN-LG": [
+   "t7-3"
+  ],
+  "TC-115-PS-LSPN-LVNR": [
+   "t7-3"
+  ],
+  "TC-115-PS-LSPN-PRL": [
+   "t7-3"
+  ],
+  "TC-115-PS-LSPN-SF": [
+   "t7-3"
+  ],
+  "U-CC/12PET": [
+   "t15-1"
+  ],
+  "U-CC/16PET": [
+   "t15-1"
+  ],
+  "WT-CB19": [
+   "w4-1"
+  ],
+  "WT-CB19K": [
+   "t11-5"
+  ],
+  "WT-CB22": [
+   "w4-1"
+  ],
+  "WT-CB22K": [
+   "t13-2"
+  ],
+  "WT-CB25": [
+   "w4-1"
+  ],
+  "WT-CB25K": [
+   "t3-4"
+  ],
+  "WT-CB32K": [
+   "t3-3"
+  ],
+  "WT-CB36": [
+   "t1-1",
+   "t4-1"
+  ],
+  "WT-CB36K": [
+   "t15-2"
+  ],
+  "WT-KS508": [
+   "t11-3"
+  ],
+  "WT-KSS12": [
+   "t11-3"
+  ],
+  "WT-PT-2": [
+   "t9-3"
+  ],
+  "WT-PT-4": [
+   "t9-3"
+  ]
+ },
+ "representative": {
+  "ST-178WOOD": {
+   "image": "t7-6",
+   "kind": "duplicate",
+   "note": "identical product to STI-178WOOD, listed twice in the printed catalogue"
+  },
+  "SKR/12KR": {
+   "image": "t4-6",
+   "kind": "size-variant",
+   "note": "kraft shaker; card shows the 16 oz"
+  },
+  "SKRPL/08KR": {
+   "image": "t4-6",
+   "kind": "size-variant",
+   "note": "kraft shaker lid; card shows the 16 oz"
+  },
+  "WT-CB32": {
+   "image": "t1-1",
+   "kind": "size-variant",
+   "note": "white carry bag; card shows the 36 cm"
+  },
+  "LB/SKR": {
+   "image": "w6-4",
+   "kind": "size-variant",
+   "note": "kraft lunch box; card shows the XS"
+  },
+  "PB/ALU-400ML": {
+   "image": "t3-6",
+   "kind": "size-variant",
+   "note": "PET bottle, aluminium lid; card shows the 450 ml"
+  },
+  "PSC/650W": {
+   "image": "w1-4",
+   "kind": "size-variant",
+   "note": "white soup cup; card shows the 20/25 oz"
+  },
+  "NPK-2PLY": {
+   "image": "w1-1",
+   "kind": "size-variant",
+   "note": "napkin; card shows NPK230"
+  },
+  "CCL/D/14PET": {
+   "image": "t6-1",
+   "kind": "variant",
+   "note": "same 14–20 oz PET dome lid as CCL/D/14PET-H, cross hole rather than round"
+  }
+ }
+}

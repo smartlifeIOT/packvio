@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 296 80" role="img" aria-label="Packvio">
+  <!--
+    PLACEHOLDER LOGO LOCKUP. Same status as packvio-mark.svg: the real artwork
+    has not been extracted from the brand identity PDF in /docs (those PDFs are
+    image-based and this machine has no poppler to rasterise them).
+
+    This is the placeholder "P" mark plus a wordmark set in whatever grotesque
+    the viewer has. Note that an SVG loaded through <img> cannot use a webfont,
+    so the wordmark will NOT be Poppins here — it falls back to a system sans.
+    That is the main reason this needs replacing with real outlined paths.
+
+    Keep the filename and the 0 0 296 80 viewBox (3.7:1) when replacing, and
+    keep packvio-logo-white.svg in step.
+  -->
+  <title>Packvio</title>
+  <g fill="#39255F">
+    <path
+      fill-rule="evenodd"
+      d="M6 8h26.4a17.6 17.6 0 0 1 0 35.2H17.2V72H6V8Zm11.2 10.4h15.2a7.2 7.2 0 0 1 0 14.4H17.2V18.4Z"
+    />
+    <text
+      x="76"
+      y="52"
+      font-family="Poppins, 'Segoe UI', system-ui, sans-serif"
+      font-size="34"
+      font-weight="600"
+      letter-spacing="0.5"
+    >Packvio</text>
+  </g>
+</svg>

@@ -1,0 +1,630 @@
+{
+  "common": {
+    "brand": "Packvio",
+    "company": "Smavio Limited Trading Co.",
+    "skipToContent": "Skip to main content",
+    "home": "Home",
+    "breadcrumb": "Breadcrumb"
+  },
+  "nav": {
+    "primaryLabel": "Primary",
+    "menuLabel": "Menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "home": "Home",
+    "products": "Products",
+    "customPrinting": "Custom Printing",
+    "about": "About",
+    "contact": "Contact",
+    "requestQuote": "Request a Quote",
+    "browseCategories": "Browse categories",
+    "allCategories": "All categories",
+    "viewAllProducts": "View all products",
+    "contactStripTagline": "Food packaging solutions — Riyadh, Saudi Arabia",
+    "switchTo": "Switch language to {language}",
+    "languageName": {
+      "ar": "العربية",
+      "en": "English"
+    },
+    "faq": "FAQ"
+  },
+  "search": {
+    "label": "Search products",
+    "placeholder": "Search by name or code…",
+    "clear": "Clear search",
+    "resultsCount": "{count, plural, =1 {1 suggestion available} other {# suggestions available}}",
+    "noResults": "No matching products"
+  },
+  "product": {
+    "caseOf": "Case of {count}",
+    "requestQuote": "Request Quote",
+    "viewDetails": "View Details",
+    "imageComingSoon": "Photo coming soon",
+    "quoteOnly": "Quote only",
+    "buyOnline": "Order on our store",
+    "orderOnWhatsapp": "Order now on WhatsApp",
+    "breadcrumb": "Breadcrumb",
+    "allProducts": "All products",
+    "related": "You may also need",
+    "quoteHelp": "Tell us the quantity you need and we'll come back with pricing and lead time.",
+    "orderOrQuoteHelp": "Request a quote for volume pricing and lead time, or order now if you already know what you need.",
+    "whatsappOrderPrefill": "Hello Packvio, I'd like to order:\n\n{name}\nCode: {code}\nQuantity: {cases} case(s) — {units} units\n\nPlease confirm price and availability.",
+    "specsHeading": "Specifications",
+    "specsCaption": "Specifications for {name}",
+    "gallery": "Images of {name}",
+    "viewImage": "View image {number}",
+    "addToQuoteList": "Add to quote list",
+    "addedToQuoteList": "Added to quote list",
+    "inQuoteList": "{count, plural, =1 {1 item in your quote list} other {# items in your quote list}}",
+    "badges": {
+      "customPrinting": "Logo printing available",
+      "foodSafe": "Food-contact grade"
+    },
+    "specs": {
+      "code": "Product code",
+      "size": "Size",
+      "material": "Material",
+      "caseQuantity": "Units per case"
+    },
+    "tiers": {
+      "heading": "Volume pricing",
+      "caption": "Volume pricing for {name}",
+      "minQuantity": "From (units)",
+      "unitPrice": "Price per unit"
+    }
+  },
+  "products": {
+    "title": "Products",
+    "heading": "Products",
+    "intro": "Cups, lids, boxes, trays and bags — supplied by the case for food businesses across Saudi Arabia.",
+    "searchHeading": "Search results for “{query}”",
+    "inCategory": "{category} — Products",
+    "resultCount": "{count, plural, =0 {No products} =1 {1 product} other {{formatted} products}}",
+    "filters": {
+      "title": "Filters",
+      "open": "Filters",
+      "close": "Close filters",
+      "categories": "Category",
+      "fulfilment": "How to order",
+      "printing": "Logo printing",
+      "customPrintingAvailable": "Custom printing available",
+      "customPrintingHint": "Available on selected products. Lids, cutlery and equipment are not printed.",
+      "active": "Filtered by:",
+      "removeFilter": "Remove filter: {filter}",
+      "clearAll": "Clear all filters",
+      "fulfilmentMode": {
+        "quote": "By quote",
+        "cart": "Buy online",
+        "both": "Quote or buy online"
+      }
+    },
+    "sort": {
+      "label": "Sort",
+      "featured": "Featured first",
+      "name": "Name (A–Z)",
+      "newest": "Newest first"
+    },
+    "pagination": {
+      "label": "Pagination",
+      "previous": "Previous",
+      "next": "Next",
+      "goToPage": "Go to page {page}"
+    },
+    "empty": {
+      "heading": "Nothing matched",
+      "searchedFor": "You searched for <term></term>.",
+      "withFilters": "Filtered by: {filters}",
+      "help": "Product photography is still being shot, so searching by name or product code works best. If it isn't listed here, we may still be able to source it — tell us what you need.",
+      "askUs": "Ask us for it",
+      "browseAll": "Or <link>browse the full catalog</link>."
+    }
+  },
+  "category": {
+    "productCount": "{count, plural, =0 {No products} =1 {1 product} other {{formatted} products}}",
+    "empty": "There are no products in this category yet.",
+    "breadcrumbProducts": "Products",
+    "subcategories": "Subcategories",
+    "browseAll": "Looking for something else? <link>Browse the full catalog</link>."
+  },
+  "home": {
+    "meta": {
+      "siteName": "Packvio",
+      "title": "Packvio — Wholesale Food & Beverage Packaging in Saudi Arabia",
+      "description": "Wholesale paper cups, lids, kraft boxes, trays and bags supplied by the case, with custom logo printing. Request a quote from Packvio, Riyadh."
+    },
+    "hero": {
+      "eyebrow": "Wholesale packaging · Riyadh",
+      "headline": "Packaging your food business can rely on",
+      "subhead": "Paper cups, lids, kraft boxes, trays and carry bags — supplied by the case, printed with your logo, and shipped across the Kingdom on request.",
+      "primaryCta": "Browse Products",
+      "secondaryCta": "Request a Quote",
+      "statProducts": "Products in the catalog",
+      "statCategories": "Product categories",
+      "statDelivery": "Delivery in Riyadh",
+      "statDeliveryValue": "Fast"
+    },
+    "categories": {
+      "heading": "Shop by category",
+      "intro": "Everything a café, restaurant or cloud kitchen serves in, packs in and hands over.",
+      "viewAll": "View all products",
+      "productCount": "{count, plural, =1 {1 product} other {{formatted} products}}"
+    },
+    "values": {
+      "heading": "Why buy from Packvio",
+      "foodSafe": {
+        "title": "Food-contact grade materials",
+        "body": "Food-contact grade paper and board with PE and PET linings, selected for direct contact with food and drink — so what you serve in is never the weak link in your kitchen."
+      },
+      "printing": {
+        "title": "Custom logo printing",
+        "body": "Put your brand on the cup. We print your logo in one to four colours, available on selected products, with artwork checked and a proof approved before anything goes on press."
+      },
+      "wholesale": {
+        "title": "Wholesale by the case",
+        "body": "Case quantities from 200 up to 6,000 units, priced for volume. Fast delivery in Riyadh from stock, and shipping across the Kingdom on request."
+      }
+    },
+    "featured": {
+      "heading": "Best sellers",
+      "intro": "The lines our customers reorder most.",
+      "viewAll": "View all products"
+    },
+    "newest": {
+      "heading": "Latest additions",
+      "intro": "New products recently added to the catalog."
+    },
+    "customPrinting": {
+      "eyebrow": "Custom printing",
+      "heading": "Your logo, on every cup you hand over",
+      "body": "A printed cup keeps working long after the drink is finished — on the desk, in the car, in a photo. We print your logo on selected products, from a single colour on kraft to full four-colour work.",
+      "bullets": {
+        "one": "One to four colours, on selected cups, sleeves, boxes and bags",
+        "two": "Free artwork check and a digital proof before we print",
+        "three": "Minimum order quantities apply, and vary by item"
+      },
+      "cta": "See custom printing",
+      "panelTitle": "Your logo here",
+      "panelSubtitle": "1–4 colours · selected products"
+    },
+    "quote": {
+      "heading": "Tell us what you need",
+      "body": "Send us the items and quantities, and we'll come back with pricing, lead time and printing options.",
+      "teaser": "Add the product codes and quantities — that's all we need to price it.",
+      "cta": "Request a Quote",
+      "callUs": "Call us",
+      "whatsapp": "WhatsApp"
+    }
+  },
+  "about": {
+    "title": "About",
+    "heading": "About Packvio",
+    "lead": "Packvio is the packaging brand of Smavio Limited Trading Co., supplying food and beverage packaging by the case to businesses across Saudi Arabia.",
+    "body1": "We work with cafés, restaurants, bakeries, cloud kitchens and catering companies — the businesses that get through thousands of cups and boxes a month and cannot afford a supplier who runs out. Our range covers the whole service journey: the cup a drink is served in, the lid that keeps it there, the box a meal travels in and the bag it is handed over in.",
+    "body2": "Everything is sold by the case, in quantities from 200 to 6,000 units, and most of the range can carry your logo. We hold stock in Riyadh, and we quote from a product code and a quantity — no account to open, no minimum spend to qualify for an answer.",
+    "cta": "Request a quote",
+    "contactCta": "Contact us",
+    "stats": {
+      "products": "Products in the catalog",
+      "categories": "Product categories",
+      "based": "Based in",
+      "basedValue": "Riyadh"
+    },
+    "vision": {
+      "heading": "What we're building",
+      "body": "A packaging supplier that a food business can plan around: consistent stock, honest lead times, and a quote back quickly enough to be useful.",
+      "body2": "Saudi Arabia's food and beverage sector is growing fast, and the businesses in it are increasingly judged on presentation as much as on what they serve. We want the packaging part of that to be the easy part — dependable supply, food-contact grade materials, and branding that looks like it was planned rather than improvised."
+    },
+    "serves": {
+      "heading": "Who we supply",
+      "intro": "From a single café to a catering operation running several sites.",
+      "restaurants": "Restaurants",
+      "cafes": "Cafés",
+      "bakeries": "Bakeries",
+      "catering": "Catering",
+      "hospitals": "Hospitals",
+      "hotels": "Hotels"
+    },
+    "company": {
+      "heading": "The company",
+      "body": "Packvio is a trading name of Smavio Limited Trading Co., registered in Riyadh, Kingdom of Saudi Arabia. Orders, invoicing and VAT are handled under that entity, and our online store is operated on Salla.",
+      "registered": "Smavio Limited Trading Co. — Riyadh, Saudi Arabia"
+    }
+  },
+  "customPrinting": {
+    "title": "Custom Printing",
+    "heading": "Custom logo printing",
+    "lead": "Turn everything you hand over into something that carries your name.",
+    "body": "We print on selected products across the Packvio range — paper cups, sleeves, kraft boxes, lunch boxes, carry bags and wrapping paper. Send us your logo and we'll check the artwork, advise on colours for the material, and send a digital proof for approval before anything goes on press.",
+    "cta": "Request a printing quote",
+    "browsePrintable": "{count, plural, =1 {Browse 1 printable product} other {Browse {formatted} printable products}}",
+    "panel": {
+      "title": "Your logo here",
+      "body": "Cups, sleeves, boxes and bags carrying your brand — printed to order in one to four colours."
+    },
+    "capabilities": {
+      "heading": "What we can print",
+      "colours": {
+        "title": "One to four colours",
+        "body": "Single-colour work on kraft through to full four-colour print, matched to your brand palette."
+      },
+      "materials": {
+        "title": "Selected products",
+        "body": "Paper cups, sleeves, kraft boxes, lunch boxes, carry bags and wrapping paper. Lids, cutlery and equipment are not printed."
+      },
+      "finishes": {
+        "title": "Material-aware advice",
+        "body": "Kraft, white board and PE-lined stock all take ink differently. We'll tell you how your logo will actually come out before you commit."
+      },
+      "proofing": {
+        "title": "Proof before press",
+        "body": "A free artwork check and a digital proof for approval. Nothing is printed until you have signed it off."
+      }
+    },
+    "moq": {
+      "heading": "Minimum order quantities",
+      "body": "Printed orders have a minimum quantity, and it varies by product — a paper cup and a carry bag are not set up the same way. Tell us the item and the quantity you have in mind and we'll confirm the minimum for it.",
+      "note": "Unprinted stock lines have no printing minimum and are sold by the case."
+    },
+    "process": {
+      "heading": "How it works",
+      "intro": "Four steps from your logo to a delivered pallet.",
+      "artwork": {
+        "title": "Send artwork",
+        "body": "Send your logo — vector (AI, EPS, PDF or SVG) prints best. We'll check it and tell you if anything needs adjusting."
+      },
+      "proof": {
+        "title": "Approve a proof",
+        "body": "We send a digital proof showing your logo positioned on the product. Nothing goes on press until you approve it."
+      },
+      "production": {
+        "title": "Production",
+        "body": "Your order is printed and made up. We confirm the schedule when the proof is approved."
+      },
+      "delivery": {
+        "title": "Delivery",
+        "body": "Delivered in Riyadh, or shipped across the Kingdom on request."
+      },
+      "leadTime": "Lead times for printed orders depend on the product, the quantity and the current press schedule. We confirm a date in writing when you approve the proof — we would rather give you a real one than a number that slips."
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "heading": "Talk to us",
+    "lead": "Call, message or email — whichever is easiest. Tell us what you serve and we'll advise on the right item for it.",
+    "formHeading": "Send us a message",
+    "formLead": "For pricing on specific items, the quote form is faster — it takes product codes and quantities.",
+    "detailsHeading": "Contact details",
+    "phoneLabel": "Phone",
+    "whatsappCardLabel": "WhatsApp",
+    "emailLabel": "Email",
+    "addressLabel": "Address",
+    "address": "Riyadh, Kingdom of Saudi Arabia",
+    "hoursHeading": "Business hours",
+    "hoursNote": "Riyadh time (GMT+3). WhatsApp messages sent outside these hours are answered the next working day.",
+    "hours": {
+      "weekdays": {
+        "days": "Sunday – Thursday",
+        "time": "9:00 – 18:00"
+      },
+      "thursday": {
+        "days": "Friday",
+        "time": "Closed"
+      },
+      "weekend": {
+        "days": "Saturday",
+        "time": "10:00 – 16:00"
+      }
+    },
+    "map": {
+      "frameTitle": "Map showing Packvio's location in Riyadh",
+      "addressLine": "Riyadh, Kingdom of Saudi Arabia",
+      "directions": "Get directions",
+      "pendingNote": "The pin marks central Riyadh. Our exact street address is being confirmed — message us on WhatsApp for directions or to arrange a collection."
+    },
+    "whatsappLabel": "Contact us on WhatsApp",
+    "whatsappCta": "Message on WhatsApp",
+    "whatsappPrefill": "Hello Packvio — I'd like a quote for packaging."
+  },
+  "quote": {
+    "title": "Request a Quote",
+    "heading": "Request a quote",
+    "lead": "Tell us the items and quantities you need and we'll come back with pricing, lead time and printing options.",
+    "whatsappCta": "Quote via WhatsApp",
+    "callCta": "Call us",
+    "emailCta": "Email us",
+    "whatsappPrefill": "Hello Packvio — I'd like a quote. The items I need are:",
+    "aside": {
+      "heading": "Prefer to talk?",
+      "body": "WhatsApp is usually the fastest way to reach us. Send the product codes and quantities and we'll reply with a quote.",
+      "faqCta": "Read the FAQ"
+    },
+    "basket": {
+      "badgeLabel": "{count, plural, =1 {Quote list, 1 item} other {Quote list, # items}}"
+    },
+    "stepper": {
+      "label": "Quantity in cases",
+      "increase": "Add one case",
+      "decrease": "Remove one case",
+      "cases": "{count, plural, =1 {case} other {cases}}",
+      "unitTotal": "{cases} × case = {units} units"
+    },
+    "form": {
+      "itemsLegend": "What do you need?",
+      "itemsHelp": "Quantities are in cases — the case size is shown under each item. Add anything we don't list as a free-text line.",
+      "contactLegend": "How do we reach you?",
+      "contactName": "Your name",
+      "companyName": "Company",
+      "phone": "Mobile number",
+      "phoneHint": "Saudi mobile — 05…, +966… or 9665… all work.",
+      "email": "Email",
+      "city": "City",
+      "message": "Anything else we should know?",
+      "messageContact": "Your message",
+      "needsCustomPrinting": "I want my logo printed on these items",
+      "freeTextLabel": "Item not in the catalog",
+      "freeTextPlaceholder": "Describe what you need…",
+      "addFreeText": "Add an item we don't list",
+      "removeLine": "Remove {name}",
+      "perCase": "{count, plural, =1 {1 unit per case} other {{formatted} units per case}}",
+      "contactLineName": "General enquiry",
+      "honeypot": "Leave this field empty",
+      "submit": "Send request",
+      "submitting": "Sending…",
+      "privacy": "We use your details to answer this request. We don't sell them or add you to a mailing list.",
+      "errors": {
+        "title": "We couldn't send that",
+        "contactName": "Please enter your name.",
+        "phone": "Enter a Saudi mobile number, e.g. 0594816791 or +966 59 481 6791.",
+        "email": "Enter a valid email address.",
+        "items": "Add at least one item to be quoted.",
+        "message": "Please tell us what you need.",
+        "rateLimited": "You've sent several requests recently. Please try again later, or message us on WhatsApp.",
+        "network": "We couldn't reach the server. Check your connection and try again.",
+        "server": "Something went wrong at our end. Please try again, or message us on WhatsApp."
+      }
+    },
+    "success": {
+      "heading": "Request received",
+      "lead": "Thank you — your request is with our sales team.",
+      "referenceLabel": "Your reference",
+      "referenceHint": "Quote this reference if you contact us about this request.",
+      "nextHeading": "What happens next",
+      "next": {
+        "one": "We check availability and the case quantities for each item you listed.",
+        "two": "We send you a written quote by email with pricing, lead time and printing options.",
+        "three": "If anything needs clarifying — artwork, sizes, delivery — we call or message you first."
+      },
+      "contactHeading": "Need to add something?",
+      "contactLead": "Remembered another item, or want to change a quantity? Reach us directly and quote your reference.",
+      "whatsappCta": "Message on WhatsApp",
+      "whatsappPrefill": "Hello Packvio — about my quote request {reference}:",
+      "keepBrowsing": "Keep browsing the catalog"
+    }
+  },
+  "footer": {
+    "blurb": "Wholesale food and beverage packaging, supplied by the case across Saudi Arabia, with custom logo printing to order.",
+    "categoriesHeading": "Categories",
+    "linksHeading": "Company",
+    "contactHeading": "Contact",
+    "address": "Riyadh, Saudi Arabia",
+    "vision2030Alt": "Saudi Vision 2030",
+    "faq": "FAQ"
+  },
+  "notFound": {
+    "heading": "We couldn't find that page",
+    "body": "The link may be out of date, or the product may no longer be in the catalog.",
+    "browseProducts": "Browse products",
+    "home": "Go home"
+  },
+  "styleguide": {
+    "title": "Design System",
+    "intro": "Internal reference for Packvio's design tokens and primitives. Available in development only.",
+    "sections": {
+      "colour": "Colour",
+      "type": "Type scale",
+      "spacing": "Spacing",
+      "radii": "Radii",
+      "shadows": "Shadows",
+      "container": "Container",
+      "buttons": "Buttons",
+      "badges": "Badges",
+      "cards": "Cards",
+      "productPanel": "Product panel",
+      "specTable": "Spec table",
+      "checkerBand": "Checker band",
+      "categoryTab": "Category tab",
+      "icons": "Icons",
+      "prose": "Prose",
+      "categoryIcons": "Category icons"
+    },
+    "labels": {
+      "onWhite": "on white",
+      "onPurple": "on purple",
+      "latinSample": "Latin sample",
+      "arabicSample": "Arabic sample",
+      "variants": "Variants",
+      "sizes": "Sizes",
+      "tones": "Tones",
+      "withIcon": "With icon",
+      "asLink": "As link",
+      "cyanRule": "Cyan is never a text colour on light surfaces — 2.11:1 misses even the 3:1 large-text floor. Use it for fills and borders; use purple for text and links.",
+      "leadingNote": "Arabic line-height is 1.15× the Latin value at the same size.",
+      "directionalIcons": "Directional — mirrored automatically",
+      "staticIcons": "Non-directional — passed through",
+      "tabNote": "The tab is pinned to the logical end edge: left in Arabic, right in English.",
+      "categoryIconNote": "The 28 category icons at three sizes. All are 24×24, stroke 1.75, round caps and joins, currentColor, no fills. These are consistent stand-ins, not final artwork — review them here before commissioning a redraw."
+    },
+    "buttons": {
+      "primary": "Request a quote",
+      "secondary": "Browse catalog",
+      "ghost": "Learn more",
+      "onPurple": "Contact us"
+    },
+    "badges": {
+      "inStock": "In stock",
+      "customPrint": "Custom print",
+      "foodSafe": "Food safe",
+      "lowStock": "Low stock",
+      "discontinued": "Discontinued",
+      "neutral": "General"
+    },
+    "prose": {
+      "heading": "About Packvio",
+      "paragraph": "We supply wholesale food and beverage packaging to restaurants, cafés and food businesses across the Kingdom, in case quantities from 200 up to 6,000 units.",
+      "listIntro": "What we supply:",
+      "listOne": "Paper cups and lids in multiple sizes",
+      "listTwo": "Kraft boxes and serving containers",
+      "listThree": "Custom logo printing to order"
+    },
+    "cards": {
+      "title": "Sample card",
+      "body": "White surface with a hairline border and a soft shadow that lifts on hover."
+    }
+  },
+  "sample": {
+    "productName": "8 oz Double-Wall Paper Cup",
+    "categoryTab": "Paper cups",
+    "specCaption": "8 oz cup specifications",
+    "specs": {
+      "code": "Code",
+      "capacity": "Capacity",
+      "material": "Material",
+      "diameter": "Rim diameter",
+      "caseQuantity": "Case",
+      "printing": "Custom printing"
+    },
+    "printingAvailable": "Available"
+  },
+  "faq": {
+    "title": "FAQ",
+    "heading": "Frequently asked questions",
+    "lead": "Ordering, printing, delivery and materials. If your question is not here, ask us — we answer quickly.",
+    "pendingLabel": "Answer pending confirmation",
+    "whatsappPrefill": "Hello Packvio — I have a question about:",
+    "groups": {
+      "ordering": "Ordering & minimums",
+      "printing": "Custom printing",
+      "delivery": "Delivery",
+      "products": "Products & materials",
+      "payment": "Payment & accounts"
+    },
+    "aside": {
+      "heading": "Still not sure?",
+      "body": "Send us the product codes and quantities and we will come back with pricing, lead time and printing options.",
+      "quoteCta": "Request a quote",
+      "whatsappCta": "Ask on WhatsApp"
+    },
+    "items": {
+      "ordering": {
+        "howToOrder": {
+          "q": "How do I place an order?",
+          "a": "Send us a quote request with the items and quantities you need — from the quote form, from any product page, or on WhatsApp. We reply with pricing, lead time and printing options. Some lines can also be bought directly through our online store, and those show an \"Order on our store\" button on the product page."
+        },
+        "caseOnly": {
+          "q": "Do you sell single units, or only by the case?",
+          "a": "By the case. Packvio is a wholesale supplier, and every line is priced and shipped in case quantities — from 200 units up to 6,000 depending on the item. The exact case size is shown on each product page under \"Units per case\"."
+        },
+        "notListed": {
+          "q": "Can I order something that isn't on the site?",
+          "a": "Yes. The quote form has a free-text line for items we do not list — describe what you need and we will tell you whether we can source it. The catalog here is what we stock regularly, not the limit of what we can supply."
+        },
+        "referenceNumber": {
+          "q": "What is the reference number on my quote request?",
+          "a": "Every request gets a reference in the form PV-2026-0001, shown on screen as soon as you submit. Quote it when you contact us about that request — it is how our sales team finds it immediately."
+        },
+        "minimumOrder": {
+          "q": "What is the minimum order quantity?",
+          "a": "We are confirming this with the Packvio team and will publish the answer here shortly. In the meantime, ask us directly — WhatsApp is the fastest way to get a straight answer."
+        },
+        "samples": {
+          "q": "Can I get samples before I order?",
+          "a": "We are confirming this with the Packvio team and will publish the answer here shortly. In the meantime, ask us directly — WhatsApp is the fastest way to get a straight answer."
+        },
+        "quoteValidity": {
+          "q": "How long is a quote valid for?",
+          "a": "We are confirming this with the Packvio team and will publish the answer here shortly. In the meantime, ask us directly — WhatsApp is the fastest way to get a straight answer."
+        }
+      },
+      "printing": {
+        "canYouPrint": {
+          "q": "Can you print my logo on the packaging?",
+          "a": "Yes, on selected products. We print in one to four colours, matched to your brand palette. Paper cups, sleeves, kraft boxes, lunch boxes, carry bags and wrapping paper all take print; lids, cutlery and equipment do not."
+        },
+        "artworkFormat": {
+          "q": "What artwork do you need from me?",
+          "a": "Vector artwork prints best — AI, EPS, PDF or SVG. Send us what you have and we will check it and tell you if anything needs adjusting before it goes on press. We will also advise on how your colours will actually come out on the material you have chosen, since kraft, white board and PE-lined stock all take ink differently."
+        },
+        "proof": {
+          "q": "Will I see a proof before you print?",
+          "a": "Always. We send a digital proof showing your logo positioned on the product, and nothing goes on press until you have approved it."
+        },
+        "whichProducts": {
+          "q": "Which products can be printed?",
+          "a": "Cups, sleeves, kraft boxes, lunch boxes, carry bags and wrapping paper. Lids, cutlery and sealing equipment are not printed. You can see the full printable range by filtering the products listing on \"Custom printing available\"."
+        },
+        "printMinimum": {
+          "q": "What is the minimum order for a printed item?",
+          "a": "We are confirming this with the Packvio team and will publish the answer here shortly. In the meantime, ask us directly — WhatsApp is the fastest way to get a straight answer."
+        },
+        "printLeadTime": {
+          "q": "How long does a printed order take?",
+          "a": "We are confirming this with the Packvio team and will publish the answer here shortly. In the meantime, ask us directly — WhatsApp is the fastest way to get a straight answer."
+        }
+      },
+      "delivery": {
+        "whereDeliver": {
+          "q": "Where do you deliver?",
+          "a": "We deliver in Riyadh from our own stock, and ship across the Kingdom on request. Tell us where the order is going when you ask for a quote and we will confirm the arrangement for that destination."
+        },
+        "deliveryTime": {
+          "q": "How long does delivery take?",
+          "a": "We are confirming this with the Packvio team and will publish the answer here shortly. In the meantime, ask us directly — WhatsApp is the fastest way to get a straight answer."
+        },
+        "deliveryCharge": {
+          "q": "Is there a delivery charge?",
+          "a": "We are confirming this with the Packvio team and will publish the answer here shortly. In the meantime, ask us directly — WhatsApp is the fastest way to get a straight answer."
+        },
+        "collection": {
+          "q": "Can I collect my order myself?",
+          "a": "We are confirming this with the Packvio team and will publish the answer here shortly. In the meantime, ask us directly — WhatsApp is the fastest way to get a straight answer."
+        }
+      },
+      "products": {
+        "foodSafe": {
+          "q": "Are your products safe for direct contact with food?",
+          "a": "Yes. We supply food-contact grade paper and board, with PE and PET linings where the product needs a moisture or grease barrier, selected for direct contact with food and drink. If you need the supplier documentation for a specific line for your own records, ask us and we will send what we hold."
+        },
+        "petVsPp": {
+          "q": "What is the difference between PET and PP cups?",
+          "a": "PET is the glass-clear, rigid plastic used for cold drinks — it looks the best and holds its shape, but it softens with heat. PP is slightly less clear and a little more flexible, and tolerates warmer contents. For iced coffee and juice, PET; for anything that may go in warm, PP."
+        },
+        "lidsFit": {
+          "q": "Do your lids fit your cups?",
+          "a": "Yes — lids are listed by the cup diameter they fit, and the diameter is shown in the specifications on both the cup and the lid. Coffee cups, soup cups and clear cups each have their own lid category. If you are unsure which lid goes with which cup, send us the cup code and we will confirm."
+        },
+        "recyclable": {
+          "q": "Are your products recyclable or biodegradable?",
+          "a": "We are confirming this with the Packvio team and will publish the answer here shortly. In the meantime, ask us directly — WhatsApp is the fastest way to get a straight answer."
+        },
+        "shelfLife": {
+          "q": "How should I store the packaging, and how long does it keep?",
+          "a": "We are confirming this with the Packvio team and will publish the answer here shortly. In the meantime, ask us directly — WhatsApp is the fastest way to get a straight answer."
+        }
+      },
+      "payment": {
+        "howToPay": {
+          "q": "How do I pay, and which methods do you accept?",
+          "a": "We are confirming this with the Packvio team and will publish the answer here shortly. In the meantime, ask us directly — WhatsApp is the fastest way to get a straight answer."
+        },
+        "creditAccount": {
+          "q": "Do you offer credit accounts for regular customers?",
+          "a": "We are confirming this with the Packvio team and will publish the answer here shortly. In the meantime, ask us directly — WhatsApp is the fastest way to get a straight answer."
+        },
+        "taxInvoice": {
+          "q": "Will I receive a VAT tax invoice?",
+          "a": "We are confirming this with the Packvio team and will publish the answer here shortly. In the meantime, ask us directly — WhatsApp is the fastest way to get a straight answer."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,45 @@
+# ---------------------------------------------------------------------------
+# Deployment target. Copy to `deploy.config` and fill in — that file is
+# gitignored, so the server address and any token stay on your machine.
+#
+#   cp deploy.config.example deploy.config
+# ---------------------------------------------------------------------------
+
+# --- server ---
+SERVER_USER="root"
+SERVER_HOST="147.79.114.76"
+SERVER_PORT="22"
+
+# Path to a private key. Leave EMPTY to use password auth — each script runs its
+# work as a SINGLE remote session, so you type the password once.
+#
+# A key is still better: Git Bash on Windows cannot multiplex SSH connections,
+# so anything interactive (deploy:setup) asks per step. Two minutes to fix:
+#   ssh-keygen -t ed25519 -C "packvio-deploy"
+#   ssh-copy-id root@147.79.114.76
+SSH_KEY="~/.ssh/id_ed25519"
+
+# --- source ---
+# The SERVER clones from GitHub. Nothing large is uploaded — an image transfer
+# over scp is what keeps breaking on a slow link.
+REPO_URL="https://github.com/msufyanabbas/packvio.git"
+BRANCH="main"
+
+# Private repo? Create a fine-grained PAT with read-only Contents access. It is
+# used for the clone and then stripped from .git/config on the server.
+GIT_TOKEN=""
+
+# --- server layout ---
+# This box already runs DocGen under /var/www/tawal-docgen. Packvio sits beside
+# it with its own compose project name, so container, network and volume names
+# cannot collide.
+DEPLOY_DIR="/var/www/packvio"       # docker-compose.prod.yml and .env live here
+SRC_DIR="/var/www/packvio/src"      # git checkout the server builds from
+
+# --- site ---
+# Baked into the web image at BUILD time as NEXT_PUBLIC_SITE_URL and
+# NEXT_PUBLIC_API_URL. Change it and you must rebuild, not just restart.
+DOMAIN="packvio.smart-life.sa"
+
+# --- images ---
+IMAGE_PREFIX="packvio"

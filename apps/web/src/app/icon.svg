@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Packvio">
+  <!--
+    Favicon. App Router convention: this file is served at /icon.svg and Next
+    injects the <link rel="icon"> for it, which is what stops every page load
+    logging a 404 for /favicon.ico.
+
+    It carries the SAME PLACEHOLDER "P" as public/brand/packvio-mark.svg and is
+    replaced at the same time — see the packvio-mark note in CLAUDE.md. The mark
+    is knocked out of a filled purple tile rather than drawn on transparency:
+    at 16px a thin glyph on nothing disappears into the browser chrome, and the
+    tab is the one place the brand appears at that size.
+  -->
+  <title>Packvio</title>
+  <rect width="100" height="100" rx="22" fill="#39255F" />
+  <path
+    fill="#FFFFFF"
+    fill-rule="evenodd"
+    d="M22 14h33a22 22 0 0 1 0 44H36v28H22V14Zm14 13h19a9 9 0 0 1 0 18H36V27Z"
+  />
+</svg>

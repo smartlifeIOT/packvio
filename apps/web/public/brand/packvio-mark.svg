@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Packvio">
+  <!--
+    PLACEHOLDER. Geometric stand-in for the Packvio "P" mark so nothing 404s.
+    Replace with the real mark exported from the brand identity PDF in /docs,
+    keeping this filename and the 0 0 100 100 viewBox.
+  -->
+  <title>Packvio</title>
+  <path
+    fill="#39255F"
+    fill-rule="evenodd"
+    d="M22 14h33a22 22 0 0 1 0 44H36v28H22V14Zm14 13h19a9 9 0 0 1 0 18H36V27Z"
+  />
+</svg>

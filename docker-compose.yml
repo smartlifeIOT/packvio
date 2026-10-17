@@ -1,0 +1,152 @@
+# Packvio — the whole thing, on your machine, in one command.
+#
+#   docker compose up --build
+#
+# Brings up Postgres, runs the migrations, seeds the catalogue, then starts the
+# API and the site:
+#
+#   http://localhost:3000        the site (redirects to /ar)
+#   http://localhost:4000/api/v1 the API
+#   http://localhost:4000/api/v1/docs  Swagger
+#   localhost:5433               Postgres, if you want a client on it
+#
+# No .env needed. Every value below has a working development default, and the
+# two secrets the API refuses to boot without are supplied as obvious
+# throwaways. Drop a .env beside this file to override any of them.
+#
+# ---------------------------------------------------------------------------
+# THIS IS THE DEVELOPMENT STACK. Production is docker-compose.prod.yml, which is
+# a different shape: nginx terminates TLS and is the only thing that publishes a
+# port, the API and Postgres are unreachable from outside the Docker network,
+# and migrations are a deliberate step rather than something that happens on the
+# way up. `npm run deploy` uses that file; this one is never deployed.
+#
+# The project name differs (`packvio-dev` vs `packvio`) so the two cannot
+# collide: separate containers, separate networks, and crucially a separate
+# pgdata volume. Running this on a server would NOT touch production data.
+# ---------------------------------------------------------------------------
+name: packvio-dev
+
+x-api-env: &api-env
+  NODE_ENV: development
+  DATABASE_URL: postgres://${POSTGRES_USER:-packvio}:${POSTGRES_PASSWORD:-packvio}@postgres:5432/${POSTGRES_DB:-packvio}
+  # Dev throwaways. The API validates the SHAPE of both at boot — 32 bytes of
+  # base64, and 32+ characters — so a placeholder has to be a real one.
+  # Production generates its own; see deploy/env.prod.example.
+  SALLA_TOKEN_ENC_KEY: ${SALLA_TOKEN_ENC_KEY:-ZGV2LW9ubHkta2V5LW5vdC1mb3ItcHJvZHVjdGlvbiEhIQ==}
+  QUOTE_IP_HASH_SALT: ${QUOTE_IP_HASH_SALT:-dev-only-salt-not-for-production-0123456789}
+  ADMIN_API_KEY: ${ADMIN_API_KEY:-dev-admin-key}
+  REVALIDATE_SECRET: ${REVALIDATE_SECRET:-dev-revalidate-secret}
+  QUOTE_RATE_LIMIT: ${QUOTE_RATE_LIMIT:-50}
+  SALLA_CLIENT_ID: ${SALLA_CLIENT_ID:-}
+  SALLA_CLIENT_SECRET: ${SALLA_CLIENT_SECRET:-}
+  SALLA_WEBHOOK_SECRET: ${SALLA_WEBHOOK_SECRET:-}
+  SALLA_STORE_LOCALE: ${SALLA_STORE_LOCALE:-ar}
+
+services:
+  # -------------------------------------------------------------------------
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-packvio}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-packvio}
+      POSTGRES_DB: ${POSTGRES_DB:-packvio}
+    ports:
+      # 5433, not 5432: another Postgres is very likely already on 5432 — on
+      # this machine it is smartlife-postgres-local. Override with POSTGRES_PORT.
+      # Bound to loopback so the database is not on the network even in dev.
+      - '127.0.0.1:${POSTGRES_PORT:-5433}:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-packvio} -d ${POSTGRES_DB:-packvio}']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 15s
+
+  # -------------------------------------------------------------------------
+  # Migrations and the catalogue seed, as one short-lived container that must
+  # EXIT SUCCESSFULLY before the API is allowed to start.
+  #
+  # In production these are two separate manual steps, deliberately — see the
+  # comment in docker-compose.prod.yml. Here they run automatically because a
+  # dev stack that comes up with an empty database is a dev stack you have to
+  # finish setting up by hand, which is exactly what this file exists to avoid.
+  # The seed is idempotent, so a second `up` re-runs it and changes nothing.
+  init:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    image: packvio-api:dev
+    restart: 'no'
+    environment: *api-env
+    depends_on:
+      postgres:
+        condition: service_healthy
+    entrypoint: ['dumb-init', '--', 'sh', '-c']
+    # The CLI path is ABSOLUTE because npm hoists every dependency to
+    # /app/node_modules while the working directory is /app/apps/api.
+    command:
+      - >
+        node /app/node_modules/typeorm/cli.js migration:run -d dist/database/data-source.js
+        && node dist/database/seeds/seed.js
+
+  # -------------------------------------------------------------------------
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    image: packvio-api:dev
+    restart: unless-stopped
+    environment:
+      <<: *api-env
+      API_PORT: 4000
+      WEB_ORIGIN: http://localhost:3000
+      NEXT_PUBLIC_SITE_URL: http://localhost:3000
+    ports:
+      # Published, unlike production: the RFQ form posts from the BROWSER to
+      # NEXT_PUBLIC_API_URL, so in dev the API has to be reachable from the host.
+      - '127.0.0.1:${API_PORT:-4000}:4000'
+    depends_on:
+      init:
+        # Not service_started — the API would race the migrations and lose on a
+        # cold boot, which is the kind of failure that passes on a fast machine
+        # and fails on a loaded one.
+        condition: service_completed_successfully
+
+  # -------------------------------------------------------------------------
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        # BUILD args, not environment. Next inlines every NEXT_PUBLIC_* value
+        # into the browser bundle at build time; setting them below instead
+        # would compile `undefined` into every URL the page prints and the site
+        # would render perfectly while nothing worked. Change one of these and
+        # you must rebuild, not just restart.
+        NEXT_PUBLIC_SITE_URL: http://localhost:3000
+        NEXT_PUBLIC_API_URL: http://localhost:4000/api/v1
+        NEXT_PUBLIC_MAP_LAT: '24.7136'
+        NEXT_PUBLIC_MAP_LNG: '46.6753'
+        NEXT_PUBLIC_MAP_ZOOM: '13'
+    image: packvio-web:dev
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      # Server-side only: the Next server reaches the API over the compose
+      # network, while the browser uses the published port above.
+      API_INTERNAL_URL: http://api:4000/api/v1
+      REVALIDATE_SECRET: ${REVALIDATE_SECRET:-dev-revalidate-secret}
+    ports:
+      - '127.0.0.1:${WEB_PORT:-3000}:3000'
+    depends_on:
+      api:
+        condition: service_started
+
+volumes:
+  pgdata:

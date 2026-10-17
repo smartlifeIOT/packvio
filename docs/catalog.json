@@ -1,0 +1,2450 @@
+{
+  "$comment": "Extracted from the Packvio printed company profile (docs/Packvio_profile.pdf). Prices intentionally absent - Salla is the source of truth for pricing and stock. Arabic names are a first pass and should be reviewed by the Packvio team.",
+  "brand": {
+    "nameEn": "Packvio",
+    "nameAr": "باك فيو",
+    "companyEn": "Smavio Limited Trading Co.",
+    "companyAr": "شركة سمافيو ليميتد التجارية",
+    "city": "Riyadh",
+    "cityAr": "الرياض",
+    "country": "SA",
+    "phone": "+966594816791",
+    "email": "nedhal@smavioltd.com"
+  },
+  "categories": [
+    {
+      "slug": "coffee-cups",
+      "slugAr": "اكواب-قهوة-ورقية",
+      "nameEn": "Coffee Paper Cups",
+      "nameAr": "أكواب قهوة ورقية",
+      "order": 1,
+      "descriptionEn": "Single-wall paper cups for hot drinks, 4 to 12 oz.",
+      "descriptionAr": "أكواب ورقية بجدار مفرد للمشروبات الساخنة من 4 إلى 12 أونصة.",
+      "customPrinting": true
+    },
+    {
+      "slug": "coffee-cup-lids",
+      "slugAr": "اغطية-اكواب-القهوة",
+      "nameEn": "Coffee Cup Lids",
+      "nameAr": "أغطية أكواب القهوة",
+      "order": 2,
+      "descriptionEn": "Dome lids in white and black for every coffee cup size.",
+      "descriptionAr": "أغطية بارزة باللونين الأبيض والأسود لجميع مقاسات أكواب القهوة.",
+      "customPrinting": false
+    },
+    {
+      "slug": "coffee-accessories",
+      "slugAr": "مستلزمات-القهوة",
+      "nameEn": "Coffee Accessories",
+      "nameAr": "مستلزمات القهوة",
+      "order": 3,
+      "descriptionEn": "Sleeves, wooden stirrers and pulp cup carriers.",
+      "descriptionAr": "أكمام عازلة ومحركات خشبية وحوامل أكواب من اللب الورقي.",
+      "customPrinting": true
+    },
+    {
+      "slug": "soup-cups",
+      "slugAr": "اكواب-الشوربة",
+      "nameEn": "Soup Cups",
+      "nameAr": "أكواب الشوربة",
+      "order": 4,
+      "descriptionEn": "Paper soup and salad cups from 4 oz to 35 oz.",
+      "descriptionAr": "أكواب ورقية للشوربة والسلطات من 4 أونصة إلى 35 أونصة.",
+      "customPrinting": true
+    },
+    {
+      "slug": "soup-cup-lids",
+      "slugAr": "اغطية-اكواب-الشوربة",
+      "nameEn": "Soup Cup Lids",
+      "nameAr": "أغطية أكواب الشوربة",
+      "order": 5,
+      "descriptionEn": "PET, PP and OPS flat lids for the soup cup range.",
+      "descriptionAr": "أغطية مسطحة من PET وPP وOPS لتشكيلة أكواب الشوربة.",
+      "customPrinting": false
+    },
+    {
+      "slug": "kraft-bowls",
+      "slugAr": "اوعية-كرافت",
+      "nameEn": "Kraft Paper Bowls",
+      "nameAr": "أوعية كرافت ورقية",
+      "order": 6,
+      "descriptionEn": "335 gsm kraft bowls, 500 ml to 1500 ml, with matching lids.",
+      "descriptionAr": "أوعية كرافت بوزن 335 جم/م² من 500 مل إلى 1500 مل مع أغطية مطابقة.",
+      "customPrinting": true
+    },
+    {
+      "slug": "shakers",
+      "slugAr": "علب-الشيكر",
+      "nameEn": "Shakers",
+      "nameAr": "علب الشيكر",
+      "order": 7,
+      "descriptionEn": "Double-PE coated shaker tubs with lids in kraft, white and black.",
+      "descriptionAr": "علب شيكر مغلفة بطبقتي بولي إيثيلين مع أغطية بألوان الكرافت والأبيض والأسود.",
+      "customPrinting": true
+    },
+    {
+      "slug": "carry-bags",
+      "slugAr": "اكياس-التوصيل",
+      "nameEn": "Carry Bags",
+      "nameAr": "أكياس التوصيل",
+      "order": 8,
+      "descriptionEn": "Twisted-handle paper carry bags in white and kraft, five sizes.",
+      "descriptionAr": "أكياس ورقية بمقابض مجدولة باللونين الأبيض والكرافت بخمسة مقاسات.",
+      "customPrinting": true
+    },
+    {
+      "slug": "lunch-boxes",
+      "slugAr": "علب-الوجبات",
+      "nameEn": "Lunch Boxes",
+      "nameAr": "علب الوجبات",
+      "order": 9,
+      "descriptionEn": "Hinged-lid meal boxes in white and kraft, XXS to L.",
+      "descriptionAr": "علب وجبات بغطاء مفصلي باللونين الأبيض والكرافت من XXS إلى L.",
+      "customPrinting": true
+    },
+    {
+      "slug": "sushi-trays",
+      "slugAr": "صواني-السوشي",
+      "nameEn": "Sushi Trays",
+      "nameAr": "صواني السوشي",
+      "order": 10,
+      "descriptionEn": "Kraft trays with clear PET lids, 500 ml to 2100 ml.",
+      "descriptionAr": "صواني كرافت بأغطية PET شفافة من 500 مل إلى 2100 مل.",
+      "customPrinting": true
+    },
+    {
+      "slug": "wrapping-paper",
+      "slugAr": "ورق-التغليف",
+      "nameEn": "Wrapping Paper & Bags",
+      "nameAr": "ورق التغليف والأكياس",
+      "order": 11,
+      "descriptionEn": "Wax, greaseproof and aluminium wraps, bakery and burger bags.",
+      "descriptionAr": "أوراق شمعية ومقاومة للدهون وألمنيوم وأكياس المخبوزات والبرجر.",
+      "customPrinting": true
+    },
+    {
+      "slug": "food-trays",
+      "slugAr": "صواني-الطعام",
+      "nameEn": "Food Trays",
+      "nameAr": "صواني الطعام",
+      "order": 12,
+      "descriptionEn": "Open paperboard trays for fries, burgers and hot dogs.",
+      "descriptionAr": "صواني ورقية مفتوحة للبطاطس والبرجر والهوت دوج.",
+      "customPrinting": true
+    },
+    {
+      "slug": "cutlery",
+      "slugAr": "ادوات-المائدة",
+      "nameEn": "Cutlery & Tableware",
+      "nameAr": "أدوات المائدة",
+      "order": 13,
+      "descriptionEn": "Spoons, forks, knives, stirrers, straws, napkins and cutlery packs.",
+      "descriptionAr": "ملاعق وشوك وسكاكين ومحركات وشفاطات ومناديل وأطقم أدوات مائدة.",
+      "customPrinting": false
+    },
+    {
+      "slug": "hmr-containers",
+      "slugAr": "علب-الوجبات-الجاهزة",
+      "nameEn": "HMR Plastic Containers",
+      "nameAr": "علب الوجبات الجاهزة",
+      "order": 14,
+      "descriptionEn": "One, two and three compartment PP bases with OPS clear lids.",
+      "descriptionAr": "قواعد PP بقسم واحد أو قسمين أو ثلاثة مع أغطية OPS شفافة.",
+      "customPrinting": true
+    },
+    {
+      "slug": "clear-cups",
+      "slugAr": "اكواب-شفافة",
+      "nameEn": "Clear Cups",
+      "nameAr": "أكواب شفافة",
+      "order": 15,
+      "descriptionEn": "PET and PP clear cups for cold drinks, plus portion cups.",
+      "descriptionAr": "أكواب PET وPP شفافة للمشروبات الباردة بالإضافة إلى أكواب الصلصات.",
+      "customPrinting": true
+    },
+    {
+      "slug": "clear-cup-lids",
+      "slugAr": "اغطية-الاكواب-الشفافة",
+      "nameEn": "Clear Cup Lids",
+      "nameAr": "أغطية الأكواب الشفافة",
+      "order": 16,
+      "descriptionEn": "Dome, flat and cross-hole lids for the clear cup range.",
+      "descriptionAr": "أغطية بارزة ومسطحة وبفتحة متقاطعة لتشكيلة الأكواب الشفافة.",
+      "customPrinting": false
+    },
+    {
+      "slug": "bottles-jars",
+      "slugAr": "زجاجات-وعبوات",
+      "nameEn": "Bottles & Jars",
+      "nameAr": "زجاجات وعبوات",
+      "order": 17,
+      "descriptionEn": "PET bottles with plastic or aluminium lids, and sealable jars.",
+      "descriptionAr": "زجاجات PET بأغطية بلاستيكية أو ألمنيوم وعبوات قابلة للإغلاق.",
+      "customPrinting": true
+    },
+    {
+      "slug": "equipment",
+      "slugAr": "معدات-التغليف",
+      "nameEn": "Sealing Equipment",
+      "nameAr": "معدات التغليف",
+      "order": 18,
+      "descriptionEn": "Film rolls and cup and jar sealing machines.",
+      "descriptionAr": "لفات أفلام وماكينات لحام الأكواب والعبوات.",
+      "customPrinting": false
+    },
+    {
+      "slug": "spoons",
+      "slugAr": "ملاعق",
+      "nameEn": "Spoons",
+      "nameAr": "ملاعق",
+      "parent": "cutlery",
+      "order": 19,
+      "descriptionEn": "Disposable spoons from 9 to 18 cm — dessert, parfait, leaf and ice-cream.",
+      "descriptionAr": "ملاعق للاستخدام مرة واحدة من 9 إلى 18 سم — للحلويات والبارفيه والآيس كريم.",
+      "customPrinting": false
+    },
+    {
+      "slug": "forks-and-knives",
+      "slugAr": "شوك-وسكاكين",
+      "nameEn": "Forks & Knives",
+      "nameAr": "شوك وسكاكين",
+      "parent": "cutlery",
+      "order": 20,
+      "descriptionEn": "Disposable forks, knives and sporks in PP and PS.",
+      "descriptionAr": "شوك وسكاكين وملاعق شوكية للاستخدام مرة واحدة من البولي بروبيلين والبوليسترين.",
+      "customPrinting": false
+    },
+    {
+      "slug": "straws",
+      "slugAr": "شفاطات",
+      "nameEn": "Straws",
+      "nameAr": "شفاطات",
+      "parent": "cutlery",
+      "order": 21,
+      "descriptionEn": "Wrapped and piercing straws for cold drinks.",
+      "descriptionAr": "شفاطات مغلفة وشفاطات مدببة للمشروبات الباردة.",
+      "customPrinting": false
+    },
+    {
+      "slug": "napkins",
+      "slugAr": "مناديل",
+      "nameEn": "Napkins",
+      "nameAr": "مناديل",
+      "parent": "cutlery",
+      "order": 22,
+      "descriptionEn": "Two- and three-ply table napkins.",
+      "descriptionAr": "مناديل طاولة بطبقتين وثلاث طبقات.",
+      "customPrinting": false
+    },
+    {
+      "slug": "stirrers",
+      "slugAr": "محركات-المشروبات",
+      "nameEn": "Stirrers",
+      "nameAr": "محركات المشروبات",
+      "parent": "cutlery",
+      "order": 23,
+      "descriptionEn": "Plastic and wooden stirrers for hot drinks.",
+      "descriptionAr": "محركات بلاستيكية وخشبية للمشروبات الساخنة.",
+      "customPrinting": false
+    },
+    {
+      "slug": "other-tableware",
+      "slugAr": "ادوات-مائدة-اخرى",
+      "nameEn": "Other Tableware",
+      "nameAr": "أدوات مائدة أخرى",
+      "parent": "cutlery",
+      "order": 24,
+      "descriptionEn": "Cutlery packs, cake servers, chopsticks and other service items.",
+      "descriptionAr": "أطقم أدوات مائدة وسكاكين كيك وعيدان طعام ومستلزمات تقديم أخرى.",
+      "customPrinting": false
+    },
+    {
+      "slug": "drink-cups",
+      "slugAr": "اكواب-المشروبات",
+      "nameEn": "Clear Drink Cups",
+      "nameAr": "أكواب مشروبات شفافة",
+      "parent": "clear-cups",
+      "order": 25,
+      "descriptionEn": "PET and PP clear cups from 9 to 20 oz for cold drinks.",
+      "descriptionAr": "أكواب شفافة من PET وPP من 9 إلى 20 أونصة للمشروبات الباردة.",
+      "customPrinting": true
+    },
+    {
+      "slug": "portion-cups",
+      "slugAr": "اكواب-الصلصات",
+      "nameEn": "Portion Cups & Lids",
+      "nameAr": "أكواب صلصات وأغطيتها",
+      "parent": "clear-cups",
+      "order": 26,
+      "descriptionEn": "Small portion cups from 0.75 to 2.5 oz, with matching lids.",
+      "descriptionAr": "أكواب صلصات صغيرة من 0.75 إلى 2.5 أونصة مع أغطيتها.",
+      "customPrinting": true
+    },
+    {
+      "slug": "wraps",
+      "slugAr": "اوراق-التغليف",
+      "nameEn": "Wrapping Papers",
+      "nameAr": "أوراق التغليف",
+      "parent": "wrapping-paper",
+      "order": 27,
+      "descriptionEn": "Wax, greaseproof and aluminium wrapping papers in 25 and 36 cm.",
+      "descriptionAr": "أوراق تغليف شمعية ومقاومة للدهون وألمنيوم بمقاسي 25 و36 سم.",
+      "customPrinting": true
+    },
+    {
+      "slug": "bakery-and-burger-bags",
+      "slugAr": "اكياس-المخبوزات-والبرغر",
+      "nameEn": "Bakery & Burger Bags",
+      "nameAr": "أكياس المخبوزات والبرغر",
+      "parent": "wrapping-paper",
+      "order": 28,
+      "descriptionEn": "Kraft bakery bags and greaseproof burger bags.",
+      "descriptionAr": "أكياس مخبوزات كرافت وأكياس برغر مقاومة للدهون.",
+      "customPrinting": true
+    }
+  ],
+  "products": [
+    {
+      "code": "PCS/04",
+      "category": "coffee-cups",
+      "nameEn": "Single Wall Coffee Cup 4 oz",
+      "nameAr": "كوب قهوة جدار مفرد 4 أونصة",
+      "size": "4 OZ",
+      "material": "230G+18PE",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "PCS/08",
+      "category": "coffee-cups",
+      "nameEn": "Single Wall Coffee Cup 8 oz",
+      "nameAr": "كوب قهوة جدار مفرد 8 أونصة",
+      "size": "8 OZ",
+      "material": "301 GSM Ø80",
+      "caseQuantity": 1000,
+      "quoteOnly": false,
+      "featured": true
+    },
+    {
+      "code": "PCS/12",
+      "category": "coffee-cups",
+      "nameEn": "Single Wall Coffee Cup 12 oz",
+      "nameAr": "كوب قهوة جدار مفرد 12 أونصة",
+      "size": "12 OZ",
+      "material": "334 GSM Ø90",
+      "caseQuantity": 1000,
+      "quoteOnly": false,
+      "featured": true
+    },
+    {
+      "code": "DCL/04W",
+      "category": "coffee-cup-lids",
+      "nameEn": "Dome Lid 4 oz White",
+      "nameAr": "غطاء بارز 4 أونصة أبيض",
+      "size": "4 OZ",
+      "material": "PS",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "DCL/04B",
+      "category": "coffee-cup-lids",
+      "nameEn": "Dome Lid 4 oz Black",
+      "nameAr": "غطاء بارز 4 أونصة أسود",
+      "size": "4 OZ",
+      "material": "PS",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "DCL/08W",
+      "category": "coffee-cup-lids",
+      "nameEn": "Dome Lid 8 oz White",
+      "nameAr": "غطاء بارز 8 أونصة أبيض",
+      "size": "8 OZ",
+      "material": "PS",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "DCL/08B",
+      "category": "coffee-cup-lids",
+      "nameEn": "Dome Lid 8 oz Black",
+      "nameAr": "غطاء بارز 8 أونصة أسود",
+      "size": "8 OZ",
+      "material": "PS",
+      "caseQuantity": 1000,
+      "quoteOnly": false,
+      "featured": true
+    },
+    {
+      "code": "DCL/12W",
+      "category": "coffee-cup-lids",
+      "nameEn": "Dome Lid 12-20 oz White",
+      "nameAr": "غطاء بارز 12-20 أونصة أبيض",
+      "size": "12-20 OZ",
+      "material": "PS",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "DCL/12B",
+      "category": "coffee-cup-lids",
+      "nameEn": "Dome Lid 12-20 oz Black",
+      "nameAr": "غطاء بارز 12-20 أونصة أسود",
+      "size": "12-20 OZ",
+      "material": "PS",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "WT-KS508",
+      "category": "coffee-accessories",
+      "nameEn": "Cup Sleeve Smooth Ripple",
+      "nameAr": "كم كوب مموج ناعم",
+      "size": "",
+      "material": "Smooth surface ripple",
+      "caseQuantity": 1000,
+      "quoteOnly": false,
+      "featured": true
+    },
+    {
+      "code": "WT-KSS12",
+      "category": "coffee-accessories",
+      "nameEn": "Cup Sleeve Brown Kraft",
+      "nameAr": "كم كوب كرافت بني",
+      "size": "",
+      "material": "Inside / brown kraft",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "STI-178WOOD",
+      "category": "coffee-accessories",
+      "nameEn": "Wooden Stirrer 178 mm",
+      "nameAr": "محرك خشبي 178 ملم",
+      "size": "178 MM",
+      "material": "Wood",
+      "caseQuantity": 2000,
+      "quoteOnly": false
+    },
+    {
+      "code": "WT-PT-4",
+      "category": "coffee-accessories",
+      "nameEn": "Pulp Cup Tray 4 Cup",
+      "nameAr": "حامل أكواب من اللب 4 أكواب",
+      "size": "4 CUP",
+      "material": "Pulp",
+      "caseQuantity": 240,
+      "quoteOnly": false
+    },
+    {
+      "code": "WT-PT-2",
+      "category": "coffee-accessories",
+      "nameEn": "Pulp Cup Tray 2 Cup",
+      "nameAr": "حامل أكواب من اللب كوبان",
+      "size": "2 CUP",
+      "material": "Pulp",
+      "caseQuantity": 360,
+      "quoteOnly": false
+    },
+    {
+      "code": "PSC/04W",
+      "category": "soup-cups",
+      "nameEn": "Soup Cup 4 oz",
+      "nameAr": "كوب شوربة 4 أونصة",
+      "size": "4 OZ",
+      "material": "257 GSM 120CC/Ø75",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "PSC/06W",
+      "category": "soup-cups",
+      "nameEn": "Soup Cup 6 oz",
+      "nameAr": "كوب شوربة 6 أونصة",
+      "size": "6 OZ",
+      "material": "13PE+214+18PE 175CC/Ø96",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "PSC/08W",
+      "category": "soup-cups",
+      "nameEn": "Soup Cup 8 oz",
+      "nameAr": "كوب شوربة 8 أونصة",
+      "size": "8 OZ",
+      "material": "13PE+214+18PE 260CC/Ø95",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "PSC/12W",
+      "category": "soup-cups",
+      "nameEn": "Soup Cup 12 oz",
+      "nameAr": "كوب شوربة 12 أونصة",
+      "size": "12 OZ",
+      "material": "12PE+250+18PE 390CC/Ø101",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "PSC/14W",
+      "category": "soup-cups",
+      "nameEn": "Soup Cup 14 oz",
+      "nameAr": "كوب شوربة 14 أونصة",
+      "size": "14 OZ",
+      "material": "282 GSM 390CC/Ø112",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "PSC/16W",
+      "category": "soup-cups",
+      "nameEn": "Soup Cup 16 oz",
+      "nameAr": "كوب شوربة 16 أونصة",
+      "size": "16 OZ",
+      "material": "282 GSM 520CC/Ø112",
+      "caseQuantity": 1000,
+      "quoteOnly": false,
+      "featured": true
+    },
+    {
+      "code": "PSC/20W",
+      "category": "soup-cups",
+      "nameEn": "Soup Cup 20 oz",
+      "nameAr": "كوب شوربة 20 أونصة",
+      "size": "20 OZ",
+      "material": "297 GSM 750CC/Ø126",
+      "caseQuantity": 600,
+      "quoteOnly": false
+    },
+    {
+      "code": "PSC/25W",
+      "category": "soup-cups",
+      "nameEn": "Soup Cup 25 oz",
+      "nameAr": "كوب شوربة 25 أونصة",
+      "size": "25 OZ",
+      "material": "312 GSM 780CC/Ø142",
+      "caseQuantity": 600,
+      "quoteOnly": false
+    },
+    {
+      "code": "PSC/30W",
+      "category": "soup-cups",
+      "nameEn": "Soup Cup 30 oz",
+      "nameAr": "كوب شوربة 30 أونصة",
+      "size": "30 OZ",
+      "material": "312 GSM 850CC/Ø142",
+      "caseQuantity": 600,
+      "quoteOnly": false
+    },
+    {
+      "code": "PSC/35W",
+      "category": "soup-cups",
+      "nameEn": "Soup Cup 35 oz",
+      "nameAr": "كوب شوربة 35 أونصة",
+      "size": "35 OZ",
+      "material": "312 GSM 1000CC/Ø142",
+      "caseQuantity": 600,
+      "quoteOnly": false
+    },
+    {
+      "code": "BB/01",
+      "category": "soup-cups",
+      "nameEn": "Bowl 600 cc",
+      "nameAr": "وعاء 600 سم³",
+      "size": "600 CC",
+      "material": "16+295+17 PE",
+      "caseQuantity": 600,
+      "quoteOnly": false
+    },
+    {
+      "code": "PSC/650W",
+      "category": "soup-cups",
+      "nameEn": "Soup Cup 650 cc",
+      "nameAr": "كوب شوربة 650 سم³",
+      "size": "650 CC",
+      "material": "297 GSM",
+      "caseQuantity": 600,
+      "quoteOnly": false
+    },
+    {
+      "code": "SIL/F/04PET",
+      "category": "soup-cup-lids",
+      "nameEn": "PET Flat Lid 4 oz",
+      "nameAr": "غطاء PET مسطح 4 أونصة",
+      "size": "4 OZ",
+      "material": "PET",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "SIL/F/08PP",
+      "category": "soup-cup-lids",
+      "nameEn": "PP Flat Lid 8 oz",
+      "nameAr": "غطاء PP مسطح 8 أونصة",
+      "size": "8 OZ",
+      "material": "PP",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "SIL/F/1500OPS",
+      "category": "soup-cup-lids",
+      "nameEn": "OPS Flat Lid 6 oz",
+      "nameAr": "غطاء OPS مسطح 6 أونصة",
+      "size": "6 OZ",
+      "material": "OPS",
+      "caseQuantity": 2000,
+      "quoteOnly": false
+    },
+    {
+      "code": "SIL/F/12PP",
+      "category": "soup-cup-lids",
+      "nameEn": "PP Flat Lid 12 oz",
+      "nameAr": "غطاء PP مسطح 12 أونصة",
+      "size": "12 OZ",
+      "material": "PP",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "SIL/F/16PP",
+      "category": "soup-cup-lids",
+      "nameEn": "PP Flat Lid 14-16 oz",
+      "nameAr": "غطاء PP مسطح 14-16 أونصة",
+      "size": "14 OZ & 16 OZ",
+      "material": "PP",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "SIL/F/20PP",
+      "category": "soup-cup-lids",
+      "nameEn": "PP Flat Lid 20 oz",
+      "nameAr": "غطاء PP مسطح 20 أونصة",
+      "size": "20 OZ",
+      "material": "PP",
+      "caseQuantity": 600,
+      "quoteOnly": false
+    },
+    {
+      "code": "BBL/F/NTD/PP",
+      "category": "soup-cup-lids",
+      "nameEn": "PP Flat Lid 26 oz Ø168",
+      "nameAr": "غطاء PP مسطح 26 أونصة Ø168",
+      "size": "FIT 26 OZ",
+      "material": "PP Ø168",
+      "caseQuantity": 600,
+      "quoteOnly": false
+    },
+    {
+      "code": "SIL/F/142PP",
+      "category": "soup-cup-lids",
+      "nameEn": "PP Flat Lid 25-35 oz",
+      "nameAr": "غطاء PP مسطح 25-35 أونصة",
+      "size": "25 OZ TO 35 OZ / 650 CC",
+      "material": "PP",
+      "caseQuantity": 600,
+      "quoteOnly": false
+    },
+    {
+      "code": "SB/500KR",
+      "category": "kraft-bowls",
+      "nameEn": "Kraft Paper Bowl 500 ml",
+      "nameAr": "وعاء كرافت 500 مل",
+      "size": "500 ML",
+      "material": "Kraft paper 335 GSM",
+      "caseQuantity": 300,
+      "quoteOnly": false
+    },
+    {
+      "code": "SB/750KR",
+      "category": "kraft-bowls",
+      "nameEn": "Kraft Paper Bowl 750 ml",
+      "nameAr": "وعاء كرافت 750 مل",
+      "size": "750 ML",
+      "material": "Kraft paper 335 GSM",
+      "caseQuantity": 300,
+      "quoteOnly": false
+    },
+    {
+      "code": "SB/1000KR",
+      "category": "kraft-bowls",
+      "nameEn": "Kraft Paper Bowl 1000 ml",
+      "nameAr": "وعاء كرافت 1000 مل",
+      "size": "1000 ML",
+      "material": "Kraft paper 335 GSM",
+      "caseQuantity": 300,
+      "quoteOnly": false,
+      "featured": true
+    },
+    {
+      "code": "SB/1100KR",
+      "category": "kraft-bowls",
+      "nameEn": "Kraft Paper Bowl 1100 ml",
+      "nameAr": "وعاء كرافت 1100 مل",
+      "size": "1100 ML",
+      "material": "Kraft paper 335 GSM",
+      "caseQuantity": 300,
+      "quoteOnly": false
+    },
+    {
+      "code": "SB/1300KR",
+      "category": "kraft-bowls",
+      "nameEn": "Kraft Paper Bowl 1300 ml",
+      "nameAr": "وعاء كرافت 1300 مل",
+      "size": "1300 ML",
+      "material": "Kraft paper 335 GSM",
+      "caseQuantity": 300,
+      "quoteOnly": false
+    },
+    {
+      "code": "SB/1500KR",
+      "category": "kraft-bowls",
+      "nameEn": "Kraft Paper Bowl 1500 ml",
+      "nameAr": "وعاء كرافت 1500 مل",
+      "size": "1500 ML",
+      "material": "Kraft paper 335 GSM",
+      "caseQuantity": 300,
+      "quoteOnly": false
+    },
+    {
+      "code": "SBL/150 OPS",
+      "category": "kraft-bowls",
+      "nameEn": "Bowl Lid OPS Ø150",
+      "nameAr": "غطاء وعاء OPS قطر 150",
+      "size": "FIT Ø150 MM",
+      "material": "OPS",
+      "caseQuantity": 300,
+      "quoteOnly": false
+    },
+    {
+      "code": "SBL/150 PP",
+      "category": "kraft-bowls",
+      "nameEn": "Bowl Lid PP Ø150",
+      "nameAr": "غطاء وعاء PP قطر 150",
+      "size": "FIT Ø150 MM",
+      "material": "PP",
+      "caseQuantity": 300,
+      "quoteOnly": false
+    },
+    {
+      "code": "SBL/1300 OPS",
+      "category": "kraft-bowls",
+      "nameEn": "Bowl Lid OPS Ø165",
+      "nameAr": "غطاء وعاء OPS قطر 165",
+      "size": "FIT Ø165 MM",
+      "material": "OPS",
+      "caseQuantity": 300,
+      "quoteOnly": false
+    },
+    {
+      "code": "SBL/1300 PP",
+      "category": "kraft-bowls",
+      "nameEn": "Bowl Lid PP Ø165",
+      "nameAr": "غطاء وعاء PP قطر 165",
+      "size": "FIT Ø165 MM",
+      "material": "PP",
+      "caseQuantity": 300,
+      "quoteOnly": false
+    },
+    {
+      "code": "SBL/1500 OPS",
+      "category": "kraft-bowls",
+      "nameEn": "Bowl Lid OPS Ø185",
+      "nameAr": "غطاء وعاء OPS قطر 185",
+      "size": "FIT Ø185 MM",
+      "material": "OPS",
+      "caseQuantity": 300,
+      "quoteOnly": false
+    },
+    {
+      "code": "SBL/1500 PP",
+      "category": "kraft-bowls",
+      "nameEn": "Bowl Lid PP Ø185",
+      "nameAr": "غطاء وعاء PP قطر 185",
+      "size": "FIT Ø185 MM",
+      "material": "PP",
+      "caseQuantity": 300,
+      "quoteOnly": false
+    },
+    {
+      "code": "SKR/12KR",
+      "category": "shakers",
+      "nameEn": "Shaker 12 OZ Kraft",
+      "nameAr": "علبة شيكر 12 OZ كرافت",
+      "size": "12 OZ",
+      "material": "340G + double PE (Kraft)",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "SKRPL/08KR",
+      "category": "shakers",
+      "nameEn": "Shaker Lid 08-12 OZ Kraft",
+      "nameAr": "غطاء شيكر 08-12 OZ كرافت",
+      "size": "08-12 OZ",
+      "material": "340G + double PE (Kraft)",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "SKR/16KR",
+      "category": "shakers",
+      "nameEn": "Shaker 16 OZ Kraft",
+      "nameAr": "علبة شيكر 16 OZ كرافت",
+      "size": "16 OZ",
+      "material": "340G + double PE (Kraft)",
+      "caseQuantity": 500,
+      "quoteOnly": false,
+      "featured": true
+    },
+    {
+      "code": "SKRPL/16KR",
+      "category": "shakers",
+      "nameEn": "Shaker Lid 16 OZ Kraft",
+      "nameAr": "غطاء شيكر 16 OZ كرافت",
+      "size": "16 OZ",
+      "material": "340G + double PE (Kraft)",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "SKR/26KR",
+      "category": "shakers",
+      "nameEn": "Shaker 26 OZ Kraft",
+      "nameAr": "علبة شيكر 26 OZ كرافت",
+      "size": "26 OZ",
+      "material": "340G + double PE (Kraft)",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "SKRPL/26KR",
+      "category": "shakers",
+      "nameEn": "Shaker Lid 26 OZ Kraft",
+      "nameAr": "غطاء شيكر 26 OZ كرافت",
+      "size": "26 OZ",
+      "material": "340G + double PE (Kraft)",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "SKR/12W",
+      "category": "shakers",
+      "nameEn": "Shaker 12 OZ White",
+      "nameAr": "علبة شيكر 12 OZ أبيض",
+      "size": "12 OZ",
+      "material": "340G + double PE (White)",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "SKRPL/08W",
+      "category": "shakers",
+      "nameEn": "Shaker Lid 08-12 OZ White",
+      "nameAr": "غطاء شيكر 08-12 OZ أبيض",
+      "size": "08-12 OZ",
+      "material": "340G + double PE (White)",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "SKR/16W",
+      "category": "shakers",
+      "nameEn": "Shaker 16 OZ White",
+      "nameAr": "علبة شيكر 16 OZ أبيض",
+      "size": "16 OZ",
+      "material": "340G + double PE (White)",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "SKRPL/16W",
+      "category": "shakers",
+      "nameEn": "Shaker Lid 16 OZ White",
+      "nameAr": "غطاء شيكر 16 OZ أبيض",
+      "size": "16 OZ",
+      "material": "340G + double PE (White)",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "SKR/26W",
+      "category": "shakers",
+      "nameEn": "Shaker 26 OZ White",
+      "nameAr": "علبة شيكر 26 OZ أبيض",
+      "size": "26 OZ",
+      "material": "340G + double PE (White)",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "SKRPL/26W",
+      "category": "shakers",
+      "nameEn": "Shaker Lid 26 OZ White",
+      "nameAr": "غطاء شيكر 26 OZ أبيض",
+      "size": "26 OZ",
+      "material": "340G + double PE (White)",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "SKR/12B",
+      "category": "shakers",
+      "nameEn": "Shaker 12 OZ Black",
+      "nameAr": "علبة شيكر 12 OZ أسود",
+      "size": "12 OZ",
+      "material": "340G + double PE (Black)",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "SKRPL/08B",
+      "category": "shakers",
+      "nameEn": "Shaker Lid 08-12 OZ Black",
+      "nameAr": "غطاء شيكر 08-12 OZ أسود",
+      "size": "08-12 OZ",
+      "material": "340G + double PE (Black)",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "SKR/16B",
+      "category": "shakers",
+      "nameEn": "Shaker 16 OZ Black",
+      "nameAr": "علبة شيكر 16 OZ أسود",
+      "size": "16 OZ",
+      "material": "340G + double PE (Black)",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "SKRPL/16B",
+      "category": "shakers",
+      "nameEn": "Shaker Lid 16 OZ Black",
+      "nameAr": "غطاء شيكر 16 OZ أسود",
+      "size": "16 OZ",
+      "material": "340G + double PE (Black)",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "SKR/26B",
+      "category": "shakers",
+      "nameEn": "Shaker 26 OZ Black",
+      "nameAr": "علبة شيكر 26 OZ أسود",
+      "size": "26 OZ",
+      "material": "340G + double PE (Black)",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "SKRPL/26B",
+      "category": "shakers",
+      "nameEn": "Shaker Lid 26 OZ Black",
+      "nameAr": "غطاء شيكر 26 OZ أسود",
+      "size": "26 OZ",
+      "material": "340G + double PE (Black)",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "WT-CB19",
+      "category": "carry-bags",
+      "nameEn": "Carry Bag White 19 cm",
+      "nameAr": "كيس توصيل أبيض 19 سم",
+      "size": "W-19 X H-22 X G-11.5",
+      "material": "White paper",
+      "caseQuantity": 400,
+      "quoteOnly": false
+    },
+    {
+      "code": "WT-CB22",
+      "category": "carry-bags",
+      "nameEn": "Carry Bag White 22 cm",
+      "nameAr": "كيس توصيل أبيض 22 سم",
+      "size": "W-22 X G-10 X H-28",
+      "material": "White paper",
+      "caseQuantity": 300,
+      "quoteOnly": false
+    },
+    {
+      "code": "WT-CB25",
+      "category": "carry-bags",
+      "nameEn": "Carry Bag White 25 cm",
+      "nameAr": "كيس توصيل أبيض 25 سم",
+      "size": "W-25 X G-12 X H-31",
+      "material": "White paper",
+      "caseQuantity": 300,
+      "quoteOnly": false
+    },
+    {
+      "code": "WT-CB32",
+      "category": "carry-bags",
+      "nameEn": "Carry Bag White 32 cm",
+      "nameAr": "كيس توصيل أبيض 32 سم",
+      "size": "W-32 X G-16 X H-33",
+      "material": "White paper",
+      "caseQuantity": 250,
+      "quoteOnly": false
+    },
+    {
+      "code": "WT-CB36",
+      "category": "carry-bags",
+      "nameEn": "Carry Bag White 36 cm",
+      "nameAr": "كيس توصيل أبيض 36 سم",
+      "size": "W-36 X G-20 X H-35",
+      "material": "White paper",
+      "caseQuantity": 200,
+      "quoteOnly": false
+    },
+    {
+      "code": "WT-CB19K",
+      "category": "carry-bags",
+      "nameEn": "Carry Bag Kraft 19 cm",
+      "nameAr": "كيس توصيل كرافت 19 سم",
+      "size": "W-19 X H-22 X G-11.5",
+      "material": "Kraft paper",
+      "caseQuantity": 400,
+      "quoteOnly": false
+    },
+    {
+      "code": "WT-CB22K",
+      "category": "carry-bags",
+      "nameEn": "Carry Bag Kraft 22 cm",
+      "nameAr": "كيس توصيل كرافت 22 سم",
+      "size": "W-22 X G-10 X H-28",
+      "material": "Kraft paper",
+      "caseQuantity": 300,
+      "quoteOnly": false
+    },
+    {
+      "code": "WT-CB25K",
+      "category": "carry-bags",
+      "nameEn": "Carry Bag Kraft 25 cm",
+      "nameAr": "كيس توصيل كرافت 25 سم",
+      "size": "W-25 X G-12 X H-31",
+      "material": "Kraft paper",
+      "caseQuantity": 300,
+      "quoteOnly": false,
+      "featured": true
+    },
+    {
+      "code": "WT-CB32K",
+      "category": "carry-bags",
+      "nameEn": "Carry Bag Kraft 32 cm",
+      "nameAr": "كيس توصيل كرافت 32 سم",
+      "size": "W-32 X G-16 X H-33",
+      "material": "Kraft paper",
+      "caseQuantity": 250,
+      "quoteOnly": false
+    },
+    {
+      "code": "WT-CB36K",
+      "category": "carry-bags",
+      "nameEn": "Carry Bag Kraft 36 cm",
+      "nameAr": "كيس توصيل كرافت 36 سم",
+      "size": "W-36 X G-20 X H-35",
+      "material": "Kraft paper",
+      "caseQuantity": 200,
+      "quoteOnly": false
+    },
+    {
+      "code": "LB/XXSW",
+      "category": "lunch-boxes",
+      "nameEn": "Lunch Box White XXS",
+      "nameAr": "علبة وجبة بيضاء XXS",
+      "size": "13.4 x 10 x 3.7 CM",
+      "material": "300G+18PE",
+      "caseQuantity": 200,
+      "quoteOnly": false
+    },
+    {
+      "code": "LB/XSW",
+      "category": "lunch-boxes",
+      "nameEn": "Lunch Box White XS",
+      "nameAr": "علبة وجبة بيضاء XS",
+      "size": "15 x 12 x 4.5 CM",
+      "material": "300G+18PE",
+      "caseQuantity": 200,
+      "quoteOnly": false
+    },
+    {
+      "code": "LB/SW",
+      "category": "lunch-boxes",
+      "nameEn": "Lunch Box White S",
+      "nameAr": "علبة وجبة بيضاء S",
+      "size": "17 x 12 x 4.5 CM",
+      "material": "300G+18PE",
+      "caseQuantity": 200,
+      "quoteOnly": false
+    },
+    {
+      "code": "LB/MW",
+      "category": "lunch-boxes",
+      "nameEn": "Lunch Box White M",
+      "nameAr": "علبة وجبة بيضاء M",
+      "size": "20 x 14 x 5 CM",
+      "material": "320G+18PE",
+      "caseQuantity": 200,
+      "quoteOnly": false
+    },
+    {
+      "code": "LB/XXSKR",
+      "category": "lunch-boxes",
+      "nameEn": "Lunch Box Kraft XXS",
+      "nameAr": "علبة وجبة كرافت XXS",
+      "size": "13.4 x 10 x 3.7 CM",
+      "material": "300G+18PE",
+      "caseQuantity": 200,
+      "quoteOnly": false
+    },
+    {
+      "code": "LB/XSKR",
+      "category": "lunch-boxes",
+      "nameEn": "Lunch Box Kraft XS",
+      "nameAr": "علبة وجبة كرافت XS",
+      "size": "15 x 12 x 4.5 CM",
+      "material": "300G+18PE",
+      "caseQuantity": 200,
+      "quoteOnly": false
+    },
+    {
+      "code": "LB/SKR",
+      "category": "lunch-boxes",
+      "nameEn": "Lunch Box Kraft S",
+      "nameAr": "علبة وجبة كرافت S",
+      "size": "17 x 12 x 4.5 CM",
+      "material": "300G+18PE",
+      "caseQuantity": 200,
+      "quoteOnly": false
+    },
+    {
+      "code": "LB/MKR",
+      "category": "lunch-boxes",
+      "nameEn": "Lunch Box Kraft M",
+      "nameAr": "علبة وجبة كرافت M",
+      "size": "20 x 14 x 5 CM",
+      "material": "320G+18PE",
+      "caseQuantity": 200,
+      "quoteOnly": false,
+      "featured": true
+    },
+    {
+      "code": "LB/LKR",
+      "category": "lunch-boxes",
+      "nameEn": "Lunch Box Kraft L",
+      "nameAr": "علبة وجبة كرافت L",
+      "size": "22.5 x 15.5 x 6.5 CM",
+      "material": "320G+18PE",
+      "caseQuantity": 200,
+      "quoteOnly": false
+    },
+    {
+      "code": "ST/500KR",
+      "category": "sushi-trays",
+      "nameEn": "Sushi Tray with Lid 500 ml",
+      "nameAr": "صينية سوشي بغطاء 500 مل",
+      "size": "500 ML",
+      "material": "350 GSM + PE (PET lid)",
+      "caseQuantity": 200,
+      "quoteOnly": false
+    },
+    {
+      "code": "ST/700KR",
+      "category": "sushi-trays",
+      "nameEn": "Sushi Tray with Lid 700 ml",
+      "nameAr": "صينية سوشي بغطاء 700 مل",
+      "size": "700 ML",
+      "material": "350 GSM + PE (PET lid)",
+      "caseQuantity": 200,
+      "quoteOnly": false
+    },
+    {
+      "code": "ST/900KR",
+      "category": "sushi-trays",
+      "nameEn": "Sushi Tray with Lid 900 ml",
+      "nameAr": "صينية سوشي بغطاء 900 مل",
+      "size": "900 ML",
+      "material": "350 GSM + PE (PET lid)",
+      "caseQuantity": 200,
+      "quoteOnly": false,
+      "featured": true
+    },
+    {
+      "code": "ST/2100KR",
+      "category": "sushi-trays",
+      "nameEn": "Sushi Tray with Lid 2100 ml",
+      "nameAr": "صينية سوشي بغطاء 2100 مل",
+      "size": "2100 ML",
+      "material": "350 GSM + PE (PET lid)",
+      "caseQuantity": 200,
+      "quoteOnly": false
+    },
+    {
+      "code": "SQ-WRP25W",
+      "category": "wraps",
+      "nameEn": "White Wax Paper 25 cm",
+      "nameAr": "ورق شمعي أبيض 25 سم",
+      "size": "25 CM",
+      "material": "30 GSM white wax",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "SQ-WRP36W",
+      "category": "wraps",
+      "nameEn": "White Wax Paper 36 cm",
+      "nameAr": "ورق شمعي أبيض 36 سم",
+      "size": "36 CM",
+      "material": "30 GSM white wax",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "SQ-WRP25K",
+      "category": "wraps",
+      "nameEn": "Brown Greaseproof Paper 25 cm",
+      "nameAr": "ورق بني مقاوم للدهون 25 سم",
+      "size": "25 CM",
+      "material": "34 GSM brown greaseproof",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "SQ-WRP36K",
+      "category": "wraps",
+      "nameEn": "Brown Greaseproof Paper 36 cm",
+      "nameAr": "ورق بني مقاوم للدهون 36 سم",
+      "size": "36 CM",
+      "material": "34 GSM brown greaseproof",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "SQ-WRP25",
+      "category": "wraps",
+      "nameEn": "Printed Wax Paper 25 cm",
+      "nameAr": "ورق شمعي مطبوع 25 سم",
+      "size": "25 CM",
+      "material": "30 GSM printed wax",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "SQ-WRP36",
+      "category": "wraps",
+      "nameEn": "Printed Wax Paper 36 cm",
+      "nameAr": "ورق شمعي مطبوع 36 سم",
+      "size": "36 CM",
+      "material": "30 GSM printed wax",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "SQ-ALU05",
+      "category": "wraps",
+      "nameEn": "Aluminium Paper",
+      "nameAr": "ورق ألمنيوم",
+      "size": "",
+      "material": "50 GSM aluminium",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "BAKB02K",
+      "category": "bakery-and-burger-bags",
+      "nameEn": "Bakery Bag Kraft",
+      "nameAr": "كيس مخبوزات كرافت",
+      "size": "",
+      "material": "34 GSM brown greaseproof",
+      "caseQuantity": 1250,
+      "quoteOnly": false
+    },
+    {
+      "code": "BRGB01",
+      "category": "bakery-and-burger-bags",
+      "nameEn": "Burger Bag White",
+      "nameAr": "كيس برجر أبيض",
+      "size": "",
+      "material": "40 GSM white pergamin",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "BRGB03",
+      "category": "bakery-and-burger-bags",
+      "nameEn": "Burger Bag with Gusset White",
+      "nameAr": "كيس برجر بجوانب أبيض",
+      "size": "",
+      "material": "40 GSM white pergamin",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "FT1KR",
+      "category": "food-trays",
+      "nameEn": "Food Tray Kraft 12 cm",
+      "nameAr": "صينية طعام كرافت 12 سم",
+      "size": "12 x 8.5 x 2 CM",
+      "material": "230 paperboard + 15 PE (Kraft)",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "FT1W",
+      "category": "food-trays",
+      "nameEn": "Food Tray White 12 cm",
+      "nameAr": "صينية طعام أبيض 12 سم",
+      "size": "12 x 8.5 x 2 CM",
+      "material": "230 paperboard + 15 PE (White)",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "FT2KR",
+      "category": "food-trays",
+      "nameEn": "Food Tray Kraft 14 cm",
+      "nameAr": "صينية طعام كرافت 14 سم",
+      "size": "14 x 10 x 3 CM",
+      "material": "230 paperboard + 15 PE (Kraft)",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "FT2W",
+      "category": "food-trays",
+      "nameEn": "Food Tray White 14 cm",
+      "nameAr": "صينية طعام أبيض 14 سم",
+      "size": "14 x 10 x 3 CM",
+      "material": "230 paperboard + 15 PE (White)",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "FT3KR",
+      "category": "food-trays",
+      "nameEn": "Food Tray Kraft 16 cm",
+      "nameAr": "صينية طعام كرافت 16 سم",
+      "size": "16 x 12 x 3.2 CM",
+      "material": "230 paperboard + 15 PE (Kraft)",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "FT3W",
+      "category": "food-trays",
+      "nameEn": "Food Tray White 16 cm",
+      "nameAr": "صينية طعام أبيض 16 سم",
+      "size": "16 x 12 x 3.2 CM",
+      "material": "230 paperboard + 15 PE (White)",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "FT/4KR",
+      "category": "food-trays",
+      "nameEn": "Food Tray Kraft 17 cm",
+      "nameAr": "صينية طعام كرافت 17 سم",
+      "size": "17 x 12.5 x 4.1 CM",
+      "material": "230 paperboard + 15 PE (Kraft)",
+      "caseQuantity": 1000,
+      "quoteOnly": false,
+      "featured": true
+    },
+    {
+      "code": "FT/4W",
+      "category": "food-trays",
+      "nameEn": "Food Tray White 17 cm",
+      "nameAr": "صينية طعام أبيض 17 سم",
+      "size": "17 x 12.5 x 4.1 CM",
+      "material": "230 paperboard + 15 PE (White)",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "FT/5KR",
+      "category": "food-trays",
+      "nameEn": "Food Tray Kraft 21.5 cm",
+      "nameAr": "صينية طعام كرافت 21.5 سم",
+      "size": "21.5 x 15 x 4 CM",
+      "material": "230 paperboard + 15 PE (Kraft)",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "FT/5W",
+      "category": "food-trays",
+      "nameEn": "Food Tray White 21.5 cm",
+      "nameAr": "صينية طعام أبيض 21.5 سم",
+      "size": "21.5 x 15 x 4 CM",
+      "material": "230 paperboard + 15 PE (White)",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "FT/6KR",
+      "category": "food-trays",
+      "nameEn": "Food Tray Kraft 25 cm",
+      "nameAr": "صينية طعام كرافت 25 سم",
+      "size": "25 x 18 x 5.2 CM",
+      "material": "230 paperboard + 15 PE (Kraft)",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "FT/6W",
+      "category": "food-trays",
+      "nameEn": "Food Tray White 25 cm",
+      "nameAr": "صينية طعام أبيض 25 سم",
+      "size": "25 x 18 x 5.2 CM",
+      "material": "230 paperboard + 15 PE (White)",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "HB/13KR",
+      "category": "food-trays",
+      "nameEn": "Hotdog Sandwich Box",
+      "nameAr": "علبة ساندويتش هوت دوج",
+      "size": "20.8 x 7 x 3.9 CM",
+      "material": "Corrugated kraft",
+      "caseQuantity": 200,
+      "quoteOnly": false
+    },
+    {
+      "code": "3/1-01",
+      "category": "other-tableware",
+      "nameEn": "Cutlery Pack Fork, Knife & Napkin",
+      "nameAr": "طقم أدوات: شوكة وسكين ومنديل",
+      "size": "",
+      "material": "PS",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "3/1-02",
+      "category": "other-tableware",
+      "nameEn": "Cutlery Pack Fork, Spoon & Napkin",
+      "nameAr": "طقم أدوات: شوكة وملعقة ومنديل",
+      "size": "",
+      "material": "PS",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "NPK230",
+      "category": "napkins",
+      "nameEn": "Napkin 230 x 230 3 Layers",
+      "nameAr": "منديل 230×230 ثلاث طبقات",
+      "size": "230 X 230",
+      "material": "16 G, 3 layers",
+      "caseQuantity": 6000,
+      "quoteOnly": false
+    },
+    {
+      "code": "NPK-2PLY",
+      "category": "napkins",
+      "nameEn": "Napkin 2-Ply 33 x 33",
+      "nameAr": "منديل طبقتين 33×33",
+      "size": "33 X 33",
+      "material": "28 GSM pulp",
+      "caseQuantity": 3000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-900-PS-SPN-B",
+      "category": "spoons",
+      "nameEn": "Heart Shape Spoon 9 cm Black",
+      "nameAr": "ملعقة على شكل قلب 9 سم أسود",
+      "size": "9 CM",
+      "material": "PS 1.7 G",
+      "caseQuantity": 3600,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-950-PS-SPN-MIX",
+      "category": "spoons",
+      "nameEn": "Ice Cream Spoon 9 cm Mixed",
+      "nameAr": "ملعقة آيس كريم 9 سم ألوان",
+      "size": "9 CM",
+      "material": "PS",
+      "caseQuantity": 5000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-115-PS-LSPN-PRL",
+      "category": "spoons",
+      "nameEn": "Leaf Spoon 11.5 cm Pearl",
+      "nameAr": "ملعقة ورقية 11.5 سم لؤلؤي",
+      "size": "11.5 CM",
+      "material": "PS 2.05 G",
+      "caseQuantity": 2800,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-115-PS-LSPN-CG",
+      "category": "spoons",
+      "nameEn": "Leaf Spoon 11.5 cm Candy Green",
+      "nameAr": "ملعقة ورقية 11.5 سم أخضر",
+      "size": "11.5 CM",
+      "material": "PS 2.05 G",
+      "caseQuantity": 2800,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-115-PS-LSPN-BBRY",
+      "category": "spoons",
+      "nameEn": "Leaf Spoon 11.5 cm Blueberry",
+      "nameAr": "ملعقة ورقية 11.5 سم توتي",
+      "size": "11.5 CM",
+      "material": "PS 2.05 G",
+      "caseQuantity": 2800,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-115-PS-LSPN-SF",
+      "category": "spoons",
+      "nameEn": "Leaf Spoon 11.5 cm Sunflower",
+      "nameAr": "ملعقة ورقية 11.5 سم أصفر",
+      "size": "11.5 CM",
+      "material": "PS 2.05 G",
+      "caseQuantity": 2800,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-115-PS-LSPN-LG",
+      "category": "spoons",
+      "nameEn": "Leaf Spoon 11.5 cm Lemon Grass",
+      "nameAr": "ملعقة ورقية 11.5 سم ليموني",
+      "size": "11.5 CM",
+      "material": "PS 2.05 G",
+      "caseQuantity": 2800,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-115-PS-LSPN-BBG",
+      "category": "spoons",
+      "nameEn": "Leaf Spoon 11.5 cm Bubblegum",
+      "nameAr": "ملعقة ورقية 11.5 سم وردي",
+      "size": "11.5 CM",
+      "material": "PS 2.05 G",
+      "caseQuantity": 2800,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-115-PS-LSPN-LVNR",
+      "category": "spoons",
+      "nameEn": "Leaf Spoon 11.5 cm Lavender",
+      "nameAr": "ملعقة ورقية 11.5 سم بنفسجي",
+      "size": "11.5 CM",
+      "material": "PS 2.05 G",
+      "caseQuantity": 2800,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-180-PP-SPN-B",
+      "category": "spoons",
+      "nameEn": "Parfait Spoon 18 cm Black",
+      "nameAr": "ملعقة بارفيه 18 سم أسود",
+      "size": "18 CM",
+      "material": "PP 4 G",
+      "caseQuantity": 2000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-180-PP-SPN-W",
+      "category": "spoons",
+      "nameEn": "Parfait Spoon 18 cm White",
+      "nameAr": "ملعقة بارفيه 18 سم أبيض",
+      "size": "18 CM",
+      "material": "PP 4 G",
+      "caseQuantity": 2000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-180-PP-SPN-RP",
+      "category": "spoons",
+      "nameEn": "Parfait Spoon 18 cm Rose Pink",
+      "nameAr": "ملعقة بارفيه 18 سم وردي",
+      "size": "18 CM",
+      "material": "PP 4 G",
+      "caseQuantity": 2000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-180-PP-SPN-AG",
+      "category": "spoons",
+      "nameEn": "Parfait Spoon 18 cm Apple Green",
+      "nameAr": "ملعقة بارفيه 18 سم أخضر",
+      "size": "18 CM",
+      "material": "PP 4 G",
+      "caseQuantity": 2000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-160-PP-SPN-B",
+      "category": "spoons",
+      "nameEn": "Disposable Spoon 16 cm Black",
+      "nameAr": "ملعقة استخدام مرة واحدة 16 سم أسود",
+      "size": "16 CM",
+      "material": "PP 2 G",
+      "caseQuantity": 2000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-160-PP-SPN-W",
+      "category": "spoons",
+      "nameEn": "Disposable Spoon 16 cm White",
+      "nameAr": "ملعقة استخدام مرة واحدة 16 سم أبيض",
+      "size": "16 CM",
+      "material": "PP 2 G",
+      "caseQuantity": 2000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-160-PP-FRK-B",
+      "category": "forks-and-knives",
+      "nameEn": "Disposable Fork 16 cm Black",
+      "nameAr": "شوكة استخدام مرة واحدة 16 سم أسود",
+      "size": "16 CM",
+      "material": "PP 2 G",
+      "caseQuantity": 2000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-160-PP-FRK-W",
+      "category": "forks-and-knives",
+      "nameEn": "Disposable Fork 16 cm White",
+      "nameAr": "شوكة استخدام مرة واحدة 16 سم أبيض",
+      "size": "16 CM",
+      "material": "PP 2 G",
+      "caseQuantity": 2000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-170-PP-KNF-B",
+      "category": "forks-and-knives",
+      "nameEn": "Disposable Knife 16 cm Black",
+      "nameAr": "سكين استخدام مرة واحدة 16 سم أسود",
+      "size": "16 CM",
+      "material": "PP 3 G",
+      "caseQuantity": 2000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-170-PP-KNF-W",
+      "category": "forks-and-knives",
+      "nameEn": "Disposable Knife 16 cm White",
+      "nameAr": "سكين استخدام مرة واحدة 16 سم أبيض",
+      "size": "16 CM",
+      "material": "PP 3 G",
+      "caseQuantity": 2000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-170-PS-FRK-W",
+      "category": "forks-and-knives",
+      "nameEn": "Plastic Fork White",
+      "nameAr": "شوكة بلاستيك أبيض",
+      "size": "17 CM",
+      "material": "PS 5.0 GM",
+      "caseQuantity": 2000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-170-PS-FRK-B",
+      "category": "forks-and-knives",
+      "nameEn": "Plastic Fork Black",
+      "nameAr": "شوكة بلاستيك أسود",
+      "size": "17 CM",
+      "material": "PS 5.0 GM",
+      "caseQuantity": 2000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-170-PS-KNF-W",
+      "category": "forks-and-knives",
+      "nameEn": "Plastic Knife White",
+      "nameAr": "سكين بلاستيك أبيض",
+      "size": "17 CM",
+      "material": "PS 5.0 GM",
+      "caseQuantity": 2000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-170-PS-KNF-B",
+      "category": "forks-and-knives",
+      "nameEn": "Plastic Knife Black",
+      "nameAr": "سكين بلاستيك أسود",
+      "size": "17 CM",
+      "material": "PS 5.0 GM",
+      "caseQuantity": 2000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-170-PS-SPN-W",
+      "category": "spoons",
+      "nameEn": "Plastic Spoon White",
+      "nameAr": "ملعقة بلاستيك أبيض",
+      "size": "17 CM",
+      "material": "PS 5.0 GM",
+      "caseQuantity": 2000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-170-PS-SPN-B",
+      "category": "spoons",
+      "nameEn": "Plastic Spoon Black",
+      "nameAr": "ملعقة بلاستيك أسود",
+      "size": "17 CM",
+      "material": "PS 5.0 GM",
+      "caseQuantity": 2000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-100-PS-CFRK-B",
+      "category": "forks-and-knives",
+      "nameEn": "Dessert Fork 10 cm Black",
+      "nameAr": "شوكة حلويات 10 سم أسود",
+      "size": "10 CM",
+      "material": "PS",
+      "caseQuantity": 2520,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-100-PS-CFRK-P",
+      "category": "forks-and-knives",
+      "nameEn": "Dessert Fork 10 cm Peach",
+      "nameAr": "شوكة حلويات 10 سم خوخي",
+      "size": "10 CM",
+      "material": "PS",
+      "caseQuantity": 2520,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-100-PS-CFRK-MN",
+      "category": "forks-and-knives",
+      "nameEn": "Dessert Fork 10 cm Mint",
+      "nameAr": "شوكة حلويات 10 سم نعناعي",
+      "size": "10 CM",
+      "material": "PS",
+      "caseQuantity": 2520,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-100-PS-CFRK-BBRY",
+      "category": "forks-and-knives",
+      "nameEn": "Dessert Fork 10 cm Blueberry",
+      "nameAr": "شوكة حلويات 10 سم توتي",
+      "size": "10 CM",
+      "material": "PS",
+      "caseQuantity": 2520,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-100-PS-CFRK-LVNR",
+      "category": "forks-and-knives",
+      "nameEn": "Dessert Fork 10 cm Lavender",
+      "nameAr": "شوكة حلويات 10 سم بنفسجي",
+      "size": "10 CM",
+      "material": "PS",
+      "caseQuantity": 2520,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-100-PS-SPN-W",
+      "category": "spoons",
+      "nameEn": "Dessert Spoon 10 cm White",
+      "nameAr": "ملعقة حلويات 10 سم أبيض",
+      "size": "10 CM",
+      "material": "PS",
+      "caseQuantity": 4000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-100-PS-SPN-B",
+      "category": "spoons",
+      "nameEn": "Dessert Spoon 10 cm Black",
+      "nameAr": "ملعقة حلويات 10 سم أسود",
+      "size": "10 CM",
+      "material": "PS",
+      "caseQuantity": 4000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-100-PS-FRK-W",
+      "category": "forks-and-knives",
+      "nameEn": "Lovely Fork 10 cm White",
+      "nameAr": "شوكة صغيرة 10 سم أبيض",
+      "size": "10 CM",
+      "material": "PS",
+      "caseQuantity": 4000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-100-PS-FRK-B",
+      "category": "forks-and-knives",
+      "nameEn": "Lovely Fork 10 cm Black",
+      "nameAr": "شوكة صغيرة 10 سم أسود",
+      "size": "10 CM",
+      "material": "PS",
+      "caseQuantity": 4000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-130-PS-SPORK-B",
+      "category": "forks-and-knives",
+      "nameEn": "Spork 13 cm Black",
+      "nameAr": "ملعقة شوكة 13 سم أسود",
+      "size": "13 CM",
+      "material": "PS 3 G",
+      "caseQuantity": 2000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-130-PS-SPORK-W",
+      "category": "forks-and-knives",
+      "nameEn": "Spork 13 cm White",
+      "nameAr": "ملعقة شوكة 13 سم أبيض",
+      "size": "13 CM",
+      "material": "PS 3 G",
+      "caseQuantity": 2000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-180-PS-SPORK-B",
+      "category": "forks-and-knives",
+      "nameEn": "Juice Fruit Spork 18 cm Black",
+      "nameAr": "ملعقة شوكة للفواكه 18 سم أسود",
+      "size": "18 CM",
+      "material": "PS 3.5 G",
+      "caseQuantity": 1400,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-180-PS-SPORK-W",
+      "category": "forks-and-knives",
+      "nameEn": "Juice Fruit Spork 18 cm White",
+      "nameAr": "ملعقة شوكة للفواكه 18 سم أبيض",
+      "size": "18 CM",
+      "material": "PS 3.5 G",
+      "caseQuantity": 1400,
+      "quoteOnly": false
+    },
+    {
+      "code": "ST-178PS01",
+      "category": "stirrers",
+      "nameEn": "Plastic Stirrer 178 mm",
+      "nameAr": "محرك بلاستيك 178 ملم",
+      "size": "178 MM",
+      "material": "PS",
+      "caseQuantity": 5000,
+      "quoteOnly": false
+    },
+    {
+      "code": "ST-145PS02",
+      "category": "stirrers",
+      "nameEn": "Spoon Stirrer 145 mm",
+      "nameAr": "محرك بملعقة 145 ملم",
+      "size": "145 MM",
+      "material": "PS",
+      "caseQuantity": 10000,
+      "quoteOnly": false
+    },
+    {
+      "code": "ST-178WOOD",
+      "category": "stirrers",
+      "nameEn": "Wooden Stirrer 178 mm",
+      "nameAr": "محرك خشبي 178 ملم",
+      "size": "178 MM",
+      "material": "Wood",
+      "caseQuantity": 2000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-22-PS-SRV-CLR",
+      "category": "other-tableware",
+      "nameEn": "Cake Server 22 cm Clear",
+      "nameAr": "مقص كيك 22 سم شفاف",
+      "size": "22 CM",
+      "material": "PS",
+      "caseQuantity": 3000,
+      "quoteOnly": false
+    },
+    {
+      "code": "TC-22-PS-SRV-W",
+      "category": "other-tableware",
+      "nameEn": "Cake Server 22 cm White",
+      "nameAr": "مقص كيك 22 سم أبيض",
+      "size": "22 CM",
+      "material": "PS",
+      "caseQuantity": 3000,
+      "quoteOnly": false
+    },
+    {
+      "code": "CST23",
+      "category": "other-tableware",
+      "nameEn": "Chopsticks 23 cm",
+      "nameAr": "عيدان طعام 23 سم",
+      "size": "23 CM",
+      "material": "Wood",
+      "caseQuantity": 2000,
+      "quoteOnly": false
+    },
+    {
+      "code": "MSK-BLACK",
+      "category": "other-tableware",
+      "nameEn": "Face Mask Black",
+      "nameAr": "كمامة سوداء",
+      "size": "",
+      "material": "3-ply",
+      "caseQuantity": 50,
+      "quoteOnly": false
+    },
+    {
+      "code": "MSK-BLUE",
+      "category": "other-tableware",
+      "nameEn": "Face Mask Blue",
+      "nameAr": "كمامة زرقاء",
+      "size": "",
+      "material": "3-ply",
+      "caseQuantity": 50,
+      "quoteOnly": false
+    },
+    {
+      "code": "STR02/08B",
+      "category": "straws",
+      "nameEn": "Wrapped Straw Black Point",
+      "nameAr": "شفاطة مغلفة سوداء مدببة",
+      "size": "22 CM",
+      "material": "Plastic wrapped",
+      "caseQuantity": 3500,
+      "quoteOnly": false
+    },
+    {
+      "code": "STR02/08C",
+      "category": "straws",
+      "nameEn": "Wrapped Straw Clear Point",
+      "nameAr": "شفاطة مغلفة شفافة مدببة",
+      "size": "22 CM",
+      "material": "Plastic wrapped",
+      "caseQuantity": 3500,
+      "quoteOnly": false
+    },
+    {
+      "code": "STR06/08M",
+      "category": "straws",
+      "nameEn": "Wrapped Straw Mixed Colour Point",
+      "nameAr": "شفاطة مغلفة ملونة مدببة",
+      "size": "24 CM",
+      "material": "Plastic wrapped",
+      "caseQuantity": 4000,
+      "quoteOnly": false
+    },
+    {
+      "code": "STO-POB21",
+      "category": "straws",
+      "nameEn": "Piercing Straw 21 cm",
+      "nameAr": "شفاطة ثاقبة 21 سم",
+      "size": "21 CM",
+      "material": "Plastic wrapped",
+      "caseQuantity": 3500,
+      "quoteOnly": false
+    },
+    {
+      "code": "STO-P1218",
+      "category": "straws",
+      "nameEn": "Piercing Straw 19 cm",
+      "nameAr": "شفاطة ثاقبة 19 سم",
+      "size": "19 CM",
+      "material": "Plastic wrapped",
+      "caseQuantity": 2500,
+      "quoteOnly": false
+    },
+    {
+      "code": "STO-P1222",
+      "category": "straws",
+      "nameEn": "Piercing Straw 23 cm",
+      "nameAr": "شفاطة ثاقبة 23 سم",
+      "size": "23 CM",
+      "material": "Plastic wrapped",
+      "caseQuantity": 2250,
+      "quoteOnly": false
+    },
+    {
+      "code": "WT-R946J8B",
+      "category": "hmr-containers",
+      "nameEn": "HMR 1 Compartment Base 24 oz",
+      "nameAr": "قاعدة قسم واحد 24 أونصة",
+      "size": "24 OZ / 22.5 x 17.5 x 5 CM",
+      "material": "PP",
+      "caseQuantity": 300,
+      "quoteOnly": false
+    },
+    {
+      "code": "WT-R946J8F",
+      "category": "hmr-containers",
+      "nameEn": "HMR 1 Compartment Lid 24 oz",
+      "nameAr": "غطاء قسم واحد 24 أونصة",
+      "size": "24 OZ",
+      "material": "OPS clear",
+      "caseQuantity": 300,
+      "quoteOnly": false
+    },
+    {
+      "code": "WT-R-046J6",
+      "category": "hmr-containers",
+      "nameEn": "HMR 1 Compartment Base 36 oz",
+      "nameAr": "قاعدة قسم واحد 36 أونصة",
+      "size": "36 OZ / 22.5 x 17.5 x 5 CM",
+      "material": "PP",
+      "caseQuantity": 250,
+      "quoteOnly": false
+    },
+    {
+      "code": "WT-R-0466H",
+      "category": "hmr-containers",
+      "nameEn": "HMR 1 Compartment Lid 36 oz",
+      "nameAr": "غطاء قسم واحد 36 أونصة",
+      "size": "36 OZ",
+      "material": "OPS clear",
+      "caseQuantity": 250,
+      "quoteOnly": false
+    },
+    {
+      "code": "WT-R-04637",
+      "category": "hmr-containers",
+      "nameEn": "HMR 2 Compartment Base",
+      "nameAr": "قاعدة بقسمين",
+      "size": "2 SEC / 22.5 x 17.5 x 5 CM",
+      "material": "PP",
+      "caseQuantity": 250,
+      "quoteOnly": false
+    },
+    {
+      "code": "WT-R-0467H",
+      "category": "hmr-containers",
+      "nameEn": "HMR 2 Compartment Lid",
+      "nameAr": "غطاء بقسمين",
+      "size": "2 SEC",
+      "material": "OPS clear",
+      "caseQuantity": 250,
+      "quoteOnly": false
+    },
+    {
+      "code": "WT-R-0463B",
+      "category": "hmr-containers",
+      "nameEn": "HMR 3 Compartment Base",
+      "nameAr": "قاعدة بثلاثة أقسام",
+      "size": "3 SEC / 22.5 x 17.5 x 5 CM",
+      "material": "PP",
+      "caseQuantity": 250,
+      "quoteOnly": false
+    },
+    {
+      "code": "WT-R-0466H3",
+      "category": "hmr-containers",
+      "nameEn": "HMR 3 Compartment Lid",
+      "nameAr": "غطاء بثلاثة أقسام",
+      "size": "3 SEC",
+      "material": "OPS clear",
+      "caseQuantity": 250,
+      "quoteOnly": false
+    },
+    {
+      "code": "CC/9PET",
+      "category": "drink-cups",
+      "nameEn": "PET Clear Cup 9 oz",
+      "nameAr": "كوب PET شفاف 9 أونصة",
+      "size": "9 OZ",
+      "material": "PET",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "CC/10PET",
+      "category": "drink-cups",
+      "nameEn": "PET Clear Cup 10 oz",
+      "nameAr": "كوب PET شفاف 10 أونصة",
+      "size": "10 OZ",
+      "material": "PET",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "CC/12PET",
+      "category": "drink-cups",
+      "nameEn": "PET Clear Cup 12 oz",
+      "nameAr": "كوب PET شفاف 12 أونصة",
+      "size": "12 OZ",
+      "material": "PET",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "CC/16PET",
+      "category": "drink-cups",
+      "nameEn": "PET Clear Cup 16 oz",
+      "nameAr": "كوب PET شفاف 16 أونصة",
+      "size": "16 OZ",
+      "material": "PET",
+      "caseQuantity": 1000,
+      "quoteOnly": false,
+      "featured": true
+    },
+    {
+      "code": "CC/20PET",
+      "category": "drink-cups",
+      "nameEn": "PET Clear Cup 20 oz",
+      "nameAr": "كوب PET شفاف 20 أونصة",
+      "size": "20 OZ",
+      "material": "PET",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "CC/12PP",
+      "category": "drink-cups",
+      "nameEn": "PP Clear Cup 12 oz",
+      "nameAr": "كوب PP شفاف 12 أونصة",
+      "size": "12 OZ",
+      "material": "PP",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "CC/16PP",
+      "category": "drink-cups",
+      "nameEn": "PP Clear Cup 16 oz",
+      "nameAr": "كوب PP شفاف 16 أونصة",
+      "size": "16 OZ",
+      "material": "PP",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "P250",
+      "category": "portion-cups",
+      "nameEn": "Portion Cup 2.5 oz",
+      "nameAr": "كوب صلصة 2.5 أونصة",
+      "size": "2.5 OZ",
+      "material": "PET",
+      "caseQuantity": 2500,
+      "quoteOnly": false
+    },
+    {
+      "code": "PL250",
+      "category": "portion-cups",
+      "nameEn": "Portion Cup Lid 2.5 oz",
+      "nameAr": "غطاء كوب صلصة 2.5 أونصة",
+      "size": "2.5 OZ",
+      "material": "PET",
+      "caseQuantity": 2500,
+      "quoteOnly": false
+    },
+    {
+      "code": "CC/02PET",
+      "category": "portion-cups",
+      "nameEn": "Portion Cup 2 oz",
+      "nameAr": "كوب صلصة 2 أونصة",
+      "size": "2 OZ",
+      "material": "PET",
+      "caseQuantity": 2500,
+      "quoteOnly": false
+    },
+    {
+      "code": "CCL/F/02PET",
+      "category": "portion-cups",
+      "nameEn": "Portion Cup Lid 2 oz",
+      "nameAr": "غطاء كوب صلصة 2 أونصة",
+      "size": "2 OZ",
+      "material": "PET",
+      "caseQuantity": 2500,
+      "quoteOnly": false
+    },
+    {
+      "code": "CC/0.75PET",
+      "category": "portion-cups",
+      "nameEn": "Portion Cup 0.75 oz",
+      "nameAr": "كوب صلصة 0.75 أونصة",
+      "size": "0.75 OZ",
+      "material": "PET",
+      "caseQuantity": 5000,
+      "quoteOnly": false
+    },
+    {
+      "code": "CCL/F/0.75PET",
+      "category": "portion-cups",
+      "nameEn": "Portion Cup Lid 0.75 oz",
+      "nameAr": "غطاء كوب صلصة 0.75 أونصة",
+      "size": "0.75 OZ",
+      "material": "PET",
+      "caseQuantity": 5000,
+      "quoteOnly": false
+    },
+    {
+      "code": "CCL/D/12PET",
+      "category": "clear-cup-lids",
+      "nameEn": "PET Dome Lid 12 oz Cross Hole",
+      "nameAr": "غطاء PET بارز 12 أونصة بفتحة متقاطعة",
+      "size": "12 OZ",
+      "material": "PET",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "CCL/D/12PET-H",
+      "category": "clear-cup-lids",
+      "nameEn": "PET Dome Lid 12 oz Hole",
+      "nameAr": "غطاء PET بارز 12 أونصة بفتحة",
+      "size": "12 OZ",
+      "material": "PET",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "CCL/F/12PET",
+      "category": "clear-cup-lids",
+      "nameEn": "PET Flat Lid 12 oz",
+      "nameAr": "غطاء PET مسطح 12 أونصة",
+      "size": "12 OZ",
+      "material": "PET",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "CCL/D/14PET",
+      "category": "clear-cup-lids",
+      "nameEn": "PET Dome Lid 14-20 oz Cross Hole",
+      "nameAr": "غطاء PET بارز 14-20 أونصة بفتحة متقاطعة",
+      "size": "14-20 OZ",
+      "material": "PET",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "CCL/D/14PET-H",
+      "category": "clear-cup-lids",
+      "nameEn": "PET Dome Lid 14-20 oz Hole",
+      "nameAr": "غطاء PET بارز 14-20 أونصة بفتحة",
+      "size": "14-20 OZ",
+      "material": "PET",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "CCL/F/14PET",
+      "category": "clear-cup-lids",
+      "nameEn": "PET Flat Lid 14 oz",
+      "nameAr": "غطاء PET مسطح 14 أونصة",
+      "size": "14 OZ",
+      "material": "PET",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "CCL/F/08PET",
+      "category": "clear-cup-lids",
+      "nameEn": "PET Flat Lid 8-10 oz",
+      "nameAr": "غطاء PET مسطح 8-10 أونصة",
+      "size": "8-10 OZ",
+      "material": "PET",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "CCL/D/120PS",
+      "category": "clear-cup-lids",
+      "nameEn": "OPS Dome Lid 12-23 oz",
+      "nameAr": "غطاء OPS بارز 12-23 أونصة",
+      "size": "12-23 OZ",
+      "material": "OPS",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "CCL/F/120PS",
+      "category": "clear-cup-lids",
+      "nameEn": "OPS Flat Lid 12-23 oz",
+      "nameAr": "غطاء OPS مسطح 12-23 أونصة",
+      "size": "12-23 OZ",
+      "material": "OPS",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "PB-500ML",
+      "category": "bottles-jars",
+      "nameEn": "PET Bottle 500 ml Black Lid",
+      "nameAr": "زجاجة PET 500 مل بغطاء أسود",
+      "size": "500 ML / H 24.5 x Ø5.5",
+      "material": "PET",
+      "caseQuantity": 100,
+      "quoteOnly": false
+    },
+    {
+      "code": "PB-400ML",
+      "category": "bottles-jars",
+      "nameEn": "PET Bottle 400 ml Black Lid",
+      "nameAr": "زجاجة PET 400 مل بغطاء أسود",
+      "size": "400 ML / H 20.4 x Ø5.5",
+      "material": "PET",
+      "caseQuantity": 100,
+      "quoteOnly": false
+    },
+    {
+      "code": "PB-300ML",
+      "category": "bottles-jars",
+      "nameEn": "PET Bottle 300 ml Black Lid",
+      "nameAr": "زجاجة PET 300 مل بغطاء أسود",
+      "size": "300 ML / H 16.5 x Ø5.5",
+      "material": "PET",
+      "caseQuantity": 100,
+      "quoteOnly": false
+    },
+    {
+      "code": "PB/ALU-450ML",
+      "category": "bottles-jars",
+      "nameEn": "PET Bottle 450 ml Aluminium Lid",
+      "nameAr": "زجاجة PET 450 مل بغطاء ألمنيوم",
+      "size": "450 ML / H 19 x Ø5.5",
+      "material": "PET",
+      "caseQuantity": 100,
+      "quoteOnly": false
+    },
+    {
+      "code": "PB/ALU-400ML",
+      "category": "bottles-jars",
+      "nameEn": "PET Bottle 400 ml Aluminium Lid",
+      "nameAr": "زجاجة PET 400 مل بغطاء ألمنيوم",
+      "size": "400 ML / H 17 x Ø5.5",
+      "material": "PET",
+      "caseQuantity": 100,
+      "quoteOnly": false
+    },
+    {
+      "code": "PB/ALU-350ML",
+      "category": "bottles-jars",
+      "nameEn": "PET Bottle 350 ml Aluminium Lid",
+      "nameAr": "زجاجة PET 350 مل بغطاء ألمنيوم",
+      "size": "350 ML / H 15 x Ø5.5",
+      "material": "PET",
+      "caseQuantity": 100,
+      "quoteOnly": false
+    },
+    {
+      "code": "PPC/400",
+      "category": "bottles-jars",
+      "nameEn": "Injected PP Clear Cup 400 cc",
+      "nameAr": "كوب PP محقون شفاف 400 سم³",
+      "size": "400 CC",
+      "material": "PP",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "PPC/500",
+      "category": "bottles-jars",
+      "nameEn": "Injected PP Clear Cup 500 cc",
+      "nameAr": "كوب PP محقون شفاف 500 سم³",
+      "size": "500 CC",
+      "material": "PP",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "PP/90B",
+      "category": "bottles-jars",
+      "nameEn": "Injected PP Lid Ø90",
+      "nameAr": "غطاء PP محقون قطر 90",
+      "size": "Ø90",
+      "material": "PP",
+      "caseQuantity": 500,
+      "quoteOnly": false
+    },
+    {
+      "code": "U-CC/12PET",
+      "category": "bottles-jars",
+      "nameEn": "U-Shape Clear Cup 360 cc",
+      "nameAr": "كوب شفاف على شكل U 360 سم³",
+      "size": "360 CC",
+      "material": "PET",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "U-CC/16PET",
+      "category": "bottles-jars",
+      "nameEn": "U-Shape Clear Cup 500 cc",
+      "nameAr": "كوب شفاف على شكل U 500 سم³",
+      "size": "500 CC",
+      "material": "PET",
+      "caseQuantity": 1000,
+      "quoteOnly": false
+    },
+    {
+      "code": "PBS/ALU-500ML",
+      "category": "bottles-jars",
+      "nameEn": "Sealable PET Bottle 500 ml",
+      "nameAr": "زجاجة PET قابلة للحام 500 مل",
+      "size": "500 ML / Ø59 mm",
+      "material": "PET + aluminium lid",
+      "caseQuantity": 100,
+      "quoteOnly": false
+    },
+    {
+      "code": "PBS/ALU-330L",
+      "category": "bottles-jars",
+      "nameEn": "Sealable PET Bottle 330 ml Tall",
+      "nameAr": "زجاجة PET قابلة للحام 330 مل طويلة",
+      "size": "330 ML / Ø59 mm",
+      "material": "PET + aluminium lid",
+      "caseQuantity": 200,
+      "quoteOnly": false
+    },
+    {
+      "code": "PBS/ALU-330S",
+      "category": "bottles-jars",
+      "nameEn": "Sealable PET Bottle 330 ml Short",
+      "nameAr": "زجاجة PET قابلة للحام 330 مل قصيرة",
+      "size": "330 ML / Ø59 mm",
+      "material": "PET + aluminium lid",
+      "caseQuantity": 200,
+      "quoteOnly": false
+    },
+    {
+      "code": "FILM-ROLL",
+      "category": "equipment",
+      "nameEn": "Sealing Film Roll",
+      "nameAr": "لفة فيلم اللحام",
+      "size": "",
+      "material": "Printed / plain film",
+      "caseQuantity": 1,
+      "quoteOnly": true
+    },
+    {
+      "code": "ET-95SN",
+      "category": "equipment",
+      "nameEn": "ET-95SN Cup Sealing Machine",
+      "nameAr": "ماكينة لحام أكواب ET-95SN",
+      "size": "",
+      "material": "Semi-automatic",
+      "caseQuantity": 1,
+      "quoteOnly": true
+    },
+    {
+      "code": "PET-JAR-M",
+      "category": "equipment",
+      "nameEn": "PET Jar Sealing Machine",
+      "nameAr": "ماكينة لحام عبوات PET",
+      "size": "",
+      "material": "Semi-automatic",
+      "caseQuantity": 1,
+      "quoteOnly": true
+    }
+  ]
+}

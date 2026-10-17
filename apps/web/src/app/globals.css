@@ -1,0 +1,530 @@
+@import 'tailwindcss';
+
+/* ===========================================================================
+   Packvio design tokens — Tailwind v4 CSS-first config.
+   There is intentionally NO tailwind.config.js.
+
+   Components must reference SEMANTIC token names (bg-panel, text-ink,
+   border-border). Never hardcode a hex value in a component.
+   =========================================================================== */
+
+@theme {
+  /* -------------------------------------------------------------------------
+     COLOUR
+
+     Contrast audit (WCAG 2.1, measured — see the styleguide for live ratios):
+       brand-cyan      on white  =  2.11:1  -> FAILS AA (4.5) *and* large (3.0)
+       brand-purple    on white  = 13.09:1  -> AAA
+       ink             on white  = 17.17:1  -> AAA
+       ink-muted       on white  =  6.80:1  -> AA
+       ink             on cyan   =  8.12:1  -> AAA
+       white           on purple = 13.09:1  -> AAA
+       brand-cyan      on purple =  6.20:1  -> AA
+
+     >>> CYAN RULE <<<
+     brand-cyan is a FILL, BORDER and DECORATION colour only. It must never be
+     used as a text colour on a white or panel background — not even for large
+     display type, because 2.11:1 misses the 3:1 large-text floor as well.
+     For links and any text on white use brand-purple (13.09:1).
+     Cyan AS a fill is fine: put `ink` on top of it (8.12:1).
+     Cyan as TEXT is fine on purple surfaces (6.20:1).
+     ------------------------------------------------------------------------- */
+  --color-brand-cyan: #4fc0df;
+  --color-brand-purple: #39255f;
+  --color-brand-purple-deep: #2b1a48;
+
+  --color-panel: #eaf4fb;
+  --color-panel-edge: #d6e8f5;
+
+  --color-ink: #1b1b1f;
+  --color-ink-muted: #5a5a66;
+
+  --color-surface: #ffffff;
+  --color-surface-alt: #f7fafc;
+  --color-border: #e3e8ef;
+
+  /* Status colours — all chosen to clear AA (4.5:1) as text on white.
+     success #0E7A4B = 5.38:1 | warning #92400E = 7.09:1 | danger #B3261E = 6.54:1 */
+  --color-success: #0e7a4b;
+  --color-warning: #92400e;
+  --color-danger: #b3261e;
+
+  /* -------------------------------------------------------------------------
+     TYPEFACES — wired via next/font in src/app/fonts.ts, which sets the
+     --font-display / --font-body / --font-mono variables on <html>.
+
+     --font-body CARRIES A REAL ARABIC FACE FOR EVERY PLATFORM, and the order is
+     load-bearing rather than decorative. `adjustFontFallback: false` in fonts.ts
+     removed next/font's synthesised Arial-based fallback (see the block comment
+     there for the 22% metric error that made it worse than nothing), so this list
+     is now the only thing standing between an Arabic reader and a face with no
+     Arabic glyphs during the swap window.
+
+       Segoe UI          Windows
+       Geeza Pro         older macOS / iOS
+       SF Arabic         macOS 12+ / iOS 15+, the current system Arabic
+       Noto Sans Arabic  Android, and most Linux distributions
+       Tahoma            the long tail — old Windows, and anything with MS core fonts
+
+     Segoe UI alone would have been a Windows-only fix, and this site's Arabic
+     traffic is mostly phones. A stack that falls through to `sans-serif` on iOS
+     and Android puts the 22% error straight back for the readers who matter most.
+     `system-ui` is deliberately NOT in this list: it resolves to the platform UI
+     face, which on a Latin-configured system can be one with no Arabic coverage,
+     so it would swallow the fallthrough before the named Arabic faces got a turn.
+     ------------------------------------------------------------------------- */
+  --font-display: var(--font-display-src), 'Poppins', 'Segoe UI', system-ui, sans-serif;
+  --font-body:
+    var(--font-body-src), 'IBM Plex Sans Arabic', 'Segoe UI', 'Geeza Pro', 'SF Arabic',
+    'Noto Sans Arabic', 'Tahoma', sans-serif;
+  --font-mono: var(--font-mono-src), 'JetBrains Mono', ui-monospace, monospace;
+
+  /* -------------------------------------------------------------------------
+     SPACING — 8pt scale. Tailwind's numeric scale stays at 4px increments
+     (p-2 = 8px, p-4 = 16px); these named steps are the 8pt rhythm used by
+     Section/Container so vertical spacing stays consistent across the site.
+     ------------------------------------------------------------------------- */
+  --spacing-xs: 0.5rem; /*  8px */
+  --spacing-sm: 1rem; /* 16px */
+  --spacing-md: 1.5rem; /* 24px */
+  --spacing-lg: 2rem; /* 32px */
+  --spacing-xl: 3rem; /* 48px */
+  --spacing-2xl: 4rem; /* 64px */
+  --spacing-3xl: 6rem; /* 96px */
+  /* Desktop-only rhythm steps. The site read as cramped at 1440px+ because the
+     scale topped out at 96px — enough on a laptop, not enough when a section is
+     1440px wide and 400px tall. These two are used by Section at >=1024px only;
+     mobile stays on the steps above. */
+  --spacing-4xl: 7rem; /* 112px */
+  --spacing-5xl: 10rem; /* 160px */
+
+  /* ------------------------------------------------------------------------- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* Soft, low-contrast elevation. Clean catalog aesthetic — not neumorphic. */
+  --shadow-card: 0 1px 2px rgb(27 27 31 / 0.04), 0 2px 8px rgb(27 27 31 / 0.05);
+  --shadow-raised: 0 2px 4px rgb(27 27 31 / 0.05), 0 8px 20px rgb(27 27 31 / 0.08);
+  --shadow-overlay: 0 8px 16px rgb(27 27 31 / 0.08), 0 24px 48px rgb(27 27 31 / 0.12);
+
+  /* -------------------------------------------------------------------------
+     MEASURE
+
+     `page` is the default measure; `wide` is for sections that should breathe
+     past it — the hero, the value band, anything full-bleed. Two measures
+     rather than one because a 1600px-wide body-copy column is unreadable
+     (roughly 180 characters), while a 1440px hero on a 1920px screen leaves
+     240px of dead margin either side.
+
+     Gutters live on the Container component: 16px < 640px, 24px < 1024px,
+     40px above.
+     ------------------------------------------------------------------------- */
+  --container-page: 90rem; /* 1440px */
+  --container-wide: 100rem; /* 1600px */
+
+  /* -------------------------------------------------------------------------
+     PRODUCT-GRID BREAKPOINTS
+
+     The catalog grid steps 1 → 2 → 3 → 4 → 5 columns, and those steps do not
+     line up with Tailwind's defaults (640/768/1024/1280/1536): a product card
+     needs ~300px to keep its code legible, so the useful thresholds are 600,
+     900, 1280 and 1600. Naming them here rather than writing arbitrary
+     `min-[900px]:` classes at each call site keeps the ladder in one place —
+     and makes it obvious that all four grids on the site step together.
+     ------------------------------------------------------------------------- */
+  --breakpoint-g2: 600px;
+  --breakpoint-g3: 900px;
+  --breakpoint-g4: 1280px;
+  --breakpoint-g5: 1600px;
+
+  /* -------------------------------------------------------------------------
+     TYPE SCALE
+
+     Every line-height is multiplied by --leading-scale, which is 1 for Latin
+     and 1.15 for Arabic (set on <html lang="ar"> below). Arabic needs the extra
+     leading because of its ascender/descender range and vowel marks — this is
+     encoded here so no component has to eyeball it.
+     ------------------------------------------------------------------------- */
+  --text-display-1: 3.5rem; /* 56 */
+  --text-display-1--line-height: calc(1.05 * var(--leading-scale, 1));
+  --text-display-1--letter-spacing: -0.02em;
+
+  --text-display-2: 2.75rem; /* 44 */
+  --text-display-2--line-height: calc(1.1 * var(--leading-scale, 1));
+  --text-display-2--letter-spacing: -0.015em;
+
+  --text-display-3: 2.25rem; /* 36 */
+  --text-display-3--line-height: calc(1.15 * var(--leading-scale, 1));
+  --text-display-3--letter-spacing: -0.01em;
+
+  --text-h1: 2rem; /* 32 */
+  --text-h1--line-height: calc(1.2 * var(--leading-scale, 1));
+
+  --text-h2: 1.5rem; /* 24 */
+  --text-h2--line-height: calc(1.25 * var(--leading-scale, 1));
+
+  --text-h3: 1.25rem; /* 20 */
+  --text-h3--line-height: calc(1.35 * var(--leading-scale, 1));
+
+  --text-h4: 1.125rem; /* 18 */
+  --text-h4--line-height: calc(1.4 * var(--leading-scale, 1));
+
+  --text-body-lg: 1.125rem; /* 18 */
+  --text-body-lg--line-height: calc(1.65 * var(--leading-scale, 1));
+
+  --text-body: 1rem; /* 16 */
+  --text-body--line-height: calc(1.7 * var(--leading-scale, 1));
+
+  --text-body-sm: 0.875rem; /* 14 */
+  --text-body-sm--line-height: calc(1.6 * var(--leading-scale, 1));
+
+  --text-caption: 0.75rem; /* 12 */
+  --text-caption--line-height: calc(1.5 * var(--leading-scale, 1));
+
+  /* Product codes / dimensions. Tight leading, mono face, slight tracking. */
+  --text-spec: 0.8125rem; /* 13 */
+  --text-spec--line-height: calc(1.45 * var(--leading-scale, 1));
+  --text-spec--letter-spacing: 0.01em;
+}
+
+/* ---------------------------------------------------------------------------
+   Locale-driven leading multiplier. Declared OUTSIDE @theme on purpose: a
+   --leading-* name inside @theme would generate a bogus `leading-scale` utility.
+   --------------------------------------------------------------------------- */
+:root {
+  --leading-scale: 1;
+}
+
+html[lang='ar'] {
+  --leading-scale: 1.15;
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------------- */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: calc(1.7 * var(--leading-scale, 1));
+  background-color: var(--color-surface);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Headings use the display face in Latin. Arabic has no Poppins coverage, so
+   Arabic pages keep the body face (IBM Plex Sans Arabic) for headings too —
+   its 600 weight is the display weight there. */
+html[lang='en'] :is(h1, h2, h3, h4, .font-display) {
+  font-family: var(--font-display);
+}
+
+/* ---------------------------------------------------------------------------
+   Utilities
+   --------------------------------------------------------------------------- */
+
+/*
+  Isolates Latin runs (product codes, SKUs, dimensions) embedded in Arabic copy.
+  Without it the surrounding RTL run reorders them and "PCS/08" renders scrambled.
+  Usage: <span class="bidi-latin">PCS/08</span>
+*/
+@utility bidi-latin {
+  unicode-bidi: isolate;
+  direction: ltr;
+}
+
+/* Inner hairline used by ProductPanel — a 1px inset edge that reads as a
+   printed panel border rather than a drop shadow. */
+@utility panel-inset {
+  box-shadow: inset 0 0 0 1px var(--color-panel-edge);
+}
+
+/* ---------------------------------------------------------------------------
+   Prose — long-form copy blocks (about page, FAQ answers).
+   Uses logical properties throughout so it flips with direction.
+   --------------------------------------------------------------------------- */
+@layer components {
+  .prose-packvio {
+    color: var(--color-ink);
+    font-size: var(--text-body);
+    line-height: calc(1.7 * var(--leading-scale, 1));
+  }
+
+  .prose-packvio > * + * {
+    margin-block-start: 1em;
+  }
+
+  .prose-packvio :is(h2, h3, h4) {
+    color: var(--color-brand-purple);
+    font-weight: 600;
+    margin-block-start: 1.6em;
+    margin-block-end: 0.5em;
+  }
+
+  .prose-packvio h2 {
+    font-size: var(--text-h2);
+    line-height: calc(1.25 * var(--leading-scale, 1));
+  }
+
+  .prose-packvio h3 {
+    font-size: var(--text-h3);
+    line-height: calc(1.35 * var(--leading-scale, 1));
+  }
+
+  .prose-packvio h4 {
+    font-size: var(--text-h4);
+    line-height: calc(1.4 * var(--leading-scale, 1));
+  }
+
+  .prose-packvio a {
+    color: var(--color-brand-purple);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .prose-packvio a:hover {
+    color: var(--color-brand-purple-deep);
+  }
+
+  .prose-packvio :is(ul, ol) {
+    padding-inline-start: 1.5em;
+  }
+
+  .prose-packvio ul {
+    list-style: disc;
+  }
+
+  .prose-packvio ol {
+    list-style: decimal;
+  }
+
+  .prose-packvio li + li {
+    margin-block-start: 0.35em;
+  }
+
+  .prose-packvio strong {
+    font-weight: 600;
+  }
+
+  .prose-packvio code {
+    font-family: var(--font-mono);
+    font-size: var(--text-spec);
+    background-color: var(--color-surface-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding-inline: 0.35em;
+    padding-block: 0.1em;
+    unicode-bidi: isolate;
+    direction: ltr;
+  }
+
+  .prose-packvio blockquote {
+    border-inline-start: 3px solid var(--color-brand-cyan);
+    padding-inline-start: 1em;
+    color: var(--color-ink-muted);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   HERO PRODUCT DRIFT
+
+   An ambient, decorative loop of product tiles filling the hero's inline-end
+   half. Everything about it is built around three constraints:
+
+   1. TRANSFORM ONLY. Every moving thing animates `translate3d` and nothing
+      else. Animating `top`, `margin` or `height` would put layout and paint in
+      the frame budget of the page whose LCP we are protecting; a transform is
+      composited and touches neither.
+
+   2. NO JAVASCRIPT DRIVES MOTION. There is no rAF loop and no library — the
+      browser owns the timeline. JS only ever toggles a class that flips
+      `animation-play-state`, so the animation keeps running on the compositor
+      even while the main thread is busy hydrating the rest of the page.
+
+   3. THE LOOP IS EXACT. Each track holds the tile list TWICE and travels
+      exactly -50% of its own height, which lands copy 2 precisely where copy 1
+      started. That only works if the two halves are the same height, which is
+      why tiles carry `margin-block-end` instead of the track using `gap`: with
+      `gap`, an n-item track is `n*h + (n-1)*g` tall, so half of a 2n track is
+      half a gap short of one copy and the loop visibly stutters every cycle.
+   --------------------------------------------------------------------------- */
+@layer components {
+  /*
+    Vertical columns. `up` starts at the top of copy 1 and ends at the top of
+    copy 2; `down` runs the same distance in reverse, starting pre-scrolled so
+    it has somewhere to come from.
+  */
+  @keyframes packvio-drift-up {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(0, -50%, 0);
+    }
+  }
+
+  @keyframes packvio-drift-down {
+    from {
+      transform: translate3d(0, -50%, 0);
+    }
+    to {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  /*
+    The mobile marquee travels along the INLINE axis, so its direction has to
+    flip with the locale. `--drift-marquee-from/to` are set per `dir` below;
+    the keyframes themselves are direction-agnostic.
+  */
+  @keyframes packvio-drift-marquee {
+    from {
+      transform: translate3d(var(--drift-marquee-from, 0%), 0, 0);
+    }
+    to {
+      transform: translate3d(var(--drift-marquee-to, -50%), 0, 0);
+    }
+  }
+
+  .drift {
+    /*
+      Fades the tiles out at both block edges instead of letting them clip on
+      the hero boundary. A hard cut reads as an overflow bug; the fade reads as
+      depth. `-webkit-mask-image` is still required by Safari.
+    */
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 14%,
+      black 86%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 14%,
+      black 86%,
+      transparent 100%
+    );
+  }
+
+  /*
+    THE MARQUEE FADES ON THE OTHER AXIS. It travels horizontally, so the edges
+    tiles arrive at and leave through are the inline ones; the block fade above
+    would dim the top and bottom of every tile while letting them appear and
+    vanish with a hard cut at the sides — the exact overflow-bug look the mask
+    exists to prevent, applied to the wrong pair of edges.
+
+    `to right` is a physical direction and is correct here BECAUSE the gradient
+    is symmetric: identical stops at both ends mean the RTL rendering is the
+    same image, so there is nothing for a logical direction to flip. The fade is
+    tighter than the columns' 14% — a horizontal strip is short, and the tile
+    entering the frame should be readable rather than half-dissolved.
+  */
+  .drift--inline {
+    /* rtl-ok: symmetric gradient — identical at both inline edges, so RTL is unchanged */
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 7%,
+      black 93%,
+      transparent 100%
+    );
+    /* rtl-ok: symmetric gradient — identical at both inline edges, so RTL is unchanged */
+    mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+  }
+
+  .drift__track {
+    /*
+      Promoted for the whole time it is moving. Removed under reduced motion
+      and when paused out of view (below) — a permanently promoted layer costs
+      memory on every page that renders one, whether or not it is animating.
+    */
+    will-change: transform;
+    animation-name: packvio-drift-up;
+    animation-duration: var(--drift-duration, 56s);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    /* Half the track is the second copy; the loop never reaches the end. */
+    animation-fill-mode: none;
+  }
+
+  .drift__track[data-direction='down'] {
+    animation-name: packvio-drift-down;
+  }
+
+  .drift__track[data-direction='marquee'] {
+    animation-name: packvio-drift-marquee;
+  }
+
+  /* The marquee advances the way the language advances: new tiles arrive from
+     the edge the reader is reading toward. */
+  [dir='ltr'] .drift__track[data-direction='marquee'] {
+    --drift-marquee-from: 0%;
+    --drift-marquee-to: -50%;
+  }
+
+  [dir='rtl'] .drift__track[data-direction='marquee'] {
+    --drift-marquee-from: -50%;
+    --drift-marquee-to: 0%;
+  }
+
+  /*
+    PAUSING. Two triggers, one mechanism: hovering the drift, and the hero
+    scrolling out of view (a class toggled by an IntersectionObserver — the
+    observer never touches a style or a position, only this attribute).
+
+    `animation-play-state` freezes the animation in place rather than resetting
+    it, so scrolling back up resumes exactly where it stopped instead of
+    snapping to the start.
+  */
+  .drift:hover .drift__track,
+  .drift[data-paused='true'] .drift__track {
+    animation-play-state: paused;
+  }
+
+  .drift[data-paused='true'] .drift__track {
+    will-change: auto;
+  }
+
+  /*
+    REDUCED MOTION. Not merely paused — parked at a composed offset.
+
+    A paused-at-0 track shows copy 1 flush against the top of the mask with the
+    fade cutting the first tile in half, which looks like an animation that has
+    frozen. Parking each column a quarter of the way through its cycle puts
+    whole tiles inside the mask window with the stagger and scale still in
+    effect, so it reads as a deliberately composed static arrangement — which is
+    what it is.
+  */
+  @media (prefers-reduced-motion: reduce) {
+    .drift__track {
+      animation-play-state: paused;
+      will-change: auto;
+
+      /*
+        A NEGATIVE DELAY is what parks it, not a `transform` declaration.
+
+        A paused animation still applies its own computed value at the frozen
+        time, and an animation's value beats a plain declaration in the cascade
+        — so `transform: translate3d(0, -25%, 0)` here would simply be ignored,
+        leaving the up-columns frozen at 0 (first tile flush against the top of
+        the mask, visibly cut in half by the fade) and the down-column at -50%.
+        That reads as an animation that has crashed.
+
+        Starting each animation 13 seconds in and freezing it there parks every
+        column at a whole-tile offset instead. Because the three durations
+        differ (52s / 68s / 44s), the same delay lands each column at a
+        different fraction of its cycle — 25%, 19%, 30% — so the frozen result
+        keeps the staggered, layered composition rather than lining the columns
+        up at identical offsets.
+      */
+      animation-delay: -13s;
+    }
+  }
+}

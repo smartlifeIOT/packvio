@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    /**
+     * `jsx: preserve` is right for the app — Next's compiler owns the JSX
+     * transform and tsc only typechecks. ts-jest has no such downstream: with
+     * `preserve` it hands raw JSX to Node, which refuses to parse it. Likewise
+     * `module: esnext` emits `import` into a CommonJS test runtime.
+     *
+     * Both are overridden HERE rather than in tsconfig.json so the app's own
+     * build configuration is untouched and the change cannot leak into a
+     * production build.
+     */
+    "jsx": "react-jsx",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmit": false,
+    "incremental": false
+  }
+}

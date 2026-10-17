@@ -1,0 +1,79 @@
+# Local verification overlay for docker-compose.prod.yml.
+#
+#   ./deploy/scripts/local-verify.sh
+#
+# or by hand:
+#   docker compose -f docker-compose.prod.yml -f docker-compose.local.yml up -d --build
+#
+# The point is to exercise the PRODUCTION topology on a laptop: the same nginx
+# config, the same Basic Auth, the same internal-only network, the same
+# unpublished API. Only three things differ, and each is here rather than in the
+# production file so the production file has no local-only branches in it:
+#
+#   1. Images are built from source instead of pulled from a registry.
+#   2. TLS uses a self-signed certificate for `localhost` instead of one from
+#      Let's Encrypt, mounted at the exact path the template expects — so the
+#      nginx config under test is character-for-character the deployed one.
+#   3. certbot does nothing. There is no public DNS name to validate, and a
+#      renewal loop against `localhost` would fail every twelve hours forever.
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    image: packvio-api:local
+
+  migrate:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    image: packvio-api:local
+
+  seed:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    image: packvio-api:local
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        # The same build-arg plumbing production uses, with local values — which
+        # is itself part of what this verifies. Get these wrong and the site
+        # renders with `undefined` baked into its URLs, which is exactly the
+        # failure the arg/env distinction exists to catch.
+        NEXT_PUBLIC_SITE_URL: https://localhost
+        NEXT_PUBLIC_API_URL: https://localhost/api/v1
+        NEXT_PUBLIC_MAP_LAT: '24.7136'
+        NEXT_PUBLIC_MAP_LNG: '46.6753'
+        NEXT_PUBLIC_MAP_ZOOM: '13'
+    image: packvio-web:local
+
+  nginx:
+    build:
+      context: ./deploy/nginx
+    image: packvio-nginx:local
+    volumes:
+      # Bind-mounted over the named volume the production file uses, so the
+      # self-signed certificate lands where the template looks for it:
+      # /etc/letsencrypt/live/${PACKVIO_DOMAIN}/. PACKVIO_DOMAIN is `localhost`
+      # in the local env file.
+      - ./deploy/nginx/local/letsencrypt:/etc/letsencrypt:ro
+      - ./deploy/nginx/local/certbot-www:/var/www/certbot
+
+  certbot:
+    # Nothing to renew and nothing that could succeed. Exits immediately and is
+    # not restarted, so `docker compose ps` shows it stopped rather than
+    # crash-looping and burning a rate limit against a name that does not resolve.
+    restart: 'no'
+    entrypoint: ['/bin/sh', '-c']
+    command: ['echo "certbot disabled in the local overlay — nothing to renew for localhost"']
+
+  backup:
+    # The scheduler is left running so `backup-once.sh` and `restore.sh` can be
+    # exercised on demand, but the nightly hour is set out of the way.
+    environment:
+      BACKUP_HOUR_UTC: '3'

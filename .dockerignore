@@ -1,0 +1,69 @@
+# Build context filter for BOTH images.
+#
+# ONE FILE, AT THE REPO ROOT, because both Dockerfiles build with the repo root
+# as their context — they have to, for the workspace layout and the lockfile.
+# Docker reads .dockerignore from the context root and nowhere else, so a copy
+# under apps/api or apps/web would look authoritative and do absolutely nothing.
+#
+# What this is worth: docs/ alone is 76MB of PDFs. Without the exclusions below
+# every build uploads them to the daemon before the first instruction runs, and
+# node_modules would add ~700MB on top — an install that is about to be redone
+# from the lockfile anyway, and on a Windows host would arrive with the wrong
+# platform binaries.
+
+# --- dependencies: reinstalled from the lockfile inside the image ---
+node_modules
+**/node_modules
+
+# --- build output: rebuilt inside the image, and a stale copy is worse than none ---
+dist
+**/dist
+.next
+**/.next
+.next-*
+**/.next-*
+*.tsbuildinfo
+**/*.tsbuildinfo
+
+# --- version control and CI ---
+.git
+.gitignore
+.github
+
+# --- source material: 76MB of PDFs. The two JSON files are the exceptions — ---
+# --- the seed reads BOTH at runtime and the API image copies them in.       ---
+docs/*
+!docs/catalog.json
+!docs/product-images.json
+
+# --- tests and fixtures: nothing in the runtime images runs them ---
+**/*.spec.ts
+**/*.spec.tsx
+apps/api/test
+apps/api/jest.config.js
+apps/web/jest.config.js
+apps/web/tsconfig.jest.json
+**/hero-drift-fixtures.ts
+
+# --- secrets: belong in the server's .env, never in a layer ---
+.env
+.env.*
+!.env.example
+!.env.prod.example
+
+# --- deployment material: read by compose on the server, not by a build ---
+docker-compose*.yml
+deploy
+DEPLOYMENT.md
+
+# --- editor and OS noise ---
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+
+# --- local scratch ---
+coverage
+.claude

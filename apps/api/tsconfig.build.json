@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    /**
+     * The build compiles only src/, so the emit root is src/ and `dist/main.js`
+     * lands where package.json's start:prod expects it. The base config uses
+     * rootDir "." because it also typechecks test/, which lives beside src/.
+     */
+    "rootDir": "src",
+    /**
+     * Incremental is off here specifically because nest-cli.json sets
+     * `deleteOutDir: true`. Together they are a trap: the CLI wipes dist/, then
+     * tsc reads its .tsbuildinfo, concludes every output is already up to date,
+     * and emits nothing — leaving `nest start` to fail on a missing dist/main.js
+     * with no compile error to explain it.
+     */
+    "incremental": false
+  },
+  "exclude": ["node_modules", "dist", "test", "**/*.spec.ts"]
+}

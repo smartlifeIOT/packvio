@@ -1,0 +1,260 @@
+# Packvio — staging/production stack.
+#
+#   docker compose -f docker-compose.prod.yml up -d
+#
+# Every value comes from a `.env` file sitting beside this one ON THE SERVER.
+# Nothing secret is written here and nothing secret is baked into an image; see
+# .env.prod.example for the full list and where each value comes from.
+#
+# THE PUBLIC SURFACE IS NGINX AND NOTHING ELSE. Only nginx publishes ports.
+# Postgres, the API and the web app are reachable on the `internal` network by
+# service name and are not addressable from the host, let alone the internet —
+# which means the API's admin endpoints and Postgres itself are not exposed by a
+# firewall rule someone forgets to add, but by the absence of a port mapping.
+
+name: packvio
+
+x-restart: &restart
+  # unless-stopped rather than always: a container an operator deliberately
+  # stopped mid-incident should stay stopped across a daemon restart, not come
+  # back on its own while they are still looking at it.
+  restart: unless-stopped
+
+x-logging: &logging
+  # Docker's default json-file driver has NO size limit, and the disk filling up
+  # months later looks like a database problem, not a logging one.
+  logging:
+    driver: json-file
+    options:
+      max-size: '10m'
+      max-file: '5'
+
+services:
+  # -------------------------------------------------------------------------
+  postgres:
+    image: postgres:16
+    <<: [*restart, *logging]
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      # Postgres only initialises a database on an EMPTY data directory, so this
+      # applies on first boot and never again. Changing it later does nothing,
+      # which is a common source of "why is my new password not working".
+      POSTGRES_INITDB_ARGS: '--encoding=UTF8 --locale=C'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    # NO `ports:`. Deliberate, and the single most important line in this file
+    # that is not here. A published 5432 on a cloud host is found by scanners
+    # within hours.
+    networks: [internal]
+    healthcheck:
+      # `-U`/`-d` matter: bare pg_isready answers for the server, not for the
+      # database and role the API will actually connect as.
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  # -------------------------------------------------------------------------
+  # One-shot migration runner. Under a profile so it NEVER starts with `up`.
+  #
+  #   docker compose -f docker-compose.prod.yml --profile tools run --rm migrate
+  #
+  # Migrations are deliberately not run on API boot. An API that migrates at
+  # startup and then crashes — for any reason, including one unrelated to the
+  # schema — is restarted by Docker, migrates again, crashes again, forever. A
+  # DDL statement retried in a loop against a production database is how a
+  # deploy becomes an outage. Running them as a separate step means a failure
+  # stops with a non-zero exit code and a log, and nothing else has moved yet.
+  migrate:
+    image: ${API_IMAGE:-packvio-api:local}
+    <<: *logging
+    profiles: ['tools']
+    restart: 'no'
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      # Joi validates the whole schema at import time even for the CLI, so the
+      # required secrets have to be present even though a migration uses neither.
+      SALLA_TOKEN_ENC_KEY: ${SALLA_TOKEN_ENC_KEY}
+      QUOTE_IP_HASH_SALT: ${QUOTE_IP_HASH_SALT}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [internal]
+    # The compiled data source, not the ts-node one the local scripts use —
+    # there is no TypeScript in this image. See apps/api/Dockerfile.
+    #
+    # The CLI path is ABSOLUTE because npm hoists every dependency to
+    # /app/node_modules while the working directory is /app/apps/api; a relative
+    # `node_modules/typeorm/cli.js` resolves against the workspace directory,
+    # which has no node_modules of its own, and fails with MODULE_NOT_FOUND.
+    entrypoint: ['dumb-init', '--']
+    command:
+      ['node', '/app/node_modules/typeorm/cli.js', 'migration:run', '-d', 'dist/database/data-source.js']
+
+  # -------------------------------------------------------------------------
+  # Catalog seed, same shape as migrate. Idempotent — see CLAUDE.md.
+  #
+  #   docker compose -f docker-compose.prod.yml --profile tools run --rm seed
+  seed:
+    image: ${API_IMAGE:-packvio-api:local}
+    <<: *logging
+    profiles: ['tools']
+    restart: 'no'
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      SALLA_TOKEN_ENC_KEY: ${SALLA_TOKEN_ENC_KEY}
+      QUOTE_IP_HASH_SALT: ${QUOTE_IP_HASH_SALT}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [internal]
+    entrypoint: ['dumb-init', '--']
+    command: ['node', 'dist/database/seeds/seed.js']
+
+  # -------------------------------------------------------------------------
+  api:
+    image: ${API_IMAGE:-packvio-api:local}
+    <<: [*restart, *logging]
+    environment:
+      NODE_ENV: production
+      API_PORT: 4000
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      # Still set, though the RFQ no longer needs it: the browser posts to the
+      # site's own origin now and Next forwards over this network, so CORS is
+      # off the conversion path entirely. It stays correct for anything that
+      # might call the API cross-origin later, and costs nothing.
+      WEB_ORIGIN: ${SITE_URL}
+      NEXT_PUBLIC_SITE_URL: ${SITE_URL}
+      SALLA_CLIENT_ID: ${SALLA_CLIENT_ID}
+      SALLA_CLIENT_SECRET: ${SALLA_CLIENT_SECRET}
+      SALLA_WEBHOOK_SECRET: ${SALLA_WEBHOOK_SECRET}
+      SALLA_API_BASE: ${SALLA_API_BASE}
+      SALLA_OAUTH_TOKEN_URL: ${SALLA_OAUTH_TOKEN_URL}
+      SALLA_STORE_LOCALE: ${SALLA_STORE_LOCALE}
+      SALLA_TOKEN_ENC_KEY: ${SALLA_TOKEN_ENC_KEY}
+      ADMIN_API_KEY: ${ADMIN_API_KEY}
+      QUOTE_IP_HASH_SALT: ${QUOTE_IP_HASH_SALT}
+      QUOTE_RATE_LIMIT: ${QUOTE_RATE_LIMIT}
+      REVALIDATE_SECRET: ${REVALIDATE_SECRET}
+    depends_on:
+      postgres:
+        # service_healthy, not service_started. `started` means the container is
+        # running, which for Postgres is true a long time before it accepts
+        # connections — the API would fail its first pool acquisition, and on a
+        # cold boot that is a race that passes on a fast machine and fails on a
+        # loaded one.
+        condition: service_healthy
+    # NO `ports:`. nginx reaches it as http://api:4000 on the internal network.
+    networks: [internal]
+
+  # -------------------------------------------------------------------------
+  web:
+    image: ${WEB_IMAGE:-packvio-web:local}
+    <<: [*restart, *logging]
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      # RUNTIME, and internal-only. The browser never learns this address; the
+      # API is not published to the host at all. Every NEXT_PUBLIC_* value, by
+      # contrast, was frozen into this image at BUILD time — they are build args
+      # in apps/web/Dockerfile and in the CI workflow, and setting them here
+      # would do nothing at all.
+      API_INTERNAL_URL: http://api:4000/api/v1
+      REVALIDATE_SECRET: ${REVALIDATE_SECRET}
+    depends_on:
+      api:
+        condition: service_started
+    networks: [internal]
+
+  # -------------------------------------------------------------------------
+  nginx:
+    build:
+      context: ./deploy/nginx
+    image: ${NGINX_IMAGE:-packvio-nginx:local}
+    <<: [*restart, *logging]
+    environment:
+      PACKVIO_DOMAIN: ${PACKVIO_DOMAIN}
+      # Only PACKVIO_-prefixed names are substituted into the config templates.
+      # Without this filter envsubst would also eat nginx's own $host,
+      # $remote_addr and $upstream_addr, producing a config full of empty
+      # strings that still starts.
+      NGINX_ENVSUBST_FILTER: '^PACKVIO_'
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./deploy/nginx/templates:/etc/nginx/templates:ro
+      - ./deploy/nginx/snippets:/etc/nginx/snippets:ro
+      # Generated on the server by `htpasswd`, never committed. See DEPLOYMENT.md.
+      - ./deploy/nginx/htpasswd:/etc/nginx/htpasswd:ro
+      - certbot-conf:/etc/letsencrypt
+      - certbot-www:/var/www/certbot
+    depends_on:
+      - web
+      - api
+    networks: [internal]
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -q -O /dev/null http://127.0.0.1/healthz || exit 1']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  # -------------------------------------------------------------------------
+  # Renewal only. The FIRST certificate is issued by deploy/scripts/init-letsencrypt.sh,
+  # because nginx will not start without a certificate file to open and certbot
+  # cannot answer an ACME challenge without nginx running — a loop that has to be
+  # broken by hand exactly once.
+  #
+  # The 12-hour loop is the documented certbot pattern: renewal is a no-op until
+  # a certificate is inside 30 days of expiry, so checking twice a day costs
+  # nothing and means a failed renewal has ~60 chances to succeed before anything
+  # is visible to a visitor.
+  certbot:
+    image: certbot/certbot:latest
+    <<: [*restart, *logging]
+    volumes:
+      - certbot-conf:/etc/letsencrypt
+      - certbot-www:/var/www/certbot
+    entrypoint: /bin/sh
+    command: -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot --quiet; sleep 12h & wait $${!}; done'
+    networks: [internal]
+
+  # -------------------------------------------------------------------------
+  # Nightly pg_dump, 7-day retention. Runs in the postgres:16 image because
+  # pg_dump must match the server's major version — a dump taken by a 15 client
+  # against a 16 server refuses to run rather than producing a subtly wrong file.
+  backup:
+    image: postgres:16
+    <<: [*restart, *logging]
+    environment:
+      PGUSER: ${POSTGRES_USER}
+      PGPASSWORD: ${POSTGRES_PASSWORD}
+      PGDATABASE: ${POSTGRES_DB}
+      PGHOST: postgres
+      BACKUP_RETENTION_DAYS: ${BACKUP_RETENTION_DAYS:-7}
+      BACKUP_HOUR_UTC: ${BACKUP_HOUR_UTC:-23}
+    volumes:
+      - ./deploy/scripts:/scripts:ro
+      - backups:/backups
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [internal]
+    entrypoint: ['/bin/bash', '/scripts/backup-loop.sh']
+
+networks:
+  internal:
+    driver: bridge
+
+volumes:
+  pgdata:
+  backups:
+  certbot-conf:
+  certbot-www:

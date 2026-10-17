@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 296 80" role="img" aria-label="Packvio">
+  <!--
+    PLACEHOLDER — reversed (white) variant of packvio-logo.svg, for the purple
+    footer. Replace both files together; see packvio-logo.svg for the full note.
+  -->
+  <title>Packvio</title>
+  <g fill="#FFFFFF">
+    <path
+      fill-rule="evenodd"
+      d="M6 8h26.4a17.6 17.6 0 0 1 0 35.2H17.2V72H6V8Zm11.2 10.4h15.2a7.2 7.2 0 0 1 0 14.4H17.2V18.4Z"
+    />
+    <text
+      x="76"
+      y="52"
+      font-family="Poppins, 'Segoe UI', system-ui, sans-serif"
+      font-size="34"
+      font-weight="600"
+      letter-spacing="0.5"
+    >Packvio</text>
+  </g>
+</svg>

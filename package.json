@@ -1,0 +1,37 @@
+{
+  "name": "packvio-web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Packvio — bilingual wholesale food & beverage packaging website (Smavio Limited Trading Co.)",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev:api": "npm -w apps/api run start:dev",
+    "dev:web": "npm -w apps/web run dev",
+    "build": "npm -w packages/shared run build && npm -w apps/api run build && npm -w apps/web run build",
+    "typecheck": "npm -w packages/shared run build && npm -w apps/api run typecheck && npm -w apps/web run typecheck && npm -w apps/web run lint:rtl",
+    "test": "npm -w apps/api run test && npm -w apps/web run test",
+    "lint:rtl": "npm -w apps/web run lint:rtl",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "deploy": "bash scripts/deploy.sh",
+    "deploy:fresh": "bash scripts/deploy.sh --no-cache",
+    "deploy:verbose": "bash scripts/deploy.sh --verbose",
+    "deploy:setup": "bash scripts/server-setup.sh",
+    "deploy:status": "bash scripts/status.sh",
+    "deploy:logs": "bash scripts/logs.sh",
+    "deploy:watch": "bash scripts/watch.sh",
+    "deploy:rollback": "bash scripts/rollback.sh",
+    "deploy:seed": "bash scripts/seed.sh",
+    "deploy:ssh": "bash scripts/ssh.sh",
+    "verify:local": "bash deploy/scripts/local-verify.sh"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
+}
