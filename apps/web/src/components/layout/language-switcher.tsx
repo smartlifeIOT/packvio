@@ -13,8 +13,21 @@ export type LanguageSwitcherProps = {
    * rendered on a plain <a>.
    */
   href: string;
-  /** `compact` for the mobile drawer, `inline` for the desktop contact strip. */
-  variant?: 'inline' | 'compact';
+  /**
+   * `compact` for the mobile drawer, `on-dark` for the purple announcement
+   * strip, `inline` for any light surface.
+   *
+   * `on-dark` exists because the strip went from `bg-surface-alt` to
+   * `bg-brand-purple`, and `inline`'s palette is actively wrong there: its rest
+   * state is `text-ink-muted` (near-invisible on purple) and its HOVER is
+   * `text-brand-purple` — the background colour itself, so the link would
+   * disappear on the one interaction that should confirm it. A variant rather
+   * than a `className` override, because Tailwind classes do not win by being
+   * last in the attribute; two utilities for the same property resolve by
+   * stylesheet order, so an override here would work or not depending on how
+   * the CSS happened to be emitted.
+   */
+  variant?: 'inline' | 'compact' | 'on-dark';
   className?: string;
 };
 
@@ -55,13 +68,16 @@ export async function LanguageSwitcher({
       className={cx(
         'inline-flex items-center gap-1.5 font-medium transition-colors',
         'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current',
-        variant === 'inline'
-          ? 'text-caption text-ink-muted hover:text-brand-purple'
-          : 'rounded-md border border-border px-3 py-2 text-body-sm text-brand-purple hover:bg-surface-alt',
+        variant === 'inline' && 'text-caption text-ink-muted hover:text-brand-purple',
+        // Cyan on purple is 6.20:1 — a legitimate use of the brand cyan, since
+        // the rule it must obey is "never text on a LIGHT surface".
+        variant === 'on-dark' && 'text-caption text-surface/90 hover:text-brand-cyan',
+        variant === 'compact' &&
+          'rounded-md border border-border px-3 py-2 text-body-sm text-brand-purple hover:bg-surface-alt',
         className,
       )}
     >
-      <Icon icon={Languages} size={variant === 'inline' ? 14 : 18} />
+      <Icon icon={Languages} size={variant === 'compact' ? 18 : 14} />
       <span>{t(`languageName.${target}`)}</span>
     </a>
   );

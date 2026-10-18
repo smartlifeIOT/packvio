@@ -69,7 +69,7 @@ services:
   # deploy becomes an outage. Running them as a separate step means a failure
   # stops with a non-zero exit code and a log, and nothing else has moved yet.
   migrate:
-    image: ${API_IMAGE:-packvio-api:local}
+    image: ${API_IMAGE:-packvio-api:latest}
     <<: *logging
     profiles: ['tools']
     restart: 'no'
@@ -100,7 +100,7 @@ services:
   #
   #   docker compose -f docker-compose.prod.yml --profile tools run --rm seed
   seed:
-    image: ${API_IMAGE:-packvio-api:local}
+    image: ${API_IMAGE:-packvio-api:latest}
     <<: *logging
     profiles: ['tools']
     restart: 'no'
@@ -118,7 +118,7 @@ services:
 
   # -------------------------------------------------------------------------
   api:
-    image: ${API_IMAGE:-packvio-api:local}
+    image: ${API_IMAGE:-packvio-api:latest}
     <<: [*restart, *logging]
     environment:
       NODE_ENV: production
@@ -154,7 +154,7 @@ services:
 
   # -------------------------------------------------------------------------
   web:
-    image: ${WEB_IMAGE:-packvio-web:local}
+    image: ${WEB_IMAGE:-packvio-web:latest}
     <<: [*restart, *logging]
     environment:
       NODE_ENV: production
@@ -176,7 +176,7 @@ services:
   nginx:
     build:
       context: ./deploy/nginx
-    image: ${NGINX_IMAGE:-packvio-nginx:local}
+    image: ${NGINX_IMAGE:-packvio-nginx:latest}
     <<: [*restart, *logging]
     environment:
       PACKVIO_DOMAIN: ${PACKVIO_DOMAIN:?PACKVIO_DOMAIN is required - nginx substitutes it into server_name and the certificate paths}

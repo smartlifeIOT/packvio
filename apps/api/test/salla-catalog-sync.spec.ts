@@ -352,10 +352,30 @@ describeWithDb('Salla catalog sync', () => {
           order: { sortOrder: 'ASC' },
         });
 
-        expect(images).toHaveLength(2);
+        // PCS/08 is seeded with two catalogue cards, and the delete guard
+        // keeps them, so a synced product holds FOUR images rather than two.
+        expect(images).toHaveLength(4);
+
+        // The one rule that matters: exactly one primary, and it is Salla's.
+        // Two rows flagged primary is what this test caught the first time —
+        // the product page then showed the catalogue card or the real
+        // photograph depending on row order.
         expect(images.filter((image) => image.isPrimary)).toHaveLength(1);
         expect(images[0]?.isPrimary).toBe(true);
         expect(images[0]?.url).toBe('https://cdn.salla.sa/packvio/pcs08-main.jpg');
+
+        // Salla first, in its own order; the seeded stand-ins demoted after it
+        // with no duplicate sortOrder, so the gallery order is deterministic.
+        expect(images.map((image) => image.url)).toEqual([
+          'https://cdn.salla.sa/packvio/pcs08-main.jpg',
+          'https://cdn.salla.sa/packvio/pcs08-stack.jpg',
+          '/products/t1-2-card.webp',
+          '/products/t1-2-shot.webp',
+        ]);
+        expect(images.map((image) => image.sortOrder)).toEqual([0, 1, 2, 3]);
+
+        // And the seeded pictures are still THERE — demoted, not deleted.
+        expect(images.filter((image) => image.sallaId === null)).toHaveLength(2);
       });
     });
 

@@ -8,6 +8,16 @@ import { cx } from '@/lib/cx';
 import { formatNumber } from '@/lib/format';
 import { ProductMedia } from './product-media';
 
+/**
+ * How many swatches a card shows before collapsing to "+N".
+ *
+ * Six keeps the Leaf Spoon's seven colours to one line at the narrowest grid
+ * column (300px, where the grid steps to two columns) — the row wrapping to a
+ * second line changes the card's height, and a grid of cards at two different
+ * heights is the thing this component already works hard to avoid.
+ */
+const SWATCH_LIMIT = 6;
+
 export type ProductCardProps = {
   product: CatalogProductSummaryDto;
   /** `sizes` for the media slot — set it to match the grid this card sits in. */
@@ -37,6 +47,12 @@ export function ProductCard({ product, sizes, priority = false, className }: Pro
   const locale: Locale = isLocale(rawLocale) ? rawLocale : 'ar';
 
   const isQuoteOnly = product.fulfilmentMode === 'quote';
+  /**
+   * Non-null only when this card stands for a FAMILY. The API returns one row
+   * per family in every listing, with the whole family attached; a product
+   * with no siblings has `variantGroup: null` and renders exactly as before.
+   */
+  const group = product.variantGroup;
 
   return (
     <Link
@@ -58,10 +74,54 @@ export function ProductCard({ product, sizes, priority = false, className }: Pro
 
       <div className="flex flex-1 flex-col gap-1.5 text-start">
         <h3 className="text-body font-medium text-ink group-hover:text-brand-purple">
-          {product.name}
+          {/* The FAMILY name when this card stands for a family, so a tile
+              reads "Leaf Spoon 11.5 cm" rather than "Leaf Spoon 11.5 cm
+              Pearl" next to six near-identical neighbours. `product.name` is
+              still the representative SKU's own full name, which is what the
+              product page uses. */}
+          {group ? group.name : product.name}
         </h3>
 
-        <p className="bidi-latin font-mono text-spec text-ink-muted">{product.code}</p>
+        {/* The code is the representative's, and showing it on a family card
+            would name one SKU while the tile stands for several. The chips
+            below carry the choice instead, and the code appears on the page
+            the reader lands on. */}
+        {!group && <p className="bidi-latin font-mono text-spec text-ink-muted">{product.code}</p>}
+
+        {group && (
+          <ul aria-label={group.name} className="flex flex-wrap items-center gap-1 pt-0.5">
+            {group.variants.slice(0, SWATCH_LIMIT).map((variant) =>
+              variant.swatch === null ? (
+                /* No confident colour reading — show the label. Never a grey
+                   chip standing in for an unknown colour: a buyer reads that
+                   as a real option and orders the wrong thing. */
+                <li
+                  key={variant.id}
+                  className="rounded-full border border-border px-1.5 py-0.5 text-caption text-ink-muted"
+                >
+                  {variant.label}
+                </li>
+              ) : (
+                <li
+                  key={variant.id}
+                  title={variant.label}
+                  className="size-4 rounded-full border border-border"
+                  style={{ backgroundColor: variant.swatch }}
+                >
+                  {/* The colour name is the accessible label; the dot alone
+                      conveys nothing to a screen reader, and colour must
+                      never be the only channel carrying meaning. */}
+                  <span className="sr-only">{variant.label}</span>
+                </li>
+              ),
+            )}
+            {group.count > SWATCH_LIMIT && (
+              <li className="text-caption text-ink-muted">
+                {t('variants.more', { count: group.count - SWATCH_LIMIT })}
+              </li>
+            )}
+          </ul>
+        )}
 
         {product.caseQuantity !== null && (
           <p className="text-body-sm text-ink-muted">

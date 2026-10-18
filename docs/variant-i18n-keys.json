@@ -1,0 +1,25 @@
+{
+  "$comment": "Keys the variant-grouping work needs, to be MERGED into apps/web/messages/{en,ar}.json under the existing `product` namespace. Written here rather than into those files because they were being edited concurrently. `count` and `more` take an ICU {count} argument; the Arabic plural categories matter — Arabic has six, and next-intl/ICU will fall through to `other` for any the message omits, so the forms below are spelled out rather than relying on a bare count.",
+  "en": {
+    "product": {
+      "variants": {
+        "chooseColour": "Choose a colour",
+        "chooseSize": "Choose a size",
+        "chooseOption": "Choose an option",
+        "count": "{count, plural, one {# option} other {# options}}",
+        "more": "+{count}"
+      }
+    }
+  },
+  "ar": {
+    "product": {
+      "variants": {
+        "chooseColour": "اختر اللون",
+        "chooseSize": "اختر المقاس",
+        "chooseOption": "اختر الخيار",
+        "count": "{count, plural, zero {لا خيارات} one {خيار واحد} two {خياران} few {# خيارات} many {# خيارًا} other {# خيار}}",
+        "more": "+{count}"
+      }
+    }
+  }
+}

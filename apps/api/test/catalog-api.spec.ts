@@ -178,13 +178,37 @@ describeWithDb('Catalog API', () => {
       expect(codes(spaced.body)).toEqual(codes(bare.body));
     });
 
-    it('matches every cup product for the Arabic word for cup', async () => {
+    it('matches every cup FAMILY for the Arabic word for cup', async () => {
       const response = await get(
         `/catalog/products?q=${encodeURIComponent(AR.cup)}&perPage=60`,
       ).expect(200);
 
-      expect(response.body.total).toBeGreaterThanOrEqual(30);
-      expect(response.body.items.map((i: { code: string }) => i.code)).toContain('PCS/08');
+      /**
+       * Families, not SKUs. This asserted >= 30 before listings grouped, and
+       * the same query now answers 11 — not because the search got worse but
+       * because eleven families cover those thirty-odd cups, and the grid
+       * shows one card each. Loosening the number without saying why would
+       * hide a genuine regression later, so the real invariant is asserted
+       * underneath instead: every matching SKU is still reachable, through
+       * its family's variant list.
+       */
+      expect(response.body.total).toBeGreaterThanOrEqual(10);
+
+      const reachable = new Set<string>();
+      for (const item of response.body.items as Array<{
+        code: string;
+        variantGroup: { variants: Array<{ code: string }> } | null;
+      }>) {
+        reachable.add(item.code);
+        for (const variant of item.variantGroup?.variants ?? []) reachable.add(variant.code);
+      }
+
+      // The 8 oz single-wall cup is the catalog's flagship SKU: it must be
+      // findable by the bare Arabic word, whether as a card or as a variant.
+      expect([...reachable]).toContain('PCS/08');
+      // Grouping must not LOSE matches — the families on this page stand for
+      // appreciably more SKUs than there are cards.
+      expect(reachable.size).toBeGreaterThan(response.body.items.length);
     });
 
     it('ranks an exact SKU match first', async () => {
@@ -315,6 +339,116 @@ describeWithDb('Catalog API', () => {
 
   // --- other endpoints ---------------------------------------------------
 
+  describe('variant grouping', () => {
+    /**
+     * The catalog lists every colour and size as its own SKU. Listings collapse
+     * a family to one card; the SKUs themselves are untouched, because `code`
+     * is the key the Salla sync joins on and every slug is a public URL.
+     *
+     * These run against the real seeded catalog rather than fixtures: the
+     * grouping lives in hand-written SQL — a window function over a CTE — and a
+     * mock repository would prove nothing about whether Postgres actually
+     * partitions the way the TypeScript assumes.
+     */
+    it('shows the seven Leaf Spoon colours as ONE card', async () => {
+      const response = await get('/catalog/products?category=spoons&perPage=60&locale=en').expect(200);
+
+      const leafCards = (response.body.items as Array<{ name: string; variantGroup: null | { key: string } }>)
+        .filter((item) => item.variantGroup?.key === 'spoons-leaf-spoon-11-5-cm');
+
+      expect(leafCards).toHaveLength(1);
+    });
+
+    it('carries every sibling on that one card, with swatches', async () => {
+      const response = await get('/catalog/products?category=spoons&perPage=60&locale=en').expect(200);
+
+      const card = (response.body.items as Array<{
+        variantGroup: null | {
+          key: string;
+          axis: string;
+          name: string;
+          count: number;
+          variants: Array<{ code: string; label: string; swatch: string | null; slug: string; isCurrent: boolean }>;
+        };
+      }>).find((item) => item.variantGroup?.key === 'spoons-leaf-spoon-11-5-cm')?.variantGroup;
+
+      expect(card).toBeDefined();
+      expect(card?.axis).toBe('color');
+      expect(card?.name).toBe('Leaf Spoon 11.5 cm');
+      expect(card?.count).toBe(7);
+      expect(card?.variants.map((v) => v.label).sort()).toEqual([
+        'Blueberry', 'Bubblegum', 'Candy Green', 'Lavender', 'Lemon Grass', 'Pearl', 'Sunflower',
+      ]);
+      // Exactly one member is the card's own representative.
+      expect(card?.variants.filter((v) => v.isCurrent)).toHaveLength(1);
+      // Every colour resolved to a swatch, and every member kept its own slug.
+      expect(card?.variants.every((v) => v.swatch !== null)).toBe(true);
+      expect(new Set(card?.variants.map((v) => v.slug)).size).toBe(7);
+    });
+
+    it('pages over FAMILIES, so the pager does not promise cards it cannot show', async () => {
+      const first = await get('/catalog/products?category=cutlery&perPage=10&locale=en').expect(200);
+
+      // 56 SKUs in Cutlery & Tableware collapse to 31 cards.
+      expect(first.body.total).toBe(31);
+      expect(first.body.totalPages).toBe(4);
+      expect(first.body.items).toHaveLength(10);
+
+      // The last page must not be empty, which is what a SKU-based count would
+      // have caused: 56/10 would advertise 6 pages over 31 cards.
+      const last = await get('/catalog/products?category=cutlery&perPage=10&page=4&locale=en').expect(200);
+      expect(last.body.items.length).toBeGreaterThan(0);
+      expect(last.body.hasMore).toBe(false);
+    });
+
+    it('never repeats a family across pages', async () => {
+      const seen: string[] = [];
+      for (let page = 1; page <= 4; page++) {
+        const response = await get(
+          `/catalog/products?category=cutlery&perPage=10&page=${page}&locale=en`,
+        ).expect(200);
+        for (const item of response.body.items as Array<{ id: string; variantGroup: null | { key: string } }>) {
+          seen.push(item.variantGroup?.key ?? item.id);
+        }
+      }
+      expect(seen).toHaveLength(31);
+      expect(new Set(seen).size).toBe(31);
+    });
+
+    it('prefers a representative that has a photograph', async () => {
+      // The family card stands in for seven products; showing the placeholder
+      // while six photographed siblings sit behind it would be a worse grid
+      // than the ungrouped one.
+      const response = await get('/catalog/products?perPage=60&locale=en').expect(200);
+
+      const withFamilyAndPhoto = (response.body.items as Array<{
+        primaryImage: unknown;
+        variantGroup: null | { variants: unknown[] };
+      }>).filter((item) => item.variantGroup !== null && item.primaryImage !== null);
+
+      expect(withFamilyAndPhoto.length).toBeGreaterThan(0);
+    });
+
+    it('keeps every variant reachable at its own URL', async () => {
+      // Grouping is presentation. A buyer who was sent a link to the Lavender
+      // spoon must still land on the Lavender spoon.
+      const detail = await get('/catalog/products/by-code/TC-115-PS-LSPN-LVNR?locale=en').expect(200);
+
+      expect(detail.body.code).toBe('TC-115-PS-LSPN-LVNR');
+      expect(detail.body.variantGroup.count).toBe(7);
+      const current = detail.body.variantGroup.variants.filter((v: { isCurrent: boolean }) => v.isCurrent);
+      expect(current).toHaveLength(1);
+      expect(current[0].code).toBe('TC-115-PS-LSPN-LVNR');
+    });
+
+    it('leaves a product with no siblings ungrouped', async () => {
+      const detail = await get('/catalog/products/by-code/BB%2F01?locale=en').expect(200);
+
+      expect(detail.body.code).toBe('BB/01');
+      expect(detail.body.variantGroup).toBeNull();
+    });
+  });
+
   describe('categories', () => {
     it('returns active categories with product counts', async () => {
       const response = await get('/catalog/categories?locale=ar').expect(200);
@@ -329,11 +463,30 @@ describeWithDb('Catalog API', () => {
       for (const category of response.body) expect(Array.isArray(category.children)).toBe(true);
     });
 
-    it('counts only products the list endpoint would actually return', async () => {
+    it('counts every SKU the listing can reach, not the number of cards', async () => {
+      // The tile counts SKUs and the listing counts variant FAMILIES, so these
+      // two numbers are deliberately different — see the long note on
+      // CategoryQueryService.productCounts for why the tile does not say
+      // "1 product" in front of ten carry bags.
+      //
+      // What must still hold is that the tile promises nothing the listing
+      // cannot deliver: every SKU in the count is reachable, either as a card
+      // in its own right or inside some card's variant list. That is the
+      // invariant the old `productCount === total` assertion was really after,
+      // and it survives grouping where the equality does not.
       const category = await get('/catalog/categories/coffee-cups?locale=en').expect(200);
       const products = await get('/catalog/products?category=coffee-cups&perPage=60').expect(200);
 
-      expect(category.body.productCount).toBe(products.body.total);
+      const reachable = new Set<string>();
+      for (const item of products.body.items) {
+        reachable.add(item.code);
+        for (const variant of item.variantGroup?.variants ?? []) reachable.add(variant.code);
+      }
+
+      expect(category.body.productCount).toBe(reachable.size);
+      // And grouping really is collapsing something here, or this test would
+      // pass just as well with the feature switched off.
+      expect(products.body.total).toBeLessThan(category.body.productCount);
     });
   });
 

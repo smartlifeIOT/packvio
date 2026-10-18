@@ -103,9 +103,30 @@ export class CategoryQueryService {
    * recursive CTE maps every category to itself plus everything beneath it and
    * counts across that set.
    *
-   * COUNT(DISTINCT product_id) is what keeps the totals honest: if a product is
-   * ever linked to both a parent and one of its children, it is still one
-   * product, and summing the tiles must not exceed the catalog.
+   * COUNTS SKUs, NOT VARIANT FAMILIES, and that is a commercial decision
+   * rather than a technical one.
+   *
+   * It briefly counted families, to stop a tile reading "3 products" in front
+   * of a listing showing one card. That mismatch is real but it is the lesser
+   * problem. Counting families makes the Carry Bags tile say **"1 product"**
+   * when Packvio stocks ten bags, Lunch Boxes say 1 in front of nine, and
+   * Shakers 2 in front of eighteen — a wholesale buyer reads that as "they
+   * barely carry this" and leaves. Understating the range on the page whose
+   * entire job is to advertise it costs more than a count that does not equal
+   * the number of cards on the next page.
+   *
+   * It also keeps ONE meaning for "product" across the site: the hero's
+   * "213 products in the catalog" is the sum of these tiles. Counting families
+   * here would have left two different numbers both labelled "products",
+   * which is the sort of thing nobody notices until a customer does.
+   *
+   * The listing showing fewer cards than the count is self-explanatory once
+   * you are on it — the card carries a size or colour picker that visibly
+   * holds the rest.
+   *
+   * DISTINCT keeps the totals honest if a product is ever linked to both a
+   * parent and one of its children: it is still one product, and summing the
+   * tiles must not exceed the catalog.
    *
    * The visibility predicate matches ProductQueryService.VISIBLE — a count that
    * includes rows the listing then filters out is worse than no count at all,
@@ -121,7 +142,8 @@ export class CategoryQueryService {
          FROM categories c
          JOIN subtree s ON c.parent_id = s.node_id
        )
-       SELECT s.root_id AS category_id, COUNT(DISTINCT pc.product_id)::text AS product_count
+       SELECT s.root_id AS category_id,
+              COUNT(DISTINCT p.id)::text AS product_count
        FROM subtree s
        JOIN product_categories pc ON pc.category_id = s.node_id
        JOIN products p ON p.id = pc.product_id

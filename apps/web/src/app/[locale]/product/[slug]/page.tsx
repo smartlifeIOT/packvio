@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { notFound, permanentRedirect } from 'next/navigation';
 import { Breadcrumbs } from '@/components/catalog/breadcrumbs';
 import { ProductGallery } from '@/components/catalog/product-gallery';
+import { VariantPicker } from '@/components/catalog/variant-picker';
 import { ProductRail } from '@/components/catalog/product-rail';
 import { ProductActions } from '@/components/quote/product-actions';
 import { Badge, Section, SpecTable, type SpecRow } from '@/components/ui';
@@ -155,6 +156,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
             {product.description && (
               <p className="mt-3 text-body text-ink-muted">{product.description}</p>
+            )}
+
+            {/* Above the actions, because choosing the colour comes before
+                choosing the quantity — and because a buyer who lands on the
+                wrong colour should find the right one before filling in a
+                case count they would then have to re-enter. */}
+            {product.variantGroup && (
+              <VariantPicker group={product.variantGroup} className="mt-lg" />
             )}
 
             <div className="mt-lg">

@@ -200,6 +200,60 @@ export class Product {
   @Column({ name: 'sort_order', type: 'int', default: 0 })
   sortOrder!: number;
 
+  // --- variant family, LOCAL-ONLY -----------------------------------------
+  //
+  // The catalogue lists every colour and every size as its own SKU. That is
+  // right for ordering and wrong for browsing: the Leaf Spoon filled seven
+  // cards in a grid with seven near-identical tiles. These columns let the
+  // LISTING collapse a family to one card while every SKU keeps its own code,
+  // slug, product page and Salla identity.
+  //
+  // All of them are LOCAL-ONLY and derived from docs/catalog.json by
+  // `scripts/derive-variants.mjs`. They are deliberately absent from
+  // WRITABLE_PRODUCT_COLUMNS: Salla has no concept of this grouping, and a
+  // field that merely looked like one would silently re-shuffle the grid.
+
+  /**
+   * Family key, e.g. "spoons-leaf-spoon-11-5-cm". NULL for the 41 products
+   * with no siblings, which render exactly as they did before grouping.
+   *
+   * NO `@Index` DECORATOR, deliberately. This column is indexed — it is the
+   * GROUP BY key of every listing query — but by a PARTIAL composite index
+   * written out by hand in the ProductVariantGroups migration, on
+   * `(variant_group, sort_order, id) WHERE variant_group IS NOT NULL AND …`.
+   * TypeORM's `@Index` cannot express the predicate, so declaring one here
+   * would make `migration:generate` propose dropping the real index and
+   * creating a plain one, forever. It joins the ten indexes already in that
+   * situation — see the CLAUDE.md note on CatalogSearchAndReadIndexes.
+   */
+  @Column({ name: 'variant_group', type: 'varchar', length: 160, nullable: true })
+  variantGroup!: string | null;
+
+  /** What differs across the family: 'color', 'size' or 'both'. */
+  @Column({ name: 'variant_axis', type: 'varchar', length: 16, nullable: true })
+  variantAxis!: string | null;
+
+  /** What distinguishes THIS member, e.g. "Pearl" or "12 OZ Kraft". */
+  @Column({ name: 'variant_label_en', type: 'varchar', length: 120, nullable: true })
+  variantLabelEn!: string | null;
+
+  @Column({ name: 'variant_label_ar', type: 'varchar', length: 120, nullable: true })
+  variantLabelAr!: string | null;
+
+  /** The family's shared name — the product name minus the variant label. */
+  @Column({ name: 'variant_group_name_en', type: 'varchar', length: 250, nullable: true })
+  variantGroupNameEn!: string | null;
+
+  @Column({ name: 'variant_group_name_ar', type: 'varchar', length: 250, nullable: true })
+  variantGroupNameAr!: string | null;
+
+  /**
+   * Hex swatch for the colour in this member's label, where one could be read
+   * with confidence. NULL is normal — the UI falls back to the text label.
+   */
+  @Column({ name: 'variant_swatch', type: 'varchar', length: 9, nullable: true })
+  variantSwatch!: string | null;
+
   /** Product page on the Salla storefront, used for the cart handoff. */
   @Column({ name: 'salla_url', type: 'text', nullable: true })
   sallaUrl!: string | null;

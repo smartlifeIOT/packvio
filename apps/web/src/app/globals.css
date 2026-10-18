@@ -91,10 +91,18 @@
   --spacing-xl: 3rem; /* 48px */
   --spacing-2xl: 4rem; /* 64px */
   --spacing-3xl: 6rem; /* 96px */
-  /* Desktop-only rhythm steps. The site read as cramped at 1440px+ because the
-     scale topped out at 96px — enough on a laptop, not enough when a section is
-     1440px wide and 400px tall. These two are used by Section at >=1024px only;
-     mobile stays on the steps above. */
+  /* Desktop rhythm steps, used by Section at >=1024px.
+
+     --spacing-2xhalf is the one the section scale actually lands on now. The
+     gap a reader perceives between two sections is the SUM of their padding,
+     so 80px here is a 160px gap, which is a spacious-but-sane B2B rhythm.
+
+     4xl and 5xl were the previous desktop steps and produced 224px and 320px
+     gaps — enough that the page read as finished between sections. Section no
+     longer uses either, but they stay defined for full-bleed features (the
+     hero, the purple CTA band) where that much air is a deliberate effect
+     rather than an accident of stacking. */
+  --spacing-2xhalf: 5rem; /* 80px */
   --spacing-4xl: 7rem; /* 112px */
   --spacing-5xl: 10rem; /* 160px */
 

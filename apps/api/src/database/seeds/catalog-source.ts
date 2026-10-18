@@ -37,6 +37,9 @@ export interface CatalogSourceCategory {
   parent?: string;
 }
 
+/** What differs between the members of a variant family. */
+export type CatalogSourceVariantAxis = 'color' | 'size' | 'both';
+
 export interface CatalogSourceProduct {
   code: string;
   category: string;
@@ -48,6 +51,35 @@ export interface CatalogSourceProduct {
   quoteOnly?: boolean;
   /** Editorial: surfaces this product in the home page's featured rail. */
   featured?: boolean;
+
+  /**
+   * Variant family, all DERIVED — written by `node scripts/derive-variants.mjs
+   * --write` and not by hand. Re-run that script after editing any product name.
+   *
+   * The catalogue lists every colour and every size as its own SKU, which is
+   * correct for ordering and wrong for browsing: seven Leaf Spoon colours filled
+   * seven cards in a grid. These keys let the listing collapse a family to one
+   * card while every SKU keeps its own code, slug and product page — none of
+   * which may change, because `code` is what the Salla sync joins on and the
+   * slugs are public URLs.
+   *
+   * Absent on the 41 products that have no siblings. A product with no
+   * `variantGroup` renders exactly as it did before.
+   */
+  variantGroup?: string;
+  variantAxis?: CatalogSourceVariantAxis;
+  /** What distinguishes THIS member, e.g. "Pearl" or "12 OZ Kraft". */
+  variantLabelEn?: string;
+  variantLabelAr?: string;
+  /** The family's shared name, with the distinguishing part removed. */
+  variantGroupNameEn?: string;
+  variantGroupNameAr?: string;
+  /**
+   * Hex swatch for the colour in this member's label, where one could be read
+   * with confidence. Absent is normal and the UI falls back to the text label —
+   * a wrong swatch means a buyer orders the wrong colour, so it never guesses.
+   */
+  variantSwatch?: string;
 }
 
 export interface CatalogSource {

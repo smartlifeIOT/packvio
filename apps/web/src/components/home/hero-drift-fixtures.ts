@@ -46,6 +46,13 @@ export function driftProduct(
             locale: 'en',
           },
     primaryImage: options.image ?? null,
+    /**
+     * The drift is ornament: it shows one tile per product and never offers a
+     * choice, so a family is irrelevant to it. Null here is the shape a
+     * product with no siblings has anyway — 41 of 213 — so the specs still
+     * exercise a real case rather than a contrived one.
+     */
+    variantGroup: null,
   };
 }
 

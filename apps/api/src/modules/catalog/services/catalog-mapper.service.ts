@@ -8,6 +8,8 @@ import type {
   CatalogProductOptionDto,
   CatalogProductSummaryDto,
   CatalogSuggestionDto,
+  CatalogVariantAxis,
+  CatalogVariantGroupDto,
   Locale,
 } from '@packvio/shared';
 import { Category } from '../entities/category.entity';
@@ -15,7 +17,7 @@ import { PriceTier } from '../entities/price-tier.entity';
 import { ProductImage } from '../entities/product-image.entity';
 import { ProductOption } from '../entities/product-option.entity';
 import { Product } from '../entities/product.entity';
-import type { ProductSummaryRow, SuggestionRow } from './product-row.types';
+import type { ProductSummaryRow, SuggestionRow, VariantMemberRow } from './product-row.types';
 
 /**
  * The single owner of entity → localized DTO conversion.
@@ -132,10 +134,66 @@ export class CatalogMapperService {
     return roots;
   }
 
+  // --- variant families --------------------------------------------------
+
+  /**
+   * Builds the variant family carried on a product payload.
+   *
+   * Returns null unless the product is actually in a family AND at least two
+   * members survived the visibility filter. A "family" of one is a product
+   * with no choices, and rendering a single chip reading "White" under a
+   * product already called "… White" is noise.
+   *
+   * `currentId` marks which member the payload belongs to, so a card can
+   * highlight the chip it is currently showing without the UI having to
+   * compare ids itself.
+   */
+  private toVariantGroup(
+    key: string | null,
+    axis: string | null,
+    groupNameAr: string | null,
+    groupNameEn: string | null,
+    members: VariantMemberRow[] | undefined,
+    currentId: string,
+    locale: Locale,
+  ): CatalogVariantGroupDto | null {
+    if (key === null || members === undefined || members.length < 2) return null;
+
+    const name = this.pick(groupNameAr ?? '', groupNameEn ?? '', locale).value;
+
+    return {
+      key,
+      axis: isVariantAxis(axis) ? axis : 'color',
+      name,
+      count: members.length,
+      variants: members.map((member) => {
+        const slug = this.pick(member.slug_ar, member.slug_en, locale);
+        return {
+          id: member.id,
+          code: member.code,
+          // Falls back to the code rather than an empty chip: a member with no
+          // label is a data gap, and a blank chip is unclickable-looking where
+          // a SKU at least tells the reader which one it is.
+          label:
+            this.pickNullable(member.variant_label_ar, member.variant_label_en, locale) ?? member.code,
+          swatch: member.variant_swatch,
+          slug: slug.value,
+          alternateSlug: slug.alternate,
+          locale,
+          isCurrent: member.id === currentId,
+        };
+      }),
+    };
+  }
+
   // --- products ----------------------------------------------------------
 
   /** Maps one row of the single-query product list SELECT. */
-  toProductSummary(row: ProductSummaryRow, locale: Locale): CatalogProductSummaryDto {
+  toProductSummary(
+    row: ProductSummaryRow,
+    locale: Locale,
+    variantMembers?: VariantMemberRow[],
+  ): CatalogProductSummaryDto {
     const name = this.pick(row.name_ar, row.name_en, locale);
     const slug = this.pick(row.slug_ar, row.slug_en, locale);
 
@@ -178,11 +236,24 @@ export class CatalogMapperService {
               isPrimary: row.image_is_primary ?? false,
               sortOrder: row.image_sort_order ?? 0,
             },
+      variantGroup: this.toVariantGroup(
+        row.variant_group,
+        row.variant_axis,
+        row.variant_group_name_ar,
+        row.variant_group_name_en,
+        variantMembers,
+        row.id,
+        locale,
+      ),
     };
   }
 
   /** Same shape as above, but from a hydrated entity (detail and related lists). */
-  toProductSummaryFromEntity(entity: Product, locale: Locale): CatalogProductSummaryDto {
+  toProductSummaryFromEntity(
+    entity: Product,
+    locale: Locale,
+    variantMembers?: VariantMemberRow[],
+  ): CatalogProductSummaryDto {
     const name = this.pick(entity.nameAr, entity.nameEn, locale);
     const slug = this.pick(entity.slugAr, entity.slugEn, locale);
     const images = this.toImages(entity.images ?? [], locale);
@@ -217,6 +288,15 @@ export class CatalogMapperService {
        */
       primaryCategory: this.primaryCategoryOf(entity, locale),
       primaryImage: images[0] ?? null,
+      variantGroup: this.toVariantGroup(
+        entity.variantGroup,
+        entity.variantAxis,
+        entity.variantGroupNameAr,
+        entity.variantGroupNameEn,
+        variantMembers,
+        entity.id,
+        locale,
+      ),
     };
   }
 
@@ -224,8 +304,9 @@ export class CatalogMapperService {
     entity: Product,
     locale: Locale,
     related: CatalogProductSummaryDto[],
+    variantMembers?: VariantMemberRow[],
   ): CatalogProductDetailDto {
-    const summary = this.toProductSummaryFromEntity(entity, locale);
+    const summary = this.toProductSummaryFromEntity(entity, locale, variantMembers);
     const categories = (entity.categoryLinks ?? [])
       .filter((link) => link.category !== null && link.category !== undefined)
       .sort((a, b) => a.sortOrder - b.sortOrder)
@@ -320,4 +401,14 @@ export class CatalogMapperService {
 function toNumber(value: string | number | null): number | null {
   if (value === null) return null;
   return typeof value === 'number' ? value : Number(value);
+}
+
+/**
+ * `variant_axis` is a plain varchar rather than a Postgres enum, so a value
+ * written by hand into catalog.json could be anything. Narrow it here instead
+ * of casting: the UI switches on this to label the chip row ("7 colours" vs
+ * "5 sizes"), and an unexpected string would fall through every branch.
+ */
+function isVariantAxis(value: string | null): value is CatalogVariantAxis {
+  return value === 'color' || value === 'size' || value === 'both';
 }

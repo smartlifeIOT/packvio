@@ -119,6 +119,29 @@ const AR_TO_EN_SLUG: Record<string, string> = {
   'اكواب-الصلصات': 'portion-cups',
   'اوراق-التغليف': 'wraps',
   'اكياس-المخبوزات-والبرغر': 'bakery-and-burger-bags',
+
+  // ---------------------------------------------------------------------
+  // Second Arabic slug for four categories whose Arabic NAME was revised.
+  //
+  // Both spellings have to resolve, and which one a given database holds
+  // depends on when it was first seeded. The seed freezes a slug at INSERT and
+  // only re-syncs names afterwards, so an existing database keeps the slug
+  // derived from the old name forever, while a database seeded from scratch
+  // after the rename derives the new one. Drop either entry and the icon and
+  // the category tile silently vanish on the Arabic pages of one of those two
+  // deployments — which is the half that is hardest to notice, because the
+  // English site stays perfect.
+  //
+  //   اوعية كرافت ورقية -> بولات كرافت ورقية   "vessels" is lab register
+  //   ادوات المائدة     -> ادوات التقديم       dining cutlery vs. disposables
+  //   زجاجات وعبوات     -> زجاجات وبرطمانات    "containers" says nothing
+  //   اكياس التوصيل     -> اكياس توصيل بمقابض  names the handle
+  // ---------------------------------------------------------------------
+  'اوعية-كرافت-ورقية': 'kraft-bowls',
+  'بولات-كرافت-ورقية': 'kraft-bowls',
+  'ادوات-التقديم': 'cutlery',
+  'زجاجات-وبرطمانات': 'bottles-jars',
+  'اكياس-توصيل-بمقابض': 'carry-bags',
 };
 
 /** Every slug the registry covers — the styleguide and its test iterate this. */
@@ -149,4 +172,18 @@ export function categoryIcon(
 
 function resolve(slug: string): CategoryIconComponent | undefined {
   return CATEGORY_ICONS[slug] ?? CATEGORY_ICONS[AR_TO_EN_SLUG[slug] ?? ''];
+}
+
+/**
+ * The English slug for a category, whichever locale's slug you hand it.
+ *
+ * Exported so the category TILE registry can key on one locale without
+ * carrying a second copy of the 28-entry Arabic alias map — two maps that can
+ * disagree is exactly what the note above `AR_TO_EN_SLUG` exists to prevent.
+ * Returns the input unchanged when it is already English or unknown, which is
+ * what every caller wants: a miss should fall through to its own default, not
+ * throw.
+ */
+export function canonicalCategorySlug(slug: string): string {
+  return AR_TO_EN_SLUG[slug] ?? slug;
 }

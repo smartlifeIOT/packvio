@@ -18,27 +18,37 @@ const TONE_CLASSES: Record<SectionTone, string> = {
 };
 
 /**
- * Vertical rhythm, roughly doubling at desktop.
+ * Vertical rhythm.
  *
- * The scale used to top out at 96px, which is generous on a laptop and visibly
- * mean at 1440px+: a section 1440px wide with 96px of air above and below reads
- * as a band rather than as a section, and the page becomes one continuous
- * column of content with no breathing room between ideas.
+ * REVISED DOWN after looking at the built page. The previous scale ran
+ * 48/112/160 at desktop, reasoning that 96px reads as mean at 1440px. On a
+ * single section in isolation that was true; across a stacked page it was not,
+ * because what the reader experiences is not one section's padding but the SUM
+ * of two — a `md` section following another put 224px of nothing between them,
+ * and `lg` put 320px. At that size the eye stops reading it as rhythm and
+ * starts reading it as the page having ended.
  *
- * Mobile is deliberately left near where it was. Vertical space costs a phone
- * reader scrolling, and 160px of padding on a 375px screen is a third of the
- * viewport spent on nothing — the problem being fixed here is a desktop
- * problem, so the fix is scoped to desktop.
+ *   step   <640px   >=640px   >=1024px      (was)
+ *   sm      32        48        48          48 / 48 / 64
+ *   md      48        64        80          64 / 64 / 112
+ *   lg      48        64        96          64 / 96 / 160
  *
- *   step   <640px   >=640px   >=1024px
- *   sm      48        48        64
- *   md      64        64       112
- *   lg      64        96       160
+ * 80px between the content of two adjacent `md` sections is 160px of gap, which
+ * is still generous — the common range for a spacious B2B site is 64–96.
+ *
+ * Mobile comes down too, which the previous revision deliberately avoided. It
+ * was right not to ADD space on a phone; it does not follow that 64px of it was
+ * already correct. 48px still separates sections clearly at 375px and gives
+ * back most of a thumb-scroll per section across a long page.
+ *
+ * `--spacing-4xl` (112px) and `--spacing-5xl` (160px) are now unused by this
+ * scale. They are left defined: the hero and the purple CTA band are the kind
+ * of full-bleed feature that can still want them, and a token costs nothing.
  */
 const SPACING_CLASSES: Record<SectionSpacing, string> = {
-  sm: 'py-xl lg:py-2xl',
-  md: 'py-2xl lg:py-4xl',
-  lg: 'py-2xl sm:py-3xl lg:py-5xl',
+  sm: 'py-lg sm:py-xl',
+  md: 'py-xl sm:py-2xl lg:py-2xhalf',
+  lg: 'py-xl sm:py-2xl lg:py-3xl',
 };
 
 export type SectionProps = {

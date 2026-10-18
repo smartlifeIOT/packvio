@@ -418,6 +418,45 @@ describe('SallaCatalogMapper', () => {
       expect(mixed.toDeleteIds).toEqual(['salla-old']);
     });
 
+    it('demotes seeded photography once Salla supplies a real picture', () => {
+      // Keeping the seeded cards is only half the rule. The seed marks its
+      // first one primary at sortOrder 0 and the Salla parser does the same to
+      // ITS first one, so without this the product ends up with TWO primaries
+      // and duplicate sort orders — and the page shows whichever row the query
+      // returns first. A seeded card is a stand-in; real photography outranks
+      // it.
+      const seeded = [
+        { id: 'seed-card', sallaId: null, url: '/products/t1-2-card.webp', sortOrder: 0, isPrimary: true },
+        { id: 'seed-shot', sallaId: null, url: '/products/t1-2-shot.webp', sortOrder: 1, isPrimary: false },
+      ];
+
+      const plan = planImageReconciliation(seeded, [
+        { sallaId: '1', url: 'https://cdn/main.jpg', sortOrder: 0, isPrimary: true },
+        { sallaId: '2', url: 'https://cdn/alt.jpg', sortOrder: 1, isPrimary: false },
+      ]);
+
+      // Both seeded rows are re-sorted after the two incoming ones, and the
+      // one that was primary is demoted.
+      expect(plan.toUpdate).toEqual([
+        { id: 'seed-card', sortOrder: 2, isPrimary: false, sallaId: null },
+        { id: 'seed-shot', sortOrder: 3, isPrimary: false, sallaId: null },
+      ]);
+      expect(plan.toDeleteIds).toEqual([]);
+    });
+
+    it('leaves the seeded primary alone when Salla has no photography', () => {
+      // The other half: with nothing to defer to, demoting the only picture
+      // the product has would leave the page with no primary image at all.
+      const seeded = [
+        { id: 'seed-card', sallaId: null, url: '/products/t1-2-card.webp', sortOrder: 0, isPrimary: true },
+      ];
+      expect(planImageReconciliation(seeded, [])).toEqual({
+        toInsert: [],
+        toUpdate: [],
+        toDeleteIds: [],
+      });
+    });
+
     it('still deletes a Salla-sourced row that merely looks seeded', () => {
       // The guard keys on BOTH the prefix and a null sallaId, so it cannot be
       // widened into a no-op by a URL that happens to start with /products/.

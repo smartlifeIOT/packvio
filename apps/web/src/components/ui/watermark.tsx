@@ -1,5 +1,15 @@
 import { cx } from '@/lib/cx';
 
+/**
+ * Width ÷ height of public/brand/packvio-mark.webp (300 × 487).
+ *
+ * Declared rather than inferred: the file is raster, so nothing at build time
+ * would catch a mismatch, and the symptom of getting it wrong — a subtly
+ * squashed mark at 4% opacity behind a product photo — is close to invisible
+ * until someone turns the opacity up. Re-measure if the mark is re-exported.
+ */
+const MARK_ASPECT = 300 / 487;
+
 export type WatermarkPosition = 'center' | 'start-top' | 'start-bottom' | 'end-top' | 'end-bottom';
 
 /**
@@ -37,13 +47,27 @@ export function Watermark({
   return (
     <div
       aria-hidden="true"
-      className={cx('pointer-events-none absolute select-none', POSITION_CLASSES[position], className)}
+      className={cx(
+        'pointer-events-none absolute select-none',
+        POSITION_CLASSES[position],
+        className,
+      )}
       style={{ opacity }}
     >
-      {/* Plain <img>: the mark is decorative, fixed-size and already an SVG, so
-          next/image would add a wrapper and an optimizer hop for no benefit. */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/brand/packvio-mark.svg" alt="" width={size} height={size} draggable={false} />
+      {/* `size` is the HEIGHT, and the width follows the mark's own 0.6156:1
+          ratio. The placeholder this replaced was square, so passing `size` to
+          both was harmless; the real mark is noticeably taller than it is wide
+          and a square box would squash it by 38%. `size` keeps its meaning —
+          the largest dimension — so no caller had to change. */}
+      {/* eslint-disable-next-line @next/next/no-img-element -- decorative,
+          fixed-size; next/image would add a wrapper and an optimizer hop. */}
+      <img
+        src="/brand/packvio-mark.webp"
+        alt=""
+        width={Math.round(size * MARK_ASPECT)}
+        height={size}
+        draggable={false}
+      />
     </div>
   );
 }

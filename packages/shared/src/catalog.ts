@@ -83,6 +83,58 @@ export interface CatalogCategoryDetailDto extends CatalogCategoryDto {
 /** Which conversion path a product offers. Mirrors the DB enum. */
 export type CatalogFulfilmentMode = 'cart' | 'quote' | 'both';
 
+/** What differs between the members of a variant family. */
+export type CatalogVariantAxis = 'color' | 'size' | 'both';
+
+/**
+ * One member of a variant family, as carried on a sibling's payload.
+ *
+ * Deliberately tiny. A listing collapses a family to a single card, and the
+ * card needs just enough to show the choices and link to each — not a second
+ * full product summary per colour, which on the Food Tray family would be
+ * twelve nested summaries on one tile.
+ */
+export interface CatalogVariantRefDto extends LocalizedEntity {
+  id: string;
+  /** SKU. Latin — bidi-isolate it inside Arabic copy. */
+  code: string;
+  /** What distinguishes this member, e.g. "Pearl" or "12 OZ Kraft". */
+  label: string;
+  /**
+   * Hex colour for a swatch, or null when none could be read from the label
+   * with confidence. Null is common and expected: the UI must fall back to
+   * the text label rather than rendering an empty or guessed chip.
+   */
+  swatch: string | null;
+  /** True for the member whose page or card this payload belongs to. */
+  isCurrent: boolean;
+}
+
+/**
+ * The variant family a product belongs to, or null when it has no siblings.
+ *
+ * Present on every product summary and detail payload. The LISTING endpoints
+ * return one row per family — the representative — and `variants` carries the
+ * whole family so the card can show swatches and a count. The DETAIL endpoint
+ * returns the SKU that was asked for, with the same array, so the product page
+ * can offer the other colours.
+ *
+ * Every member keeps its own slug and its own page: `code` is the key the Salla
+ * sync joins on and the slugs are public URLs, so grouping is a presentation
+ * layer over unchanged rows, never a merge of them.
+ */
+export interface CatalogVariantGroupDto {
+  /** Stable family key, e.g. "spoons-leaf-spoon-11-5-cm". */
+  key: string;
+  axis: CatalogVariantAxis;
+  /** The family's shared name, localized — "Leaf Spoon 11.5 cm". */
+  name: string;
+  /** Every member, including the current one. Sorted by sortOrder then code. */
+  variants: CatalogVariantRefDto[];
+  /** `variants.length`, so a card does not have to count to render "7 colours". */
+  count: number;
+}
+
 export type CatalogProductStatus = 'active' | 'hidden' | 'out_of_stock';
 
 /** The card shape: everything a grid tile or a rail needs, and nothing else. */
@@ -121,6 +173,17 @@ export interface CatalogProductSummaryDto extends LocalizedEntity {
    */
   primaryCategory: CatalogCategoryRefDto | null;
   primaryImage: CatalogImageDto | null;
+  /**
+   * The variant family this product belongs to, or null when it has no
+   * siblings (41 of 213).
+   *
+   * On a LISTING this row is the family's representative and `variantGroup`
+   * describes the whole family. `name` above stays the full SKU name
+   * ("Leaf Spoon 11.5 cm Pearl"); a card that is standing in for a family
+   * should render `variantGroup.name` instead, which is the family name with
+   * the distinguishing part removed.
+   */
+  variantGroup: CatalogVariantGroupDto | null;
 }
 
 export interface CatalogPriceTierDto {

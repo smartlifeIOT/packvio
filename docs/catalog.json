@@ -66,7 +66,7 @@
       "slug": "kraft-bowls",
       "slugAr": "اوعية-كرافت",
       "nameEn": "Kraft Paper Bowls",
-      "nameAr": "أوعية كرافت ورقية",
+      "nameAr": "بولات كرافت ورقية",
       "order": 6,
       "descriptionEn": "335 gsm kraft bowls, 500 ml to 1500 ml, with matching lids.",
       "descriptionAr": "أوعية كرافت بوزن 335 جم/م² من 500 مل إلى 1500 مل مع أغطية مطابقة.",
@@ -86,7 +86,7 @@
       "slug": "carry-bags",
       "slugAr": "اكياس-التوصيل",
       "nameEn": "Carry Bags",
-      "nameAr": "أكياس التوصيل",
+      "nameAr": "أكياس توصيل بمقابض",
       "order": 8,
       "descriptionEn": "Twisted-handle paper carry bags in white and kraft, five sizes.",
       "descriptionAr": "أكياس ورقية بمقابض مجدولة باللونين الأبيض والكرافت بخمسة مقاسات.",
@@ -136,7 +136,7 @@
       "slug": "cutlery",
       "slugAr": "ادوات-المائدة",
       "nameEn": "Cutlery & Tableware",
-      "nameAr": "أدوات المائدة",
+      "nameAr": "أدوات التقديم",
       "order": 13,
       "descriptionEn": "Spoons, forks, knives, stirrers, straws, napkins and cutlery packs.",
       "descriptionAr": "ملاعق وشوك وسكاكين ومحركات وشفاطات ومناديل وأطقم أدوات مائدة.",
@@ -176,7 +176,7 @@
       "slug": "bottles-jars",
       "slugAr": "زجاجات-وعبوات",
       "nameEn": "Bottles & Jars",
-      "nameAr": "زجاجات وعبوات",
+      "nameAr": "زجاجات وبرطمانات",
       "order": 17,
       "descriptionEn": "PET bottles with plastic or aluminium lids, and sealable jars.",
       "descriptionAr": "زجاجات PET بأغطية بلاستيكية أو ألمنيوم وعبوات قابلة للإغلاق.",
@@ -312,7 +312,13 @@
       "size": "4 OZ",
       "material": "230G+18PE",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "coffee-cups-single-wall-coffee-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "4 oz",
+      "variantLabelAr": "4 أونصة",
+      "variantGroupNameEn": "Single Wall Coffee Cup",
+      "variantGroupNameAr": "كوب قهوة جدار مفرد"
     },
     {
       "code": "PCS/08",
@@ -323,7 +329,13 @@
       "material": "301 GSM Ø80",
       "caseQuantity": 1000,
       "quoteOnly": false,
-      "featured": true
+      "featured": true,
+      "variantGroup": "coffee-cups-single-wall-coffee-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "8 oz",
+      "variantLabelAr": "8 أونصة",
+      "variantGroupNameEn": "Single Wall Coffee Cup",
+      "variantGroupNameAr": "كوب قهوة جدار مفرد"
     },
     {
       "code": "PCS/12",
@@ -334,7 +346,13 @@
       "material": "334 GSM Ø90",
       "caseQuantity": 1000,
       "quoteOnly": false,
-      "featured": true
+      "featured": true,
+      "variantGroup": "coffee-cups-single-wall-coffee-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "12 oz",
+      "variantLabelAr": "12 أونصة",
+      "variantGroupNameEn": "Single Wall Coffee Cup",
+      "variantGroupNameAr": "كوب قهوة جدار مفرد"
     },
     {
       "code": "DCL/04W",
@@ -344,7 +362,14 @@
       "size": "4 OZ",
       "material": "PS",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "coffee-cup-lids-dome-lid",
+      "variantAxis": "both",
+      "variantLabelEn": "4 oz White",
+      "variantLabelAr": "4 أونصة أبيض",
+      "variantGroupNameEn": "Dome Lid",
+      "variantGroupNameAr": "غطاء بارز",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "DCL/04B",
@@ -354,7 +379,14 @@
       "size": "4 OZ",
       "material": "PS",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "coffee-cup-lids-dome-lid",
+      "variantAxis": "both",
+      "variantLabelEn": "4 oz Black",
+      "variantLabelAr": "4 أونصة أسود",
+      "variantGroupNameEn": "Dome Lid",
+      "variantGroupNameAr": "غطاء بارز",
+      "variantSwatch": "#1B1B1F"
     },
     {
       "code": "DCL/08W",
@@ -364,7 +396,14 @@
       "size": "8 OZ",
       "material": "PS",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "coffee-cup-lids-dome-lid",
+      "variantAxis": "both",
+      "variantLabelEn": "8 oz White",
+      "variantLabelAr": "8 أونصة أبيض",
+      "variantGroupNameEn": "Dome Lid",
+      "variantGroupNameAr": "غطاء بارز",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "DCL/08B",
@@ -375,7 +414,14 @@
       "material": "PS",
       "caseQuantity": 1000,
       "quoteOnly": false,
-      "featured": true
+      "featured": true,
+      "variantGroup": "coffee-cup-lids-dome-lid",
+      "variantAxis": "both",
+      "variantLabelEn": "8 oz Black",
+      "variantLabelAr": "8 أونصة أسود",
+      "variantGroupNameEn": "Dome Lid",
+      "variantGroupNameAr": "غطاء بارز",
+      "variantSwatch": "#1B1B1F"
     },
     {
       "code": "DCL/12W",
@@ -385,7 +431,14 @@
       "size": "12-20 OZ",
       "material": "PS",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "coffee-cup-lids-dome-lid",
+      "variantAxis": "both",
+      "variantLabelEn": "12-20 oz White",
+      "variantLabelAr": "12-20 أونصة أبيض",
+      "variantGroupNameEn": "Dome Lid",
+      "variantGroupNameAr": "غطاء بارز",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "DCL/12B",
@@ -395,7 +448,14 @@
       "size": "12-20 OZ",
       "material": "PS",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "coffee-cup-lids-dome-lid",
+      "variantAxis": "both",
+      "variantLabelEn": "12-20 oz Black",
+      "variantLabelAr": "12-20 أونصة أسود",
+      "variantGroupNameEn": "Dome Lid",
+      "variantGroupNameAr": "غطاء بارز",
+      "variantSwatch": "#1B1B1F"
     },
     {
       "code": "WT-KS508",
@@ -436,7 +496,13 @@
       "size": "4 CUP",
       "material": "Pulp",
       "caseQuantity": 240,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "coffee-accessories-pulp-cup-tray",
+      "variantAxis": "size",
+      "variantLabelEn": "4 Cup",
+      "variantLabelAr": "4 أكواب",
+      "variantGroupNameEn": "Pulp Cup Tray",
+      "variantGroupNameAr": "حامل أكواب من اللب"
     },
     {
       "code": "WT-PT-2",
@@ -446,7 +512,13 @@
       "size": "2 CUP",
       "material": "Pulp",
       "caseQuantity": 360,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "coffee-accessories-pulp-cup-tray",
+      "variantAxis": "size",
+      "variantLabelEn": "2 Cup",
+      "variantLabelAr": "كوبان",
+      "variantGroupNameEn": "Pulp Cup Tray",
+      "variantGroupNameAr": "حامل أكواب من اللب"
     },
     {
       "code": "PSC/04W",
@@ -456,7 +528,13 @@
       "size": "4 OZ",
       "material": "257 GSM 120CC/Ø75",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "soup-cups-soup-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "4 oz",
+      "variantLabelAr": "4 أونصة",
+      "variantGroupNameEn": "Soup Cup",
+      "variantGroupNameAr": "كوب شوربة"
     },
     {
       "code": "PSC/06W",
@@ -466,7 +544,13 @@
       "size": "6 OZ",
       "material": "13PE+214+18PE 175CC/Ø96",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "soup-cups-soup-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "6 oz",
+      "variantLabelAr": "6 أونصة",
+      "variantGroupNameEn": "Soup Cup",
+      "variantGroupNameAr": "كوب شوربة"
     },
     {
       "code": "PSC/08W",
@@ -476,7 +560,13 @@
       "size": "8 OZ",
       "material": "13PE+214+18PE 260CC/Ø95",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "soup-cups-soup-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "8 oz",
+      "variantLabelAr": "8 أونصة",
+      "variantGroupNameEn": "Soup Cup",
+      "variantGroupNameAr": "كوب شوربة"
     },
     {
       "code": "PSC/12W",
@@ -486,7 +576,13 @@
       "size": "12 OZ",
       "material": "12PE+250+18PE 390CC/Ø101",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "soup-cups-soup-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "12 oz",
+      "variantLabelAr": "12 أونصة",
+      "variantGroupNameEn": "Soup Cup",
+      "variantGroupNameAr": "كوب شوربة"
     },
     {
       "code": "PSC/14W",
@@ -496,7 +592,13 @@
       "size": "14 OZ",
       "material": "282 GSM 390CC/Ø112",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "soup-cups-soup-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "14 oz",
+      "variantLabelAr": "14 أونصة",
+      "variantGroupNameEn": "Soup Cup",
+      "variantGroupNameAr": "كوب شوربة"
     },
     {
       "code": "PSC/16W",
@@ -507,7 +609,13 @@
       "material": "282 GSM 520CC/Ø112",
       "caseQuantity": 1000,
       "quoteOnly": false,
-      "featured": true
+      "featured": true,
+      "variantGroup": "soup-cups-soup-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "16 oz",
+      "variantLabelAr": "16 أونصة",
+      "variantGroupNameEn": "Soup Cup",
+      "variantGroupNameAr": "كوب شوربة"
     },
     {
       "code": "PSC/20W",
@@ -517,7 +625,13 @@
       "size": "20 OZ",
       "material": "297 GSM 750CC/Ø126",
       "caseQuantity": 600,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "soup-cups-soup-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "20 oz",
+      "variantLabelAr": "20 أونصة",
+      "variantGroupNameEn": "Soup Cup",
+      "variantGroupNameAr": "كوب شوربة"
     },
     {
       "code": "PSC/25W",
@@ -527,7 +641,13 @@
       "size": "25 OZ",
       "material": "312 GSM 780CC/Ø142",
       "caseQuantity": 600,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "soup-cups-soup-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "25 oz",
+      "variantLabelAr": "25 أونصة",
+      "variantGroupNameEn": "Soup Cup",
+      "variantGroupNameAr": "كوب شوربة"
     },
     {
       "code": "PSC/30W",
@@ -537,7 +657,13 @@
       "size": "30 OZ",
       "material": "312 GSM 850CC/Ø142",
       "caseQuantity": 600,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "soup-cups-soup-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "30 oz",
+      "variantLabelAr": "30 أونصة",
+      "variantGroupNameEn": "Soup Cup",
+      "variantGroupNameAr": "كوب شوربة"
     },
     {
       "code": "PSC/35W",
@@ -547,7 +673,13 @@
       "size": "35 OZ",
       "material": "312 GSM 1000CC/Ø142",
       "caseQuantity": 600,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "soup-cups-soup-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "35 oz",
+      "variantLabelAr": "35 أونصة",
+      "variantGroupNameEn": "Soup Cup",
+      "variantGroupNameAr": "كوب شوربة"
     },
     {
       "code": "BB/01",
@@ -567,7 +699,13 @@
       "size": "650 CC",
       "material": "297 GSM",
       "caseQuantity": 600,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "soup-cups-soup-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "650 cc",
+      "variantLabelAr": "650 سم³",
+      "variantGroupNameEn": "Soup Cup",
+      "variantGroupNameAr": "كوب شوربة"
     },
     {
       "code": "SIL/F/04PET",
@@ -587,7 +725,13 @@
       "size": "8 OZ",
       "material": "PP",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "soup-cup-lids-pp-flat-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "8 oz",
+      "variantLabelAr": "8 أونصة",
+      "variantGroupNameEn": "PP Flat Lid",
+      "variantGroupNameAr": "غطاء PP مسطح"
     },
     {
       "code": "SIL/F/1500OPS",
@@ -607,7 +751,13 @@
       "size": "12 OZ",
       "material": "PP",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "soup-cup-lids-pp-flat-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "12 oz",
+      "variantLabelAr": "12 أونصة",
+      "variantGroupNameEn": "PP Flat Lid",
+      "variantGroupNameAr": "غطاء PP مسطح"
     },
     {
       "code": "SIL/F/16PP",
@@ -617,7 +767,13 @@
       "size": "14 OZ & 16 OZ",
       "material": "PP",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "soup-cup-lids-pp-flat-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "14-16 oz",
+      "variantLabelAr": "14-16 أونصة",
+      "variantGroupNameEn": "PP Flat Lid",
+      "variantGroupNameAr": "غطاء PP مسطح"
     },
     {
       "code": "SIL/F/20PP",
@@ -627,7 +783,13 @@
       "size": "20 OZ",
       "material": "PP",
       "caseQuantity": 600,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "soup-cup-lids-pp-flat-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "20 oz",
+      "variantLabelAr": "20 أونصة",
+      "variantGroupNameEn": "PP Flat Lid",
+      "variantGroupNameAr": "غطاء PP مسطح"
     },
     {
       "code": "BBL/F/NTD/PP",
@@ -647,7 +809,13 @@
       "size": "25 OZ TO 35 OZ / 650 CC",
       "material": "PP",
       "caseQuantity": 600,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "soup-cup-lids-pp-flat-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "25-35 oz",
+      "variantLabelAr": "25-35 أونصة",
+      "variantGroupNameEn": "PP Flat Lid",
+      "variantGroupNameAr": "غطاء PP مسطح"
     },
     {
       "code": "SB/500KR",
@@ -657,7 +825,13 @@
       "size": "500 ML",
       "material": "Kraft paper 335 GSM",
       "caseQuantity": 300,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "kraft-bowls-kraft-paper-bowl",
+      "variantAxis": "size",
+      "variantLabelEn": "500 ml",
+      "variantLabelAr": "500 مل",
+      "variantGroupNameEn": "Kraft Paper Bowl",
+      "variantGroupNameAr": "وعاء كرافت"
     },
     {
       "code": "SB/750KR",
@@ -667,7 +841,13 @@
       "size": "750 ML",
       "material": "Kraft paper 335 GSM",
       "caseQuantity": 300,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "kraft-bowls-kraft-paper-bowl",
+      "variantAxis": "size",
+      "variantLabelEn": "750 ml",
+      "variantLabelAr": "750 مل",
+      "variantGroupNameEn": "Kraft Paper Bowl",
+      "variantGroupNameAr": "وعاء كرافت"
     },
     {
       "code": "SB/1000KR",
@@ -678,7 +858,13 @@
       "material": "Kraft paper 335 GSM",
       "caseQuantity": 300,
       "quoteOnly": false,
-      "featured": true
+      "featured": true,
+      "variantGroup": "kraft-bowls-kraft-paper-bowl",
+      "variantAxis": "size",
+      "variantLabelEn": "1000 ml",
+      "variantLabelAr": "1000 مل",
+      "variantGroupNameEn": "Kraft Paper Bowl",
+      "variantGroupNameAr": "وعاء كرافت"
     },
     {
       "code": "SB/1100KR",
@@ -688,7 +874,13 @@
       "size": "1100 ML",
       "material": "Kraft paper 335 GSM",
       "caseQuantity": 300,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "kraft-bowls-kraft-paper-bowl",
+      "variantAxis": "size",
+      "variantLabelEn": "1100 ml",
+      "variantLabelAr": "1100 مل",
+      "variantGroupNameEn": "Kraft Paper Bowl",
+      "variantGroupNameAr": "وعاء كرافت"
     },
     {
       "code": "SB/1300KR",
@@ -698,7 +890,13 @@
       "size": "1300 ML",
       "material": "Kraft paper 335 GSM",
       "caseQuantity": 300,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "kraft-bowls-kraft-paper-bowl",
+      "variantAxis": "size",
+      "variantLabelEn": "1300 ml",
+      "variantLabelAr": "1300 مل",
+      "variantGroupNameEn": "Kraft Paper Bowl",
+      "variantGroupNameAr": "وعاء كرافت"
     },
     {
       "code": "SB/1500KR",
@@ -708,7 +906,13 @@
       "size": "1500 ML",
       "material": "Kraft paper 335 GSM",
       "caseQuantity": 300,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "kraft-bowls-kraft-paper-bowl",
+      "variantAxis": "size",
+      "variantLabelEn": "1500 ml",
+      "variantLabelAr": "1500 مل",
+      "variantGroupNameEn": "Kraft Paper Bowl",
+      "variantGroupNameAr": "وعاء كرافت"
     },
     {
       "code": "SBL/150 OPS",
@@ -778,7 +982,14 @@
       "size": "12 OZ",
       "material": "340G + double PE (Kraft)",
       "caseQuantity": 500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "shakers-shaker",
+      "variantAxis": "both",
+      "variantLabelEn": "12 OZ Kraft",
+      "variantLabelAr": "12 OZ كرافت",
+      "variantGroupNameEn": "Shaker",
+      "variantGroupNameAr": "علبة شيكر",
+      "variantSwatch": "#C19A6B"
     },
     {
       "code": "SKRPL/08KR",
@@ -788,7 +999,14 @@
       "size": "08-12 OZ",
       "material": "340G + double PE (Kraft)",
       "caseQuantity": 500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "shakers-shaker-lid",
+      "variantAxis": "both",
+      "variantLabelEn": "08-12 OZ Kraft",
+      "variantLabelAr": "08-12 OZ كرافت",
+      "variantGroupNameEn": "Shaker Lid",
+      "variantGroupNameAr": "غطاء شيكر",
+      "variantSwatch": "#C19A6B"
     },
     {
       "code": "SKR/16KR",
@@ -799,7 +1017,14 @@
       "material": "340G + double PE (Kraft)",
       "caseQuantity": 500,
       "quoteOnly": false,
-      "featured": true
+      "featured": true,
+      "variantGroup": "shakers-shaker",
+      "variantAxis": "both",
+      "variantLabelEn": "16 OZ Kraft",
+      "variantLabelAr": "16 OZ كرافت",
+      "variantGroupNameEn": "Shaker",
+      "variantGroupNameAr": "علبة شيكر",
+      "variantSwatch": "#C19A6B"
     },
     {
       "code": "SKRPL/16KR",
@@ -809,7 +1034,14 @@
       "size": "16 OZ",
       "material": "340G + double PE (Kraft)",
       "caseQuantity": 500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "shakers-shaker-lid",
+      "variantAxis": "both",
+      "variantLabelEn": "16 OZ Kraft",
+      "variantLabelAr": "16 OZ كرافت",
+      "variantGroupNameEn": "Shaker Lid",
+      "variantGroupNameAr": "غطاء شيكر",
+      "variantSwatch": "#C19A6B"
     },
     {
       "code": "SKR/26KR",
@@ -819,7 +1051,14 @@
       "size": "26 OZ",
       "material": "340G + double PE (Kraft)",
       "caseQuantity": 500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "shakers-shaker",
+      "variantAxis": "both",
+      "variantLabelEn": "26 OZ Kraft",
+      "variantLabelAr": "26 OZ كرافت",
+      "variantGroupNameEn": "Shaker",
+      "variantGroupNameAr": "علبة شيكر",
+      "variantSwatch": "#C19A6B"
     },
     {
       "code": "SKRPL/26KR",
@@ -829,7 +1068,14 @@
       "size": "26 OZ",
       "material": "340G + double PE (Kraft)",
       "caseQuantity": 500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "shakers-shaker-lid",
+      "variantAxis": "both",
+      "variantLabelEn": "26 OZ Kraft",
+      "variantLabelAr": "26 OZ كرافت",
+      "variantGroupNameEn": "Shaker Lid",
+      "variantGroupNameAr": "غطاء شيكر",
+      "variantSwatch": "#C19A6B"
     },
     {
       "code": "SKR/12W",
@@ -839,7 +1085,14 @@
       "size": "12 OZ",
       "material": "340G + double PE (White)",
       "caseQuantity": 500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "shakers-shaker",
+      "variantAxis": "both",
+      "variantLabelEn": "12 OZ White",
+      "variantLabelAr": "12 OZ أبيض",
+      "variantGroupNameEn": "Shaker",
+      "variantGroupNameAr": "علبة شيكر",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "SKRPL/08W",
@@ -849,7 +1102,14 @@
       "size": "08-12 OZ",
       "material": "340G + double PE (White)",
       "caseQuantity": 500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "shakers-shaker-lid",
+      "variantAxis": "both",
+      "variantLabelEn": "08-12 OZ White",
+      "variantLabelAr": "08-12 OZ أبيض",
+      "variantGroupNameEn": "Shaker Lid",
+      "variantGroupNameAr": "غطاء شيكر",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "SKR/16W",
@@ -859,7 +1119,14 @@
       "size": "16 OZ",
       "material": "340G + double PE (White)",
       "caseQuantity": 500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "shakers-shaker",
+      "variantAxis": "both",
+      "variantLabelEn": "16 OZ White",
+      "variantLabelAr": "16 OZ أبيض",
+      "variantGroupNameEn": "Shaker",
+      "variantGroupNameAr": "علبة شيكر",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "SKRPL/16W",
@@ -869,7 +1136,14 @@
       "size": "16 OZ",
       "material": "340G + double PE (White)",
       "caseQuantity": 500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "shakers-shaker-lid",
+      "variantAxis": "both",
+      "variantLabelEn": "16 OZ White",
+      "variantLabelAr": "16 OZ أبيض",
+      "variantGroupNameEn": "Shaker Lid",
+      "variantGroupNameAr": "غطاء شيكر",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "SKR/26W",
@@ -879,7 +1153,14 @@
       "size": "26 OZ",
       "material": "340G + double PE (White)",
       "caseQuantity": 500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "shakers-shaker",
+      "variantAxis": "both",
+      "variantLabelEn": "26 OZ White",
+      "variantLabelAr": "26 OZ أبيض",
+      "variantGroupNameEn": "Shaker",
+      "variantGroupNameAr": "علبة شيكر",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "SKRPL/26W",
@@ -889,7 +1170,14 @@
       "size": "26 OZ",
       "material": "340G + double PE (White)",
       "caseQuantity": 500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "shakers-shaker-lid",
+      "variantAxis": "both",
+      "variantLabelEn": "26 OZ White",
+      "variantLabelAr": "26 OZ أبيض",
+      "variantGroupNameEn": "Shaker Lid",
+      "variantGroupNameAr": "غطاء شيكر",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "SKR/12B",
@@ -899,7 +1187,14 @@
       "size": "12 OZ",
       "material": "340G + double PE (Black)",
       "caseQuantity": 500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "shakers-shaker",
+      "variantAxis": "both",
+      "variantLabelEn": "12 OZ Black",
+      "variantLabelAr": "12 OZ أسود",
+      "variantGroupNameEn": "Shaker",
+      "variantGroupNameAr": "علبة شيكر",
+      "variantSwatch": "#1B1B1F"
     },
     {
       "code": "SKRPL/08B",
@@ -909,7 +1204,14 @@
       "size": "08-12 OZ",
       "material": "340G + double PE (Black)",
       "caseQuantity": 500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "shakers-shaker-lid",
+      "variantAxis": "both",
+      "variantLabelEn": "08-12 OZ Black",
+      "variantLabelAr": "08-12 OZ أسود",
+      "variantGroupNameEn": "Shaker Lid",
+      "variantGroupNameAr": "غطاء شيكر",
+      "variantSwatch": "#1B1B1F"
     },
     {
       "code": "SKR/16B",
@@ -919,7 +1221,14 @@
       "size": "16 OZ",
       "material": "340G + double PE (Black)",
       "caseQuantity": 500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "shakers-shaker",
+      "variantAxis": "both",
+      "variantLabelEn": "16 OZ Black",
+      "variantLabelAr": "16 OZ أسود",
+      "variantGroupNameEn": "Shaker",
+      "variantGroupNameAr": "علبة شيكر",
+      "variantSwatch": "#1B1B1F"
     },
     {
       "code": "SKRPL/16B",
@@ -929,7 +1238,14 @@
       "size": "16 OZ",
       "material": "340G + double PE (Black)",
       "caseQuantity": 500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "shakers-shaker-lid",
+      "variantAxis": "both",
+      "variantLabelEn": "16 OZ Black",
+      "variantLabelAr": "16 OZ أسود",
+      "variantGroupNameEn": "Shaker Lid",
+      "variantGroupNameAr": "غطاء شيكر",
+      "variantSwatch": "#1B1B1F"
     },
     {
       "code": "SKR/26B",
@@ -939,7 +1255,14 @@
       "size": "26 OZ",
       "material": "340G + double PE (Black)",
       "caseQuantity": 500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "shakers-shaker",
+      "variantAxis": "both",
+      "variantLabelEn": "26 OZ Black",
+      "variantLabelAr": "26 OZ أسود",
+      "variantGroupNameEn": "Shaker",
+      "variantGroupNameAr": "علبة شيكر",
+      "variantSwatch": "#1B1B1F"
     },
     {
       "code": "SKRPL/26B",
@@ -949,7 +1272,14 @@
       "size": "26 OZ",
       "material": "340G + double PE (Black)",
       "caseQuantity": 500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "shakers-shaker-lid",
+      "variantAxis": "both",
+      "variantLabelEn": "26 OZ Black",
+      "variantLabelAr": "26 OZ أسود",
+      "variantGroupNameEn": "Shaker Lid",
+      "variantGroupNameAr": "غطاء شيكر",
+      "variantSwatch": "#1B1B1F"
     },
     {
       "code": "WT-CB19",
@@ -959,7 +1289,14 @@
       "size": "W-19 X H-22 X G-11.5",
       "material": "White paper",
       "caseQuantity": 400,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "carry-bags-carry-bag",
+      "variantAxis": "both",
+      "variantLabelEn": "White 19 cm",
+      "variantLabelAr": "أبيض 19 سم",
+      "variantGroupNameEn": "Carry Bag",
+      "variantGroupNameAr": "كيس توصيل",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "WT-CB22",
@@ -969,7 +1306,14 @@
       "size": "W-22 X G-10 X H-28",
       "material": "White paper",
       "caseQuantity": 300,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "carry-bags-carry-bag",
+      "variantAxis": "both",
+      "variantLabelEn": "White 22 cm",
+      "variantLabelAr": "أبيض 22 سم",
+      "variantGroupNameEn": "Carry Bag",
+      "variantGroupNameAr": "كيس توصيل",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "WT-CB25",
@@ -979,7 +1323,14 @@
       "size": "W-25 X G-12 X H-31",
       "material": "White paper",
       "caseQuantity": 300,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "carry-bags-carry-bag",
+      "variantAxis": "both",
+      "variantLabelEn": "White 25 cm",
+      "variantLabelAr": "أبيض 25 سم",
+      "variantGroupNameEn": "Carry Bag",
+      "variantGroupNameAr": "كيس توصيل",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "WT-CB32",
@@ -989,7 +1340,14 @@
       "size": "W-32 X G-16 X H-33",
       "material": "White paper",
       "caseQuantity": 250,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "carry-bags-carry-bag",
+      "variantAxis": "both",
+      "variantLabelEn": "White 32 cm",
+      "variantLabelAr": "أبيض 32 سم",
+      "variantGroupNameEn": "Carry Bag",
+      "variantGroupNameAr": "كيس توصيل",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "WT-CB36",
@@ -999,7 +1357,14 @@
       "size": "W-36 X G-20 X H-35",
       "material": "White paper",
       "caseQuantity": 200,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "carry-bags-carry-bag",
+      "variantAxis": "both",
+      "variantLabelEn": "White 36 cm",
+      "variantLabelAr": "أبيض 36 سم",
+      "variantGroupNameEn": "Carry Bag",
+      "variantGroupNameAr": "كيس توصيل",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "WT-CB19K",
@@ -1009,7 +1374,14 @@
       "size": "W-19 X H-22 X G-11.5",
       "material": "Kraft paper",
       "caseQuantity": 400,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "carry-bags-carry-bag",
+      "variantAxis": "both",
+      "variantLabelEn": "Kraft 19 cm",
+      "variantLabelAr": "كرافت 19 سم",
+      "variantGroupNameEn": "Carry Bag",
+      "variantGroupNameAr": "كيس توصيل",
+      "variantSwatch": "#C19A6B"
     },
     {
       "code": "WT-CB22K",
@@ -1019,7 +1391,14 @@
       "size": "W-22 X G-10 X H-28",
       "material": "Kraft paper",
       "caseQuantity": 300,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "carry-bags-carry-bag",
+      "variantAxis": "both",
+      "variantLabelEn": "Kraft 22 cm",
+      "variantLabelAr": "كرافت 22 سم",
+      "variantGroupNameEn": "Carry Bag",
+      "variantGroupNameAr": "كيس توصيل",
+      "variantSwatch": "#C19A6B"
     },
     {
       "code": "WT-CB25K",
@@ -1030,7 +1409,14 @@
       "material": "Kraft paper",
       "caseQuantity": 300,
       "quoteOnly": false,
-      "featured": true
+      "featured": true,
+      "variantGroup": "carry-bags-carry-bag",
+      "variantAxis": "both",
+      "variantLabelEn": "Kraft 25 cm",
+      "variantLabelAr": "كرافت 25 سم",
+      "variantGroupNameEn": "Carry Bag",
+      "variantGroupNameAr": "كيس توصيل",
+      "variantSwatch": "#C19A6B"
     },
     {
       "code": "WT-CB32K",
@@ -1040,7 +1426,14 @@
       "size": "W-32 X G-16 X H-33",
       "material": "Kraft paper",
       "caseQuantity": 250,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "carry-bags-carry-bag",
+      "variantAxis": "both",
+      "variantLabelEn": "Kraft 32 cm",
+      "variantLabelAr": "كرافت 32 سم",
+      "variantGroupNameEn": "Carry Bag",
+      "variantGroupNameAr": "كيس توصيل",
+      "variantSwatch": "#C19A6B"
     },
     {
       "code": "WT-CB36K",
@@ -1050,7 +1443,14 @@
       "size": "W-36 X G-20 X H-35",
       "material": "Kraft paper",
       "caseQuantity": 200,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "carry-bags-carry-bag",
+      "variantAxis": "both",
+      "variantLabelEn": "Kraft 36 cm",
+      "variantLabelAr": "كرافت 36 سم",
+      "variantGroupNameEn": "Carry Bag",
+      "variantGroupNameAr": "كيس توصيل",
+      "variantSwatch": "#C19A6B"
     },
     {
       "code": "LB/XXSW",
@@ -1060,7 +1460,14 @@
       "size": "13.4 x 10 x 3.7 CM",
       "material": "300G+18PE",
       "caseQuantity": 200,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "lunch-boxes-lunch-box",
+      "variantAxis": "both",
+      "variantLabelEn": "White XXS",
+      "variantLabelAr": "بيضاء XXS",
+      "variantGroupNameEn": "Lunch Box",
+      "variantGroupNameAr": "علبة وجبة",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "LB/XSW",
@@ -1070,7 +1477,14 @@
       "size": "15 x 12 x 4.5 CM",
       "material": "300G+18PE",
       "caseQuantity": 200,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "lunch-boxes-lunch-box",
+      "variantAxis": "both",
+      "variantLabelEn": "White XS",
+      "variantLabelAr": "بيضاء XS",
+      "variantGroupNameEn": "Lunch Box",
+      "variantGroupNameAr": "علبة وجبة",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "LB/SW",
@@ -1080,7 +1494,14 @@
       "size": "17 x 12 x 4.5 CM",
       "material": "300G+18PE",
       "caseQuantity": 200,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "lunch-boxes-lunch-box",
+      "variantAxis": "both",
+      "variantLabelEn": "White S",
+      "variantLabelAr": "بيضاء S",
+      "variantGroupNameEn": "Lunch Box",
+      "variantGroupNameAr": "علبة وجبة",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "LB/MW",
@@ -1090,7 +1511,14 @@
       "size": "20 x 14 x 5 CM",
       "material": "320G+18PE",
       "caseQuantity": 200,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "lunch-boxes-lunch-box",
+      "variantAxis": "both",
+      "variantLabelEn": "White M",
+      "variantLabelAr": "بيضاء M",
+      "variantGroupNameEn": "Lunch Box",
+      "variantGroupNameAr": "علبة وجبة",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "LB/XXSKR",
@@ -1100,7 +1528,14 @@
       "size": "13.4 x 10 x 3.7 CM",
       "material": "300G+18PE",
       "caseQuantity": 200,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "lunch-boxes-lunch-box",
+      "variantAxis": "both",
+      "variantLabelEn": "Kraft XXS",
+      "variantLabelAr": "كرافت XXS",
+      "variantGroupNameEn": "Lunch Box",
+      "variantGroupNameAr": "علبة وجبة",
+      "variantSwatch": "#C19A6B"
     },
     {
       "code": "LB/XSKR",
@@ -1110,7 +1545,14 @@
       "size": "15 x 12 x 4.5 CM",
       "material": "300G+18PE",
       "caseQuantity": 200,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "lunch-boxes-lunch-box",
+      "variantAxis": "both",
+      "variantLabelEn": "Kraft XS",
+      "variantLabelAr": "كرافت XS",
+      "variantGroupNameEn": "Lunch Box",
+      "variantGroupNameAr": "علبة وجبة",
+      "variantSwatch": "#C19A6B"
     },
     {
       "code": "LB/SKR",
@@ -1120,7 +1562,14 @@
       "size": "17 x 12 x 4.5 CM",
       "material": "300G+18PE",
       "caseQuantity": 200,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "lunch-boxes-lunch-box",
+      "variantAxis": "both",
+      "variantLabelEn": "Kraft S",
+      "variantLabelAr": "كرافت S",
+      "variantGroupNameEn": "Lunch Box",
+      "variantGroupNameAr": "علبة وجبة",
+      "variantSwatch": "#C19A6B"
     },
     {
       "code": "LB/MKR",
@@ -1131,7 +1580,14 @@
       "material": "320G+18PE",
       "caseQuantity": 200,
       "quoteOnly": false,
-      "featured": true
+      "featured": true,
+      "variantGroup": "lunch-boxes-lunch-box",
+      "variantAxis": "both",
+      "variantLabelEn": "Kraft M",
+      "variantLabelAr": "كرافت M",
+      "variantGroupNameEn": "Lunch Box",
+      "variantGroupNameAr": "علبة وجبة",
+      "variantSwatch": "#C19A6B"
     },
     {
       "code": "LB/LKR",
@@ -1141,7 +1597,14 @@
       "size": "22.5 x 15.5 x 6.5 CM",
       "material": "320G+18PE",
       "caseQuantity": 200,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "lunch-boxes-lunch-box",
+      "variantAxis": "both",
+      "variantLabelEn": "Kraft L",
+      "variantLabelAr": "كرافت L",
+      "variantGroupNameEn": "Lunch Box",
+      "variantGroupNameAr": "علبة وجبة",
+      "variantSwatch": "#C19A6B"
     },
     {
       "code": "ST/500KR",
@@ -1151,7 +1614,13 @@
       "size": "500 ML",
       "material": "350 GSM + PE (PET lid)",
       "caseQuantity": 200,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "sushi-trays-sushi-tray-with-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "500 ml",
+      "variantLabelAr": "500 مل",
+      "variantGroupNameEn": "Sushi Tray with Lid",
+      "variantGroupNameAr": "صينية سوشي بغطاء"
     },
     {
       "code": "ST/700KR",
@@ -1161,7 +1630,13 @@
       "size": "700 ML",
       "material": "350 GSM + PE (PET lid)",
       "caseQuantity": 200,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "sushi-trays-sushi-tray-with-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "700 ml",
+      "variantLabelAr": "700 مل",
+      "variantGroupNameEn": "Sushi Tray with Lid",
+      "variantGroupNameAr": "صينية سوشي بغطاء"
     },
     {
       "code": "ST/900KR",
@@ -1172,7 +1647,13 @@
       "material": "350 GSM + PE (PET lid)",
       "caseQuantity": 200,
       "quoteOnly": false,
-      "featured": true
+      "featured": true,
+      "variantGroup": "sushi-trays-sushi-tray-with-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "900 ml",
+      "variantLabelAr": "900 مل",
+      "variantGroupNameEn": "Sushi Tray with Lid",
+      "variantGroupNameAr": "صينية سوشي بغطاء"
     },
     {
       "code": "ST/2100KR",
@@ -1182,7 +1663,13 @@
       "size": "2100 ML",
       "material": "350 GSM + PE (PET lid)",
       "caseQuantity": 200,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "sushi-trays-sushi-tray-with-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "2100 ml",
+      "variantLabelAr": "2100 مل",
+      "variantGroupNameEn": "Sushi Tray with Lid",
+      "variantGroupNameAr": "صينية سوشي بغطاء"
     },
     {
       "code": "SQ-WRP25W",
@@ -1192,7 +1679,13 @@
       "size": "25 CM",
       "material": "30 GSM white wax",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "wraps-white-wax-paper",
+      "variantAxis": "size",
+      "variantLabelEn": "25 cm",
+      "variantLabelAr": "25 سم",
+      "variantGroupNameEn": "White Wax Paper",
+      "variantGroupNameAr": "ورق شمعي أبيض"
     },
     {
       "code": "SQ-WRP36W",
@@ -1202,7 +1695,13 @@
       "size": "36 CM",
       "material": "30 GSM white wax",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "wraps-white-wax-paper",
+      "variantAxis": "size",
+      "variantLabelEn": "36 cm",
+      "variantLabelAr": "36 سم",
+      "variantGroupNameEn": "White Wax Paper",
+      "variantGroupNameAr": "ورق شمعي أبيض"
     },
     {
       "code": "SQ-WRP25K",
@@ -1212,7 +1711,13 @@
       "size": "25 CM",
       "material": "34 GSM brown greaseproof",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "wraps-brown-greaseproof-paper",
+      "variantAxis": "size",
+      "variantLabelEn": "25 cm",
+      "variantLabelAr": "25 سم",
+      "variantGroupNameEn": "Brown Greaseproof Paper",
+      "variantGroupNameAr": "ورق بني مقاوم للدهون"
     },
     {
       "code": "SQ-WRP36K",
@@ -1222,7 +1727,13 @@
       "size": "36 CM",
       "material": "34 GSM brown greaseproof",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "wraps-brown-greaseproof-paper",
+      "variantAxis": "size",
+      "variantLabelEn": "36 cm",
+      "variantLabelAr": "36 سم",
+      "variantGroupNameEn": "Brown Greaseproof Paper",
+      "variantGroupNameAr": "ورق بني مقاوم للدهون"
     },
     {
       "code": "SQ-WRP25",
@@ -1232,7 +1743,13 @@
       "size": "25 CM",
       "material": "30 GSM printed wax",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "wraps-printed-wax-paper",
+      "variantAxis": "size",
+      "variantLabelEn": "25 cm",
+      "variantLabelAr": "25 سم",
+      "variantGroupNameEn": "Printed Wax Paper",
+      "variantGroupNameAr": "ورق شمعي مطبوع"
     },
     {
       "code": "SQ-WRP36",
@@ -1242,7 +1759,13 @@
       "size": "36 CM",
       "material": "30 GSM printed wax",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "wraps-printed-wax-paper",
+      "variantAxis": "size",
+      "variantLabelEn": "36 cm",
+      "variantLabelAr": "36 سم",
+      "variantGroupNameEn": "Printed Wax Paper",
+      "variantGroupNameAr": "ورق شمعي مطبوع"
     },
     {
       "code": "SQ-ALU05",
@@ -1292,7 +1815,14 @@
       "size": "12 x 8.5 x 2 CM",
       "material": "230 paperboard + 15 PE (Kraft)",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "food-trays-food-tray",
+      "variantAxis": "both",
+      "variantLabelEn": "Kraft 12 cm",
+      "variantLabelAr": "كرافت 12 سم",
+      "variantGroupNameEn": "Food Tray",
+      "variantGroupNameAr": "صينية طعام",
+      "variantSwatch": "#C19A6B"
     },
     {
       "code": "FT1W",
@@ -1302,7 +1832,14 @@
       "size": "12 x 8.5 x 2 CM",
       "material": "230 paperboard + 15 PE (White)",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "food-trays-food-tray",
+      "variantAxis": "both",
+      "variantLabelEn": "White 12 cm",
+      "variantLabelAr": "أبيض 12 سم",
+      "variantGroupNameEn": "Food Tray",
+      "variantGroupNameAr": "صينية طعام",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "FT2KR",
@@ -1312,7 +1849,14 @@
       "size": "14 x 10 x 3 CM",
       "material": "230 paperboard + 15 PE (Kraft)",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "food-trays-food-tray",
+      "variantAxis": "both",
+      "variantLabelEn": "Kraft 14 cm",
+      "variantLabelAr": "كرافت 14 سم",
+      "variantGroupNameEn": "Food Tray",
+      "variantGroupNameAr": "صينية طعام",
+      "variantSwatch": "#C19A6B"
     },
     {
       "code": "FT2W",
@@ -1322,7 +1866,14 @@
       "size": "14 x 10 x 3 CM",
       "material": "230 paperboard + 15 PE (White)",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "food-trays-food-tray",
+      "variantAxis": "both",
+      "variantLabelEn": "White 14 cm",
+      "variantLabelAr": "أبيض 14 سم",
+      "variantGroupNameEn": "Food Tray",
+      "variantGroupNameAr": "صينية طعام",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "FT3KR",
@@ -1332,7 +1883,14 @@
       "size": "16 x 12 x 3.2 CM",
       "material": "230 paperboard + 15 PE (Kraft)",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "food-trays-food-tray",
+      "variantAxis": "both",
+      "variantLabelEn": "Kraft 16 cm",
+      "variantLabelAr": "كرافت 16 سم",
+      "variantGroupNameEn": "Food Tray",
+      "variantGroupNameAr": "صينية طعام",
+      "variantSwatch": "#C19A6B"
     },
     {
       "code": "FT3W",
@@ -1342,7 +1900,14 @@
       "size": "16 x 12 x 3.2 CM",
       "material": "230 paperboard + 15 PE (White)",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "food-trays-food-tray",
+      "variantAxis": "both",
+      "variantLabelEn": "White 16 cm",
+      "variantLabelAr": "أبيض 16 سم",
+      "variantGroupNameEn": "Food Tray",
+      "variantGroupNameAr": "صينية طعام",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "FT/4KR",
@@ -1353,7 +1918,14 @@
       "material": "230 paperboard + 15 PE (Kraft)",
       "caseQuantity": 1000,
       "quoteOnly": false,
-      "featured": true
+      "featured": true,
+      "variantGroup": "food-trays-food-tray",
+      "variantAxis": "both",
+      "variantLabelEn": "Kraft 17 cm",
+      "variantLabelAr": "كرافت 17 سم",
+      "variantGroupNameEn": "Food Tray",
+      "variantGroupNameAr": "صينية طعام",
+      "variantSwatch": "#C19A6B"
     },
     {
       "code": "FT/4W",
@@ -1363,7 +1935,14 @@
       "size": "17 x 12.5 x 4.1 CM",
       "material": "230 paperboard + 15 PE (White)",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "food-trays-food-tray",
+      "variantAxis": "both",
+      "variantLabelEn": "White 17 cm",
+      "variantLabelAr": "أبيض 17 سم",
+      "variantGroupNameEn": "Food Tray",
+      "variantGroupNameAr": "صينية طعام",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "FT/5KR",
@@ -1373,7 +1952,14 @@
       "size": "21.5 x 15 x 4 CM",
       "material": "230 paperboard + 15 PE (Kraft)",
       "caseQuantity": 500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "food-trays-food-tray",
+      "variantAxis": "both",
+      "variantLabelEn": "Kraft 21.5 cm",
+      "variantLabelAr": "كرافت 21.5 سم",
+      "variantGroupNameEn": "Food Tray",
+      "variantGroupNameAr": "صينية طعام",
+      "variantSwatch": "#C19A6B"
     },
     {
       "code": "FT/5W",
@@ -1383,7 +1969,14 @@
       "size": "21.5 x 15 x 4 CM",
       "material": "230 paperboard + 15 PE (White)",
       "caseQuantity": 500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "food-trays-food-tray",
+      "variantAxis": "both",
+      "variantLabelEn": "White 21.5 cm",
+      "variantLabelAr": "أبيض 21.5 سم",
+      "variantGroupNameEn": "Food Tray",
+      "variantGroupNameAr": "صينية طعام",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "FT/6KR",
@@ -1393,7 +1986,14 @@
       "size": "25 x 18 x 5.2 CM",
       "material": "230 paperboard + 15 PE (Kraft)",
       "caseQuantity": 500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "food-trays-food-tray",
+      "variantAxis": "both",
+      "variantLabelEn": "Kraft 25 cm",
+      "variantLabelAr": "كرافت 25 سم",
+      "variantGroupNameEn": "Food Tray",
+      "variantGroupNameAr": "صينية طعام",
+      "variantSwatch": "#C19A6B"
     },
     {
       "code": "FT/6W",
@@ -1403,7 +2003,14 @@
       "size": "25 x 18 x 5.2 CM",
       "material": "230 paperboard + 15 PE (White)",
       "caseQuantity": 500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "food-trays-food-tray",
+      "variantAxis": "both",
+      "variantLabelEn": "White 25 cm",
+      "variantLabelAr": "أبيض 25 سم",
+      "variantGroupNameEn": "Food Tray",
+      "variantGroupNameAr": "صينية طعام",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "HB/13KR",
@@ -1483,7 +2090,14 @@
       "size": "11.5 CM",
       "material": "PS 2.05 G",
       "caseQuantity": 2800,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "spoons-leaf-spoon-11-5-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "Pearl",
+      "variantLabelAr": "لؤلؤي",
+      "variantGroupNameEn": "Leaf Spoon 11.5 cm",
+      "variantGroupNameAr": "ملعقة ورقية 11.5 سم",
+      "variantSwatch": "#F2EFE6"
     },
     {
       "code": "TC-115-PS-LSPN-CG",
@@ -1493,7 +2107,14 @@
       "size": "11.5 CM",
       "material": "PS 2.05 G",
       "caseQuantity": 2800,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "spoons-leaf-spoon-11-5-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "Candy Green",
+      "variantLabelAr": "أخضر",
+      "variantGroupNameEn": "Leaf Spoon 11.5 cm",
+      "variantGroupNameAr": "ملعقة ورقية 11.5 سم",
+      "variantSwatch": "#8CC63F"
     },
     {
       "code": "TC-115-PS-LSPN-BBRY",
@@ -1503,7 +2124,14 @@
       "size": "11.5 CM",
       "material": "PS 2.05 G",
       "caseQuantity": 2800,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "spoons-leaf-spoon-11-5-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "Blueberry",
+      "variantLabelAr": "توتي",
+      "variantGroupNameEn": "Leaf Spoon 11.5 cm",
+      "variantGroupNameAr": "ملعقة ورقية 11.5 سم",
+      "variantSwatch": "#4A5FA5"
     },
     {
       "code": "TC-115-PS-LSPN-SF",
@@ -1513,7 +2141,14 @@
       "size": "11.5 CM",
       "material": "PS 2.05 G",
       "caseQuantity": 2800,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "spoons-leaf-spoon-11-5-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "Sunflower",
+      "variantLabelAr": "أصفر",
+      "variantGroupNameEn": "Leaf Spoon 11.5 cm",
+      "variantGroupNameAr": "ملعقة ورقية 11.5 سم",
+      "variantSwatch": "#F5C518"
     },
     {
       "code": "TC-115-PS-LSPN-LG",
@@ -1523,7 +2158,14 @@
       "size": "11.5 CM",
       "material": "PS 2.05 G",
       "caseQuantity": 2800,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "spoons-leaf-spoon-11-5-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "Lemon Grass",
+      "variantLabelAr": "ليموني",
+      "variantGroupNameEn": "Leaf Spoon 11.5 cm",
+      "variantGroupNameAr": "ملعقة ورقية 11.5 سم",
+      "variantSwatch": "#C6D94A"
     },
     {
       "code": "TC-115-PS-LSPN-BBG",
@@ -1533,7 +2175,14 @@
       "size": "11.5 CM",
       "material": "PS 2.05 G",
       "caseQuantity": 2800,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "spoons-leaf-spoon-11-5-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "Bubblegum",
+      "variantLabelAr": "وردي",
+      "variantGroupNameEn": "Leaf Spoon 11.5 cm",
+      "variantGroupNameAr": "ملعقة ورقية 11.5 سم",
+      "variantSwatch": "#F49AC2"
     },
     {
       "code": "TC-115-PS-LSPN-LVNR",
@@ -1543,7 +2192,14 @@
       "size": "11.5 CM",
       "material": "PS 2.05 G",
       "caseQuantity": 2800,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "spoons-leaf-spoon-11-5-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "Lavender",
+      "variantLabelAr": "بنفسجي",
+      "variantGroupNameEn": "Leaf Spoon 11.5 cm",
+      "variantGroupNameAr": "ملعقة ورقية 11.5 سم",
+      "variantSwatch": "#B49BD4"
     },
     {
       "code": "TC-180-PP-SPN-B",
@@ -1553,7 +2209,14 @@
       "size": "18 CM",
       "material": "PP 4 G",
       "caseQuantity": 2000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "spoons-parfait-spoon-18-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "Black",
+      "variantLabelAr": "أسود",
+      "variantGroupNameEn": "Parfait Spoon 18 cm",
+      "variantGroupNameAr": "ملعقة بارفيه 18 سم",
+      "variantSwatch": "#1B1B1F"
     },
     {
       "code": "TC-180-PP-SPN-W",
@@ -1563,7 +2226,14 @@
       "size": "18 CM",
       "material": "PP 4 G",
       "caseQuantity": 2000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "spoons-parfait-spoon-18-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "White",
+      "variantLabelAr": "أبيض",
+      "variantGroupNameEn": "Parfait Spoon 18 cm",
+      "variantGroupNameAr": "ملعقة بارفيه 18 سم",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "TC-180-PP-SPN-RP",
@@ -1573,7 +2243,14 @@
       "size": "18 CM",
       "material": "PP 4 G",
       "caseQuantity": 2000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "spoons-parfait-spoon-18-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "Rose Pink",
+      "variantLabelAr": "وردي",
+      "variantGroupNameEn": "Parfait Spoon 18 cm",
+      "variantGroupNameAr": "ملعقة بارفيه 18 سم",
+      "variantSwatch": "#E8A0B4"
     },
     {
       "code": "TC-180-PP-SPN-AG",
@@ -1583,7 +2260,14 @@
       "size": "18 CM",
       "material": "PP 4 G",
       "caseQuantity": 2000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "spoons-parfait-spoon-18-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "Apple Green",
+      "variantLabelAr": "أخضر",
+      "variantGroupNameEn": "Parfait Spoon 18 cm",
+      "variantGroupNameAr": "ملعقة بارفيه 18 سم",
+      "variantSwatch": "#9ACD32"
     },
     {
       "code": "TC-160-PP-SPN-B",
@@ -1593,7 +2277,14 @@
       "size": "16 CM",
       "material": "PP 2 G",
       "caseQuantity": 2000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "spoons-disposable-spoon-16-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "Black",
+      "variantLabelAr": "أسود",
+      "variantGroupNameEn": "Disposable Spoon 16 cm",
+      "variantGroupNameAr": "ملعقة استخدام مرة واحدة 16 سم",
+      "variantSwatch": "#1B1B1F"
     },
     {
       "code": "TC-160-PP-SPN-W",
@@ -1603,7 +2294,14 @@
       "size": "16 CM",
       "material": "PP 2 G",
       "caseQuantity": 2000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "spoons-disposable-spoon-16-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "White",
+      "variantLabelAr": "أبيض",
+      "variantGroupNameEn": "Disposable Spoon 16 cm",
+      "variantGroupNameAr": "ملعقة استخدام مرة واحدة 16 سم",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "TC-160-PP-FRK-B",
@@ -1613,7 +2311,14 @@
       "size": "16 CM",
       "material": "PP 2 G",
       "caseQuantity": 2000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "forks-and-knives-disposable-fork-16-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "Black",
+      "variantLabelAr": "أسود",
+      "variantGroupNameEn": "Disposable Fork 16 cm",
+      "variantGroupNameAr": "شوكة استخدام مرة واحدة 16 سم",
+      "variantSwatch": "#1B1B1F"
     },
     {
       "code": "TC-160-PP-FRK-W",
@@ -1623,7 +2328,14 @@
       "size": "16 CM",
       "material": "PP 2 G",
       "caseQuantity": 2000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "forks-and-knives-disposable-fork-16-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "White",
+      "variantLabelAr": "أبيض",
+      "variantGroupNameEn": "Disposable Fork 16 cm",
+      "variantGroupNameAr": "شوكة استخدام مرة واحدة 16 سم",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "TC-170-PP-KNF-B",
@@ -1633,7 +2345,14 @@
       "size": "16 CM",
       "material": "PP 3 G",
       "caseQuantity": 2000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "forks-and-knives-disposable-knife-16-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "Black",
+      "variantLabelAr": "أسود",
+      "variantGroupNameEn": "Disposable Knife 16 cm",
+      "variantGroupNameAr": "سكين استخدام مرة واحدة 16 سم",
+      "variantSwatch": "#1B1B1F"
     },
     {
       "code": "TC-170-PP-KNF-W",
@@ -1643,7 +2362,14 @@
       "size": "16 CM",
       "material": "PP 3 G",
       "caseQuantity": 2000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "forks-and-knives-disposable-knife-16-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "White",
+      "variantLabelAr": "أبيض",
+      "variantGroupNameEn": "Disposable Knife 16 cm",
+      "variantGroupNameAr": "سكين استخدام مرة واحدة 16 سم",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "TC-170-PS-FRK-W",
@@ -1653,7 +2379,14 @@
       "size": "17 CM",
       "material": "PS 5.0 GM",
       "caseQuantity": 2000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "forks-and-knives-plastic-fork",
+      "variantAxis": "color",
+      "variantLabelEn": "White",
+      "variantLabelAr": "أبيض",
+      "variantGroupNameEn": "Plastic Fork",
+      "variantGroupNameAr": "شوكة بلاستيك",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "TC-170-PS-FRK-B",
@@ -1663,7 +2396,14 @@
       "size": "17 CM",
       "material": "PS 5.0 GM",
       "caseQuantity": 2000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "forks-and-knives-plastic-fork",
+      "variantAxis": "color",
+      "variantLabelEn": "Black",
+      "variantLabelAr": "أسود",
+      "variantGroupNameEn": "Plastic Fork",
+      "variantGroupNameAr": "شوكة بلاستيك",
+      "variantSwatch": "#1B1B1F"
     },
     {
       "code": "TC-170-PS-KNF-W",
@@ -1673,7 +2413,14 @@
       "size": "17 CM",
       "material": "PS 5.0 GM",
       "caseQuantity": 2000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "forks-and-knives-plastic-knife",
+      "variantAxis": "color",
+      "variantLabelEn": "White",
+      "variantLabelAr": "أبيض",
+      "variantGroupNameEn": "Plastic Knife",
+      "variantGroupNameAr": "سكين بلاستيك",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "TC-170-PS-KNF-B",
@@ -1683,7 +2430,14 @@
       "size": "17 CM",
       "material": "PS 5.0 GM",
       "caseQuantity": 2000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "forks-and-knives-plastic-knife",
+      "variantAxis": "color",
+      "variantLabelEn": "Black",
+      "variantLabelAr": "أسود",
+      "variantGroupNameEn": "Plastic Knife",
+      "variantGroupNameAr": "سكين بلاستيك",
+      "variantSwatch": "#1B1B1F"
     },
     {
       "code": "TC-170-PS-SPN-W",
@@ -1693,7 +2447,14 @@
       "size": "17 CM",
       "material": "PS 5.0 GM",
       "caseQuantity": 2000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "spoons-plastic-spoon",
+      "variantAxis": "color",
+      "variantLabelEn": "White",
+      "variantLabelAr": "أبيض",
+      "variantGroupNameEn": "Plastic Spoon",
+      "variantGroupNameAr": "ملعقة بلاستيك",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "TC-170-PS-SPN-B",
@@ -1703,7 +2464,14 @@
       "size": "17 CM",
       "material": "PS 5.0 GM",
       "caseQuantity": 2000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "spoons-plastic-spoon",
+      "variantAxis": "color",
+      "variantLabelEn": "Black",
+      "variantLabelAr": "أسود",
+      "variantGroupNameEn": "Plastic Spoon",
+      "variantGroupNameAr": "ملعقة بلاستيك",
+      "variantSwatch": "#1B1B1F"
     },
     {
       "code": "TC-100-PS-CFRK-B",
@@ -1713,7 +2481,14 @@
       "size": "10 CM",
       "material": "PS",
       "caseQuantity": 2520,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "forks-and-knives-dessert-fork-10-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "Black",
+      "variantLabelAr": "أسود",
+      "variantGroupNameEn": "Dessert Fork 10 cm",
+      "variantGroupNameAr": "شوكة حلويات 10 سم",
+      "variantSwatch": "#1B1B1F"
     },
     {
       "code": "TC-100-PS-CFRK-P",
@@ -1723,7 +2498,14 @@
       "size": "10 CM",
       "material": "PS",
       "caseQuantity": 2520,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "forks-and-knives-dessert-fork-10-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "Peach",
+      "variantLabelAr": "خوخي",
+      "variantGroupNameEn": "Dessert Fork 10 cm",
+      "variantGroupNameAr": "شوكة حلويات 10 سم",
+      "variantSwatch": "#F5C2A0"
     },
     {
       "code": "TC-100-PS-CFRK-MN",
@@ -1733,7 +2515,14 @@
       "size": "10 CM",
       "material": "PS",
       "caseQuantity": 2520,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "forks-and-knives-dessert-fork-10-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "Mint",
+      "variantLabelAr": "نعناعي",
+      "variantGroupNameEn": "Dessert Fork 10 cm",
+      "variantGroupNameAr": "شوكة حلويات 10 سم",
+      "variantSwatch": "#A8D8C8"
     },
     {
       "code": "TC-100-PS-CFRK-BBRY",
@@ -1743,7 +2532,14 @@
       "size": "10 CM",
       "material": "PS",
       "caseQuantity": 2520,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "forks-and-knives-dessert-fork-10-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "Blueberry",
+      "variantLabelAr": "توتي",
+      "variantGroupNameEn": "Dessert Fork 10 cm",
+      "variantGroupNameAr": "شوكة حلويات 10 سم",
+      "variantSwatch": "#4A5FA5"
     },
     {
       "code": "TC-100-PS-CFRK-LVNR",
@@ -1753,7 +2549,14 @@
       "size": "10 CM",
       "material": "PS",
       "caseQuantity": 2520,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "forks-and-knives-dessert-fork-10-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "Lavender",
+      "variantLabelAr": "بنفسجي",
+      "variantGroupNameEn": "Dessert Fork 10 cm",
+      "variantGroupNameAr": "شوكة حلويات 10 سم",
+      "variantSwatch": "#B49BD4"
     },
     {
       "code": "TC-100-PS-SPN-W",
@@ -1763,7 +2566,14 @@
       "size": "10 CM",
       "material": "PS",
       "caseQuantity": 4000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "spoons-dessert-spoon-10-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "White",
+      "variantLabelAr": "أبيض",
+      "variantGroupNameEn": "Dessert Spoon 10 cm",
+      "variantGroupNameAr": "ملعقة حلويات 10 سم",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "TC-100-PS-SPN-B",
@@ -1773,7 +2583,14 @@
       "size": "10 CM",
       "material": "PS",
       "caseQuantity": 4000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "spoons-dessert-spoon-10-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "Black",
+      "variantLabelAr": "أسود",
+      "variantGroupNameEn": "Dessert Spoon 10 cm",
+      "variantGroupNameAr": "ملعقة حلويات 10 سم",
+      "variantSwatch": "#1B1B1F"
     },
     {
       "code": "TC-100-PS-FRK-W",
@@ -1783,7 +2600,14 @@
       "size": "10 CM",
       "material": "PS",
       "caseQuantity": 4000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "forks-and-knives-lovely-fork-10-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "White",
+      "variantLabelAr": "أبيض",
+      "variantGroupNameEn": "Lovely Fork 10 cm",
+      "variantGroupNameAr": "شوكة صغيرة 10 سم",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "TC-100-PS-FRK-B",
@@ -1793,7 +2617,14 @@
       "size": "10 CM",
       "material": "PS",
       "caseQuantity": 4000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "forks-and-knives-lovely-fork-10-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "Black",
+      "variantLabelAr": "أسود",
+      "variantGroupNameEn": "Lovely Fork 10 cm",
+      "variantGroupNameAr": "شوكة صغيرة 10 سم",
+      "variantSwatch": "#1B1B1F"
     },
     {
       "code": "TC-130-PS-SPORK-B",
@@ -1803,7 +2634,14 @@
       "size": "13 CM",
       "material": "PS 3 G",
       "caseQuantity": 2000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "forks-and-knives-spork-13-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "Black",
+      "variantLabelAr": "أسود",
+      "variantGroupNameEn": "Spork 13 cm",
+      "variantGroupNameAr": "ملعقة شوكة 13 سم",
+      "variantSwatch": "#1B1B1F"
     },
     {
       "code": "TC-130-PS-SPORK-W",
@@ -1813,7 +2651,14 @@
       "size": "13 CM",
       "material": "PS 3 G",
       "caseQuantity": 2000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "forks-and-knives-spork-13-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "White",
+      "variantLabelAr": "أبيض",
+      "variantGroupNameEn": "Spork 13 cm",
+      "variantGroupNameAr": "ملعقة شوكة 13 سم",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "TC-180-PS-SPORK-B",
@@ -1823,7 +2668,14 @@
       "size": "18 CM",
       "material": "PS 3.5 G",
       "caseQuantity": 1400,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "forks-and-knives-juice-fruit-spork-18-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "Black",
+      "variantLabelAr": "أسود",
+      "variantGroupNameEn": "Juice Fruit Spork 18 cm",
+      "variantGroupNameAr": "ملعقة شوكة للفواكه 18 سم",
+      "variantSwatch": "#1B1B1F"
     },
     {
       "code": "TC-180-PS-SPORK-W",
@@ -1833,7 +2685,14 @@
       "size": "18 CM",
       "material": "PS 3.5 G",
       "caseQuantity": 1400,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "forks-and-knives-juice-fruit-spork-18-cm",
+      "variantAxis": "color",
+      "variantLabelEn": "White",
+      "variantLabelAr": "أبيض",
+      "variantGroupNameEn": "Juice Fruit Spork 18 cm",
+      "variantGroupNameAr": "ملعقة شوكة للفواكه 18 سم",
+      "variantSwatch": "#FFFFFF"
     },
     {
       "code": "ST-178PS01",
@@ -1953,7 +2812,13 @@
       "size": "21 CM",
       "material": "Plastic wrapped",
       "caseQuantity": 3500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "straws-piercing-straw",
+      "variantAxis": "size",
+      "variantLabelEn": "21 cm",
+      "variantLabelAr": "21 سم",
+      "variantGroupNameEn": "Piercing Straw",
+      "variantGroupNameAr": "شفاطة ثاقبة"
     },
     {
       "code": "STO-P1218",
@@ -1963,7 +2828,13 @@
       "size": "19 CM",
       "material": "Plastic wrapped",
       "caseQuantity": 2500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "straws-piercing-straw",
+      "variantAxis": "size",
+      "variantLabelEn": "19 cm",
+      "variantLabelAr": "19 سم",
+      "variantGroupNameEn": "Piercing Straw",
+      "variantGroupNameAr": "شفاطة ثاقبة"
     },
     {
       "code": "STO-P1222",
@@ -1973,7 +2844,13 @@
       "size": "23 CM",
       "material": "Plastic wrapped",
       "caseQuantity": 2250,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "straws-piercing-straw",
+      "variantAxis": "size",
+      "variantLabelEn": "23 cm",
+      "variantLabelAr": "23 سم",
+      "variantGroupNameEn": "Piercing Straw",
+      "variantGroupNameAr": "شفاطة ثاقبة"
     },
     {
       "code": "WT-R946J8B",
@@ -1983,7 +2860,13 @@
       "size": "24 OZ / 22.5 x 17.5 x 5 CM",
       "material": "PP",
       "caseQuantity": 300,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "hmr-containers-hmr-1-compartment-base",
+      "variantAxis": "size",
+      "variantLabelEn": "24 oz",
+      "variantLabelAr": "24 أونصة",
+      "variantGroupNameEn": "HMR 1 Compartment Base",
+      "variantGroupNameAr": "قاعدة قسم واحد"
     },
     {
       "code": "WT-R946J8F",
@@ -1993,7 +2876,13 @@
       "size": "24 OZ",
       "material": "OPS clear",
       "caseQuantity": 300,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "hmr-containers-hmr-1-compartment-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "24 oz",
+      "variantLabelAr": "24 أونصة",
+      "variantGroupNameEn": "HMR 1 Compartment Lid",
+      "variantGroupNameAr": "غطاء قسم واحد"
     },
     {
       "code": "WT-R-046J6",
@@ -2003,7 +2892,13 @@
       "size": "36 OZ / 22.5 x 17.5 x 5 CM",
       "material": "PP",
       "caseQuantity": 250,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "hmr-containers-hmr-1-compartment-base",
+      "variantAxis": "size",
+      "variantLabelEn": "36 oz",
+      "variantLabelAr": "36 أونصة",
+      "variantGroupNameEn": "HMR 1 Compartment Base",
+      "variantGroupNameAr": "قاعدة قسم واحد"
     },
     {
       "code": "WT-R-0466H",
@@ -2013,7 +2908,13 @@
       "size": "36 OZ",
       "material": "OPS clear",
       "caseQuantity": 250,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "hmr-containers-hmr-1-compartment-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "36 oz",
+      "variantLabelAr": "36 أونصة",
+      "variantGroupNameEn": "HMR 1 Compartment Lid",
+      "variantGroupNameAr": "غطاء قسم واحد"
     },
     {
       "code": "WT-R-04637",
@@ -2023,7 +2924,13 @@
       "size": "2 SEC / 22.5 x 17.5 x 5 CM",
       "material": "PP",
       "caseQuantity": 250,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "hmr-containers-hmr-compartment-base",
+      "variantAxis": "size",
+      "variantLabelEn": "2",
+      "variantLabelAr": "بقسمين",
+      "variantGroupNameEn": "HMR Compartment Base",
+      "variantGroupNameAr": "قاعدة"
     },
     {
       "code": "WT-R-0467H",
@@ -2033,7 +2940,13 @@
       "size": "2 SEC",
       "material": "OPS clear",
       "caseQuantity": 250,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "hmr-containers-hmr-compartment-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "2",
+      "variantLabelAr": "بقسمين",
+      "variantGroupNameEn": "HMR Compartment Lid",
+      "variantGroupNameAr": "غطاء"
     },
     {
       "code": "WT-R-0463B",
@@ -2043,7 +2956,13 @@
       "size": "3 SEC / 22.5 x 17.5 x 5 CM",
       "material": "PP",
       "caseQuantity": 250,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "hmr-containers-hmr-compartment-base",
+      "variantAxis": "size",
+      "variantLabelEn": "3",
+      "variantLabelAr": "بثلاثة أقسام",
+      "variantGroupNameEn": "HMR Compartment Base",
+      "variantGroupNameAr": "قاعدة"
     },
     {
       "code": "WT-R-0466H3",
@@ -2053,7 +2972,13 @@
       "size": "3 SEC",
       "material": "OPS clear",
       "caseQuantity": 250,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "hmr-containers-hmr-compartment-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "3",
+      "variantLabelAr": "بثلاثة أقسام",
+      "variantGroupNameEn": "HMR Compartment Lid",
+      "variantGroupNameAr": "غطاء"
     },
     {
       "code": "CC/9PET",
@@ -2063,7 +2988,13 @@
       "size": "9 OZ",
       "material": "PET",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "drink-cups-pet-clear-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "9 oz",
+      "variantLabelAr": "9 أونصة",
+      "variantGroupNameEn": "PET Clear Cup",
+      "variantGroupNameAr": "كوب PET شفاف"
     },
     {
       "code": "CC/10PET",
@@ -2073,7 +3004,13 @@
       "size": "10 OZ",
       "material": "PET",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "drink-cups-pet-clear-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "10 oz",
+      "variantLabelAr": "10 أونصة",
+      "variantGroupNameEn": "PET Clear Cup",
+      "variantGroupNameAr": "كوب PET شفاف"
     },
     {
       "code": "CC/12PET",
@@ -2083,7 +3020,13 @@
       "size": "12 OZ",
       "material": "PET",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "drink-cups-pet-clear-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "12 oz",
+      "variantLabelAr": "12 أونصة",
+      "variantGroupNameEn": "PET Clear Cup",
+      "variantGroupNameAr": "كوب PET شفاف"
     },
     {
       "code": "CC/16PET",
@@ -2094,7 +3037,13 @@
       "material": "PET",
       "caseQuantity": 1000,
       "quoteOnly": false,
-      "featured": true
+      "featured": true,
+      "variantGroup": "drink-cups-pet-clear-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "16 oz",
+      "variantLabelAr": "16 أونصة",
+      "variantGroupNameEn": "PET Clear Cup",
+      "variantGroupNameAr": "كوب PET شفاف"
     },
     {
       "code": "CC/20PET",
@@ -2104,7 +3053,13 @@
       "size": "20 OZ",
       "material": "PET",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "drink-cups-pet-clear-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "20 oz",
+      "variantLabelAr": "20 أونصة",
+      "variantGroupNameEn": "PET Clear Cup",
+      "variantGroupNameAr": "كوب PET شفاف"
     },
     {
       "code": "CC/12PP",
@@ -2114,7 +3069,13 @@
       "size": "12 OZ",
       "material": "PP",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "drink-cups-pp-clear-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "12 oz",
+      "variantLabelAr": "12 أونصة",
+      "variantGroupNameEn": "PP Clear Cup",
+      "variantGroupNameAr": "كوب PP شفاف"
     },
     {
       "code": "CC/16PP",
@@ -2124,7 +3085,13 @@
       "size": "16 OZ",
       "material": "PP",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "drink-cups-pp-clear-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "16 oz",
+      "variantLabelAr": "16 أونصة",
+      "variantGroupNameEn": "PP Clear Cup",
+      "variantGroupNameAr": "كوب PP شفاف"
     },
     {
       "code": "P250",
@@ -2134,7 +3101,13 @@
       "size": "2.5 OZ",
       "material": "PET",
       "caseQuantity": 2500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "portion-cups-portion-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "2.5 oz",
+      "variantLabelAr": "2.5 أونصة",
+      "variantGroupNameEn": "Portion Cup",
+      "variantGroupNameAr": "كوب صلصة"
     },
     {
       "code": "PL250",
@@ -2144,7 +3117,13 @@
       "size": "2.5 OZ",
       "material": "PET",
       "caseQuantity": 2500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "portion-cups-portion-cup-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "2.5 oz",
+      "variantLabelAr": "2.5 أونصة",
+      "variantGroupNameEn": "Portion Cup Lid",
+      "variantGroupNameAr": "غطاء كوب صلصة"
     },
     {
       "code": "CC/02PET",
@@ -2154,7 +3133,13 @@
       "size": "2 OZ",
       "material": "PET",
       "caseQuantity": 2500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "portion-cups-portion-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "2 oz",
+      "variantLabelAr": "2 أونصة",
+      "variantGroupNameEn": "Portion Cup",
+      "variantGroupNameAr": "كوب صلصة"
     },
     {
       "code": "CCL/F/02PET",
@@ -2164,7 +3149,13 @@
       "size": "2 OZ",
       "material": "PET",
       "caseQuantity": 2500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "portion-cups-portion-cup-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "2 oz",
+      "variantLabelAr": "2 أونصة",
+      "variantGroupNameEn": "Portion Cup Lid",
+      "variantGroupNameAr": "غطاء كوب صلصة"
     },
     {
       "code": "CC/0.75PET",
@@ -2174,7 +3165,13 @@
       "size": "0.75 OZ",
       "material": "PET",
       "caseQuantity": 5000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "portion-cups-portion-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "0.75 oz",
+      "variantLabelAr": "0.75 أونصة",
+      "variantGroupNameEn": "Portion Cup",
+      "variantGroupNameAr": "كوب صلصة"
     },
     {
       "code": "CCL/F/0.75PET",
@@ -2184,7 +3181,13 @@
       "size": "0.75 OZ",
       "material": "PET",
       "caseQuantity": 5000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "portion-cups-portion-cup-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "0.75 oz",
+      "variantLabelAr": "0.75 أونصة",
+      "variantGroupNameEn": "Portion Cup Lid",
+      "variantGroupNameAr": "غطاء كوب صلصة"
     },
     {
       "code": "CCL/D/12PET",
@@ -2194,7 +3197,13 @@
       "size": "12 OZ",
       "material": "PET",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "clear-cup-lids-pet-dome-lid-cross-hole",
+      "variantAxis": "size",
+      "variantLabelEn": "12 oz",
+      "variantLabelAr": "12 أونصة",
+      "variantGroupNameEn": "PET Dome Lid Cross Hole",
+      "variantGroupNameAr": "غطاء PET بارز بفتحة متقاطعة"
     },
     {
       "code": "CCL/D/12PET-H",
@@ -2204,7 +3213,13 @@
       "size": "12 OZ",
       "material": "PET",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "clear-cup-lids-pet-dome-lid-hole",
+      "variantAxis": "size",
+      "variantLabelEn": "12 oz",
+      "variantLabelAr": "12 أونصة",
+      "variantGroupNameEn": "PET Dome Lid Hole",
+      "variantGroupNameAr": "غطاء PET بارز بفتحة"
     },
     {
       "code": "CCL/F/12PET",
@@ -2214,7 +3229,13 @@
       "size": "12 OZ",
       "material": "PET",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "clear-cup-lids-pet-flat-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "12 oz",
+      "variantLabelAr": "12 أونصة",
+      "variantGroupNameEn": "PET Flat Lid",
+      "variantGroupNameAr": "غطاء PET مسطح"
     },
     {
       "code": "CCL/D/14PET",
@@ -2224,7 +3245,13 @@
       "size": "14-20 OZ",
       "material": "PET",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "clear-cup-lids-pet-dome-lid-cross-hole",
+      "variantAxis": "size",
+      "variantLabelEn": "14-20 oz",
+      "variantLabelAr": "14-20 أونصة",
+      "variantGroupNameEn": "PET Dome Lid Cross Hole",
+      "variantGroupNameAr": "غطاء PET بارز بفتحة متقاطعة"
     },
     {
       "code": "CCL/D/14PET-H",
@@ -2234,7 +3261,13 @@
       "size": "14-20 OZ",
       "material": "PET",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "clear-cup-lids-pet-dome-lid-hole",
+      "variantAxis": "size",
+      "variantLabelEn": "14-20 oz",
+      "variantLabelAr": "14-20 أونصة",
+      "variantGroupNameEn": "PET Dome Lid Hole",
+      "variantGroupNameAr": "غطاء PET بارز بفتحة"
     },
     {
       "code": "CCL/F/14PET",
@@ -2244,7 +3277,13 @@
       "size": "14 OZ",
       "material": "PET",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "clear-cup-lids-pet-flat-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "14 oz",
+      "variantLabelAr": "14 أونصة",
+      "variantGroupNameEn": "PET Flat Lid",
+      "variantGroupNameAr": "غطاء PET مسطح"
     },
     {
       "code": "CCL/F/08PET",
@@ -2254,7 +3293,13 @@
       "size": "8-10 OZ",
       "material": "PET",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "clear-cup-lids-pet-flat-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "8-10 oz",
+      "variantLabelAr": "8-10 أونصة",
+      "variantGroupNameEn": "PET Flat Lid",
+      "variantGroupNameAr": "غطاء PET مسطح"
     },
     {
       "code": "CCL/D/120PS",
@@ -2284,7 +3329,13 @@
       "size": "500 ML / H 24.5 x Ø5.5",
       "material": "PET",
       "caseQuantity": 100,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "bottles-jars-pet-bottle-black-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "500 ml",
+      "variantLabelAr": "500 مل",
+      "variantGroupNameEn": "PET Bottle Black Lid",
+      "variantGroupNameAr": "زجاجة PET بغطاء أسود"
     },
     {
       "code": "PB-400ML",
@@ -2294,7 +3345,13 @@
       "size": "400 ML / H 20.4 x Ø5.5",
       "material": "PET",
       "caseQuantity": 100,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "bottles-jars-pet-bottle-black-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "400 ml",
+      "variantLabelAr": "400 مل",
+      "variantGroupNameEn": "PET Bottle Black Lid",
+      "variantGroupNameAr": "زجاجة PET بغطاء أسود"
     },
     {
       "code": "PB-300ML",
@@ -2304,7 +3361,13 @@
       "size": "300 ML / H 16.5 x Ø5.5",
       "material": "PET",
       "caseQuantity": 100,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "bottles-jars-pet-bottle-black-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "300 ml",
+      "variantLabelAr": "300 مل",
+      "variantGroupNameEn": "PET Bottle Black Lid",
+      "variantGroupNameAr": "زجاجة PET بغطاء أسود"
     },
     {
       "code": "PB/ALU-450ML",
@@ -2314,7 +3377,13 @@
       "size": "450 ML / H 19 x Ø5.5",
       "material": "PET",
       "caseQuantity": 100,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "bottles-jars-pet-bottle-aluminium-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "450 ml",
+      "variantLabelAr": "450 مل",
+      "variantGroupNameEn": "PET Bottle Aluminium Lid",
+      "variantGroupNameAr": "زجاجة PET بغطاء ألمنيوم"
     },
     {
       "code": "PB/ALU-400ML",
@@ -2324,7 +3393,13 @@
       "size": "400 ML / H 17 x Ø5.5",
       "material": "PET",
       "caseQuantity": 100,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "bottles-jars-pet-bottle-aluminium-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "400 ml",
+      "variantLabelAr": "400 مل",
+      "variantGroupNameEn": "PET Bottle Aluminium Lid",
+      "variantGroupNameAr": "زجاجة PET بغطاء ألمنيوم"
     },
     {
       "code": "PB/ALU-350ML",
@@ -2334,7 +3409,13 @@
       "size": "350 ML / H 15 x Ø5.5",
       "material": "PET",
       "caseQuantity": 100,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "bottles-jars-pet-bottle-aluminium-lid",
+      "variantAxis": "size",
+      "variantLabelEn": "350 ml",
+      "variantLabelAr": "350 مل",
+      "variantGroupNameEn": "PET Bottle Aluminium Lid",
+      "variantGroupNameAr": "زجاجة PET بغطاء ألمنيوم"
     },
     {
       "code": "PPC/400",
@@ -2344,7 +3425,13 @@
       "size": "400 CC",
       "material": "PP",
       "caseQuantity": 500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "bottles-jars-injected-pp-clear-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "400 cc",
+      "variantLabelAr": "400 سم³",
+      "variantGroupNameEn": "Injected PP Clear Cup",
+      "variantGroupNameAr": "كوب PP محقون شفاف"
     },
     {
       "code": "PPC/500",
@@ -2354,7 +3441,13 @@
       "size": "500 CC",
       "material": "PP",
       "caseQuantity": 500,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "bottles-jars-injected-pp-clear-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "500 cc",
+      "variantLabelAr": "500 سم³",
+      "variantGroupNameEn": "Injected PP Clear Cup",
+      "variantGroupNameAr": "كوب PP محقون شفاف"
     },
     {
       "code": "PP/90B",
@@ -2374,7 +3467,13 @@
       "size": "360 CC",
       "material": "PET",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "bottles-jars-u-shape-clear-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "360 cc",
+      "variantLabelAr": "360 سم³",
+      "variantGroupNameEn": "U-Shape Clear Cup",
+      "variantGroupNameAr": "كوب شفاف على شكل U"
     },
     {
       "code": "U-CC/16PET",
@@ -2384,7 +3483,13 @@
       "size": "500 CC",
       "material": "PET",
       "caseQuantity": 1000,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "bottles-jars-u-shape-clear-cup",
+      "variantAxis": "size",
+      "variantLabelEn": "500 cc",
+      "variantLabelAr": "500 سم³",
+      "variantGroupNameEn": "U-Shape Clear Cup",
+      "variantGroupNameAr": "كوب شفاف على شكل U"
     },
     {
       "code": "PBS/ALU-500ML",
@@ -2394,7 +3499,13 @@
       "size": "500 ML / Ø59 mm",
       "material": "PET + aluminium lid",
       "caseQuantity": 100,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "bottles-jars-sealable-pet-bottle",
+      "variantAxis": "size",
+      "variantLabelEn": "500 ml",
+      "variantLabelAr": "500 مل",
+      "variantGroupNameEn": "Sealable PET Bottle",
+      "variantGroupNameAr": "زجاجة PET قابلة للحام"
     },
     {
       "code": "PBS/ALU-330L",
@@ -2404,7 +3515,13 @@
       "size": "330 ML / Ø59 mm",
       "material": "PET + aluminium lid",
       "caseQuantity": 200,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "bottles-jars-sealable-pet-bottle",
+      "variantAxis": "size",
+      "variantLabelEn": "330 ml Tall",
+      "variantLabelAr": "330 مل طويلة",
+      "variantGroupNameEn": "Sealable PET Bottle",
+      "variantGroupNameAr": "زجاجة PET قابلة للحام"
     },
     {
       "code": "PBS/ALU-330S",
@@ -2414,7 +3531,13 @@
       "size": "330 ML / Ø59 mm",
       "material": "PET + aluminium lid",
       "caseQuantity": 200,
-      "quoteOnly": false
+      "quoteOnly": false,
+      "variantGroup": "bottles-jars-sealable-pet-bottle",
+      "variantAxis": "size",
+      "variantLabelEn": "330 ml Short",
+      "variantLabelAr": "330 مل قصيرة",
+      "variantGroupNameEn": "Sealable PET Bottle",
+      "variantGroupNameAr": "زجاجة PET قابلة للحام"
     },
     {
       "code": "FILM-ROLL",

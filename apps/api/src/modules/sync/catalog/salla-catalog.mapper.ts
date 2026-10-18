@@ -431,6 +431,9 @@ export function planImageReconciliation(
     }
   }
 
+  const isSeeded = (image: ImageRow): boolean =>
+    image.sallaId === null && image.url.startsWith(SEEDED_IMAGE_PREFIX);
+
   const toDeleteIds = existing
     .filter((image) => !incomingUrls.has(image.url))
     // Seeded photography is NOT Salla's to delete. The pictures extracted from
@@ -441,9 +444,50 @@ export function planImageReconciliation(
     // photography has not been uploaded to Salla yet — which, at the time of
     // writing, is all of them. Same shape of mistake as deleting seed-only
     // products in reconciliation, and guarded the same way.
-    .filter((image) => !(image.sallaId === null && image.url.startsWith(SEEDED_IMAGE_PREFIX)))
+    .filter((image) => !isSeeded(image))
     .map((image) => image.id)
     .filter((id): id is string => typeof id === 'string' && id !== '');
+
+  // -------------------------------------------------------------------------
+  // Salla photography OUTRANKS the seeded catalogue cards, and until this block
+  // existed nothing said so.
+  //
+  // The delete guard above means a product that has both keeps both. But the
+  // seed marks its first picture `isPrimary` at `sortOrder` 0, and the Salla
+  // parser marks ITS first picture `isPrimary` at `sortOrder` 0 too — so after
+  // the first sync PCS/08 held FOUR images, TWO of them flagged primary, with
+  // sort orders 0,0,1,1. Whatever renders "the primary image" then picks
+  // whichever row the query happened to return first: the product page could
+  // show the catalogue card one day and the real photograph the next, and the
+  // gallery order was undefined. No test caught it because the only suite that
+  // can see it needs Postgres and skips without one.
+  //
+  // The rule, stated once: a seeded card is a STAND-IN until real photography
+  // exists. So when Salla supplies any image, the seeded survivors are demoted
+  // and sorted after it — kept, because losing them when a merchant clears
+  // their Salla gallery would empty the page, but never shown first.
+  //
+  // When Salla supplies NO images there is nothing to defer to, and the seeded
+  // primary stays exactly as the seed set it.
+  // -------------------------------------------------------------------------
+  if (incoming.length > 0) {
+    const survivingSeeded = existing
+      .filter(isSeeded)
+      .slice()
+      .sort((a, b) => a.sortOrder - b.sortOrder);
+
+    survivingSeeded.forEach((image, index) => {
+      const sortOrder = incoming.length + index;
+      if (image.isPrimary || image.sortOrder !== sortOrder) {
+        toUpdate.push({
+          id: image.id ?? '',
+          sortOrder,
+          isPrimary: false,
+          sallaId: image.sallaId,
+        });
+      }
+    });
+  }
 
   return { toInsert, toUpdate, toDeleteIds };
 }

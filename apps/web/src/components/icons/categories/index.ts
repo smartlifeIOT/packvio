@@ -2,6 +2,7 @@ export { CategoryIconBase, type CategoryIconProps } from './icon-base';
 export {
   CATEGORY_ICONS,
   CATEGORY_ICON_SLUGS,
+  canonicalCategorySlug,
   categoryIcon,
   type CategoryIconComponent,
 } from './registry';

@@ -15,6 +15,9 @@ import type {
   CatalogProductSummaryDto,
   CatalogStatsDto,
   CatalogSuggestionDto,
+  CatalogVariantAxis,
+  CatalogVariantGroupDto,
+  CatalogVariantRefDto,
   Locale,
   PaginatedResponse,
 } from '@packvio/shared';
@@ -90,6 +93,42 @@ export class CatalogCategoryRefResponse implements CatalogCategoryRefDto {
   @ApiProperty({ enum: ['ar', 'en'] }) locale!: Locale;
 }
 
+export class CatalogVariantRefResponse implements CatalogVariantRefDto {
+  @ApiProperty() id!: string;
+  @ApiProperty({ example: 'TC-115-PS-LSPN-PRL', description: 'SKU. Latin — bidi-isolate inside Arabic copy.' })
+  code!: string;
+  @ApiProperty({ example: 'Pearl', description: 'What distinguishes this member of the family.' })
+  label!: string;
+  @ApiProperty({
+    nullable: true,
+    example: '#F2EFE6',
+    description:
+      'Hex swatch for the colour in this label, or null when none could be read with ' +
+      'confidence. Null is common — fall back to the text label rather than guessing.',
+  })
+  swatch!: string | null;
+  @ApiProperty({ description: 'This member keeps its own product page; link to this slug.' })
+  slug!: string;
+  @ApiProperty() alternateSlug!: string;
+  @ApiProperty({ enum: ['ar', 'en'] }) locale!: Locale;
+  @ApiProperty({ description: 'True for the member whose payload this is.' })
+  isCurrent!: boolean;
+}
+
+export class CatalogVariantGroupResponse implements CatalogVariantGroupDto {
+  @ApiProperty({ example: 'spoons-leaf-spoon-11-5-cm' }) key!: string;
+  @ApiProperty({ enum: ['color', 'size', 'both'] }) axis!: CatalogVariantAxis;
+  @ApiProperty({
+    example: 'Leaf Spoon 11.5 cm',
+    description: "The family's shared name — the product name minus the variant label.",
+  })
+  name!: string;
+  @ApiProperty({ type: () => [CatalogVariantRefResponse] })
+  variants!: CatalogVariantRefResponse[];
+  @ApiProperty({ description: 'variants.length, so a card need not count to render "7 colours".' })
+  count!: number;
+}
+
 export class CatalogProductSummaryResponse implements CatalogProductSummaryDto {
   @ApiProperty() id!: string;
   @ApiProperty({ example: 'PCS/08', description: 'SKU. Latin — bidi-isolate inside Arabic copy.' })
@@ -123,6 +162,15 @@ export class CatalogProductSummaryResponse implements CatalogProductSummaryDto {
   primaryCategory!: CatalogCategoryRefResponse | null;
   @ApiProperty({ type: () => CatalogImageResponse, nullable: true })
   primaryImage!: CatalogImageResponse | null;
+  @ApiProperty({
+    type: () => CatalogVariantGroupResponse,
+    nullable: true,
+    description:
+      'The variant family this product belongs to, or null when it has no siblings. On a ' +
+      'LISTING this row is the family representative and the group describes the whole ' +
+      'family, so a card should render variantGroup.name rather than name.',
+  })
+  variantGroup!: CatalogVariantGroupResponse | null;
 }
 
 export class CatalogPriceTierResponse implements CatalogPriceTierDto {

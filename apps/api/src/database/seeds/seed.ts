@@ -329,6 +329,21 @@ async function upsertProducts(
      */
     product.supportsCustomPrinting = printableByCategory.get(item.category) ?? true;
 
+    /**
+     * Variant family — re-synced every run, for the same reason `featured` is:
+     * it is derived from the printed catalog by scripts/derive-variants.mjs,
+     * not copy anyone typed. The absent case must write NULL rather than being
+     * left alone, or a product removed from a family would keep its old group
+     * forever and go on sharing a card with products it no longer belongs to.
+     */
+    product.variantGroup = nullIfBlank(item.variantGroup);
+    product.variantAxis = nullIfBlank(item.variantAxis);
+    product.variantLabelEn = nullIfBlank(item.variantLabelEn);
+    product.variantLabelAr = nullIfBlank(item.variantLabelAr);
+    product.variantGroupNameEn = nullIfBlank(item.variantGroupNameEn);
+    product.variantGroupNameAr = nullIfBlank(item.variantGroupNameAr);
+    product.variantSwatch = nullIfBlank(item.variantSwatch);
+
     // A code that reappears in the catalog is back in the range: undo the soft
     // delete rather than inserting a second row that would break uq_products_code.
     if (product.deletedAt !== null && product.deletedAt !== undefined) {

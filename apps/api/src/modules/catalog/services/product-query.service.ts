@@ -14,7 +14,12 @@ import type { ProductListQueryDto } from '../dto/product-list-query.dto';
 import type { SuggestQueryDto } from '../dto/suggest-query.dto';
 import { normalizeSearchTerm } from '../search/arabic-normalize';
 import { CatalogMapperService } from './catalog-mapper.service';
-import type { CountRow, ProductSummaryRow, SuggestionRow } from './product-row.types';
+import type {
+  CountRow,
+  ProductSummaryRow,
+  SuggestionRow,
+  VariantMemberRow,
+} from './product-row.types';
 import { SqlParams } from './sql-params';
 
 /**
@@ -73,12 +78,49 @@ const SUMMARY_COLUMNS = `
   p.short_description_ar, p.short_description_en,
   p.size, p.material, p.case_quantity, p.price, p.sale_price, p.currency,
   p.status, p.fulfilment_mode, p.is_featured, p.supports_custom_printing,
+  p.variant_group, p.variant_axis,
+  p.variant_label_ar, p.variant_label_en,
+  p.variant_group_name_ar, p.variant_group_name_en, p.variant_swatch,
   cat.id AS category_id,
   cat.name_ar AS category_name_ar, cat.name_en AS category_name_en,
   cat.slug_ar AS category_slug_ar, cat.slug_en AS category_slug_en,
   img.id AS image_id, img.url AS image_url,
   img.alt_ar AS image_alt_ar, img.alt_en AS image_alt_en,
   img.is_primary AS image_is_primary, img.sort_order AS image_sort_order`;
+
+/**
+ * Columns the ORDER BY needs that the card itself does not.
+ *
+ * The grouped list wraps the base SELECT in a CTE and orders the OUTER query,
+ * so anything `buildOrderBy` names has to survive into it. These three are the
+ * ones that are not already on the card: `sort_order` and `created_at` back two
+ * of the sort modes, and `name_ar_normalized` backs the search-relevance ladder.
+ */
+const ORDERING_COLUMNS = `p.sort_order, p.created_at, p.name_ar_normalized`;
+
+/**
+ * The family a row belongs to, for grouping.
+ *
+ * A product with no family is its OWN group — `COALESCE` to its id — rather
+ * than being excluded. Without that the 41 ungrouped products would all share
+ * a single NULL partition and 40 of them would vanish from every listing.
+ */
+const GROUP_KEY = `COALESCE(p.variant_group, p.id::text)`;
+
+/**
+ * Picks the one row that represents each family in a listing.
+ *
+ * A row WITH a photograph wins, which is the whole point: the Leaf Spoon family
+ * has one card between seven colours, and a card showing the placeholder while
+ * six photographed siblings sit behind it would be a worse grid than the
+ * ungrouped one. `sort_order` then `id` break the tie so the choice is stable
+ * across pages — otherwise page 2 can repeat a family page 1 already showed.
+ */
+const REPRESENTATIVE_RANK = `
+  ROW_NUMBER() OVER (
+    PARTITION BY ${GROUP_KEY}
+    ORDER BY (img.id IS NULL), p.sort_order ASC, p.id ASC
+  ) AS rep_rank`;
 
 const RELATED_LIMIT = 8;
 
@@ -93,15 +135,29 @@ export class ProductQueryService {
   // --- list --------------------------------------------------------------
 
   /**
-   * The product grid. Two queries total, regardless of page size: one COUNT for
-   * the pagination envelope, one SELECT that carries the primary image along.
+   * The product grid, ONE CARD PER VARIANT FAMILY.
+   *
+   * The catalogue lists every colour and every size as its own SKU, so before
+   * grouping /categories/cutlery opened on seven Leaf Spoons in a row and the
+   * reader had to read seven names to find the one difference between them.
+   * Now a family is one card and the colours are chips on it.
+   *
+   * Three queries, regardless of page size: a COUNT of FAMILIES for the pager,
+   * a SELECT of this page's representatives, and one more that fetches the
+   * members of every family on the page. The third is what lets a card draw
+   * seven swatches without seven more round trips, and it is skipped entirely
+   * when nothing on the page has siblings.
+   *
+   * The COUNT is over families too. Counting SKUs while showing families makes
+   * the pager lie in the most annoying way available — "213 products", 24 per
+   * page, and page 4 is empty.
    */
   async list(query: ProductListQueryDto): Promise<PaginatedResponse<CatalogProductSummaryDto>> {
     const filters = new SqlParams();
     const where = this.buildFilters(query, filters);
 
     const countRows = await this.dataSource.query<CountRow[]>(
-      `SELECT COUNT(*)::text AS count FROM products p WHERE ${where}`,
+      `SELECT COUNT(DISTINCT ${GROUP_KEY})::text AS count FROM products p WHERE ${where}`,
       filters.values,
     );
     const total = Number(countRows[0]?.count ?? 0);
@@ -115,12 +171,23 @@ export class ProductQueryService {
     const limit = pageParams.add(query.perPage);
     const offset = pageParams.add((query.page - 1) * query.perPage);
 
+    /**
+     * The CTE is aliased `p` on the way out so `buildOrderBy` keeps working
+     * unchanged — it emits `p.name_ar`, `p.price` and friends, which now bind
+     * to the CTE's columns instead of the table's. That is why ORDERING_COLUMNS
+     * has to be selected inside: an ORDER BY naming a column the CTE did not
+     * carry fails at runtime, not at compile time.
+     */
     const rows = await this.dataSource.query<ProductSummaryRow[]>(
-      `SELECT ${SUMMARY_COLUMNS}
-       FROM products p
-       ${PRIMARY_IMAGE_LATERAL}
-       ${PRIMARY_CATEGORY_LATERAL}
-       WHERE ${pageWhere}
+      `WITH ranked AS (
+         SELECT ${SUMMARY_COLUMNS}, ${ORDERING_COLUMNS}, ${REPRESENTATIVE_RANK}
+         FROM products p
+         ${PRIMARY_IMAGE_LATERAL}
+         ${PRIMARY_CATEGORY_LATERAL}
+         WHERE ${pageWhere}
+       )
+       SELECT * FROM ranked p
+       WHERE p.rep_rank = 1
        ORDER BY ${orderBy}
        LIMIT ${limit} OFFSET ${offset}`,
       pageParams.values,
@@ -129,7 +196,7 @@ export class ProductQueryService {
     const totalPages = total === 0 ? 0 : Math.ceil(total / query.perPage);
 
     return {
-      items: rows.map((row) => this.mapper.toProductSummary(row, query.locale)),
+      items: await this.withVariants(rows, query.locale),
       page: query.page,
       perPage: query.perPage,
       total,
@@ -138,6 +205,56 @@ export class ProductQueryService {
       // caller asked a legitimate question and the answer is "nothing here".
       hasMore: query.page < totalPages,
     };
+  }
+
+  /**
+   * Maps rows to summaries and attaches each one's variant family.
+   *
+   * One query for every family on the page, not one per card. A 24-card page of
+   * Food Trays and Shakers would otherwise be 24 extra round trips to render
+   * what is really two families.
+   */
+  private async withVariants(
+    rows: ProductSummaryRow[],
+    locale: Locale,
+  ): Promise<CatalogProductSummaryDto[]> {
+    const keys = [...new Set(rows.map((row) => row.variant_group).filter((k): k is string => k !== null))];
+    const members = await this.loadVariantMembers(keys);
+    return rows.map((row) => this.mapper.toProductSummary(row, locale, members.get(row.variant_group ?? '')));
+  }
+
+  /**
+   * Every member of the named families, keyed by family.
+   *
+   * Ordered by `sort_order` then `code` so the chips on a card appear in the
+   * same order every time — a colour row that reshuffles between renders is the
+   * kind of thing a buyer misreads as a different product.
+   *
+   * Applies the same VISIBLE predicate as the listing: a hidden or soft-deleted
+   * sibling must not appear as a chip linking to a page that 404s.
+   */
+  private async loadVariantMembers(keys: string[]): Promise<Map<string, VariantMemberRow[]>> {
+    const grouped = new Map<string, VariantMemberRow[]>();
+    if (keys.length === 0) return grouped;
+
+    const params = new SqlParams();
+    const keyList = params.add(keys);
+
+    const rows = await this.dataSource.query<VariantMemberRow[]>(
+      `SELECT p.id, p.code, p.slug_ar, p.slug_en, p.variant_group,
+              p.variant_label_ar, p.variant_label_en, p.variant_swatch
+       FROM products p
+       WHERE ${VISIBLE} AND p.variant_group = ANY(${keyList}::text[])
+       ORDER BY p.sort_order ASC, p.code ASC`,
+      params.values,
+    );
+
+    for (const row of rows) {
+      const list = grouped.get(row.variant_group);
+      if (list) list.push(row);
+      else grouped.set(row.variant_group, [row]);
+    }
+    return grouped;
   }
 
   private buildFilters(query: ProductListQueryDto, params: SqlParams): string {
@@ -295,8 +412,23 @@ export class ProductQueryService {
     slugMatchedOtherLocale: boolean,
   ): Promise<CatalogProductDetailDto> {
     const categoryIds = (product.categoryLinks ?? []).map((link) => link.categoryId);
-    const related = await this.findRelated(product, categoryIds, locale);
-    const detail = this.mapper.toProductDetail(product, locale, related);
+    /**
+     * Siblings are loaded even though the detail page is per-SKU: the page has
+     * to offer the other colours, and each chip links to that sibling's OWN
+     * slug. Grouping is presentation over unchanged rows — every variant keeps
+     * its page, because the slugs are public URLs and `code` is what the Salla
+     * sync joins on.
+     */
+    const [related, members] = await Promise.all([
+      this.findRelated(product, categoryIds, locale),
+      product.variantGroup ? this.loadVariantMembers([product.variantGroup]) : Promise.resolve(null),
+    ]);
+    const detail = this.mapper.toProductDetail(
+      product,
+      locale,
+      related,
+      members?.get(product.variantGroup ?? '') ?? undefined,
+    );
 
     return { ...detail, slugMatchedOtherLocale };
   }
@@ -321,28 +453,42 @@ export class ProductQueryService {
     const self = params.add(product.id);
     const size = params.add(product.size);
     const material = params.add(product.material);
+    const group = params.add(product.variantGroup ?? product.id);
     const limit = params.add(RELATED_LIMIT);
 
+    /**
+     * Excludes the viewed product's WHOLE FAMILY, not just the product itself.
+     * The product page already offers every sibling as a variant chip, so a
+     * "you might also need" rail repeating the other six Leaf Spoon colours
+     * underneath would be the same list twice. `group` is NULL for a product
+     * with no siblings, and `IS DISTINCT FROM` handles that without the NULL
+     * swallowing the comparison and excluding everything.
+     */
     const rows = await this.dataSource.query<ProductSummaryRow[]>(
-      `SELECT ${SUMMARY_COLUMNS}
-       FROM products p
-       ${PRIMARY_IMAGE_LATERAL}
-       ${PRIMARY_CATEGORY_LATERAL}
-       WHERE ${VISIBLE}
-         AND p.id <> ${self}
-         AND EXISTS (
-           SELECT 1 FROM product_categories pc
-           WHERE pc.product_id = p.id AND pc.category_id = ANY(${ids}::uuid[])
-         )
-       ORDER BY
-         (CASE WHEN p.size IS NOT DISTINCT FROM ${size} THEN 0 ELSE 1 END)
-         + (CASE WHEN p.material IS NOT DISTINCT FROM ${material} THEN 0 ELSE 1 END),
-         p.sort_order ASC, p.id ASC
+      `WITH ranked AS (
+         SELECT ${SUMMARY_COLUMNS}, ${ORDERING_COLUMNS}, ${REPRESENTATIVE_RANK},
+                (CASE WHEN p.size IS NOT DISTINCT FROM ${size} THEN 0 ELSE 1 END)
+                + (CASE WHEN p.material IS NOT DISTINCT FROM ${material} THEN 0 ELSE 1 END)
+                AS affinity
+         FROM products p
+         ${PRIMARY_IMAGE_LATERAL}
+         ${PRIMARY_CATEGORY_LATERAL}
+         WHERE ${VISIBLE}
+           AND p.id <> ${self}
+           AND ${GROUP_KEY} IS DISTINCT FROM ${group}
+           AND EXISTS (
+             SELECT 1 FROM product_categories pc
+             WHERE pc.product_id = p.id AND pc.category_id = ANY(${ids}::uuid[])
+           )
+       )
+       SELECT * FROM ranked p
+       WHERE p.rep_rank = 1
+       ORDER BY p.affinity, p.sort_order ASC, p.id ASC
        LIMIT ${limit}`,
       params.values,
     );
 
-    return rows.map((row) => this.mapper.toProductSummary(row, locale));
+    return this.withVariants(rows, locale);
   }
 
   // --- autocomplete ------------------------------------------------------
@@ -403,18 +549,29 @@ export class ProductQueryService {
     const params = new SqlParams();
     const limitParam = params.add(limit);
 
+    /**
+     * Grouped like the grid, and for a reason the data already shows: PCS/08
+     * and PCS/12 are both flagged, and both are Single Wall Coffee Cups. An
+     * ungrouped rail would open the home page with the same product twice,
+     * which is exactly the clutter grouping exists to remove. The rail returns
+     * one card for that family and eleven for the rest.
+     */
     const rows = await this.dataSource.query<ProductSummaryRow[]>(
-      `SELECT ${SUMMARY_COLUMNS}
-       FROM products p
-       ${PRIMARY_IMAGE_LATERAL}
-       ${PRIMARY_CATEGORY_LATERAL}
-       WHERE ${VISIBLE} AND p.is_featured = true
+      `WITH ranked AS (
+         SELECT ${SUMMARY_COLUMNS}, ${ORDERING_COLUMNS}, ${REPRESENTATIVE_RANK}
+         FROM products p
+         ${PRIMARY_IMAGE_LATERAL}
+         ${PRIMARY_CATEGORY_LATERAL}
+         WHERE ${VISIBLE} AND p.is_featured = true
+       )
+       SELECT * FROM ranked p
+       WHERE p.rep_rank = 1
        ORDER BY p.sort_order ASC, p.id ASC
        LIMIT ${limitParam}`,
       params.values,
     );
 
-    return rows.map((row) => this.mapper.toProductSummary(row, locale));
+    return this.withVariants(rows, locale);
   }
 
   async findNewest(locale: Locale, limit: number): Promise<CatalogProductSummaryDto[]> {
@@ -422,17 +579,21 @@ export class ProductQueryService {
     const limitParam = params.add(limit);
 
     const rows = await this.dataSource.query<ProductSummaryRow[]>(
-      `SELECT ${SUMMARY_COLUMNS}
-       FROM products p
-       ${PRIMARY_IMAGE_LATERAL}
-       ${PRIMARY_CATEGORY_LATERAL}
-       WHERE ${VISIBLE}
+      `WITH ranked AS (
+         SELECT ${SUMMARY_COLUMNS}, ${ORDERING_COLUMNS}, ${REPRESENTATIVE_RANK}
+         FROM products p
+         ${PRIMARY_IMAGE_LATERAL}
+         ${PRIMARY_CATEGORY_LATERAL}
+         WHERE ${VISIBLE}
+       )
+       SELECT * FROM ranked p
+       WHERE p.rep_rank = 1
        ORDER BY p.created_at DESC, p.id ASC
        LIMIT ${limitParam}`,
       params.values,
     );
 
-    return rows.map((row) => this.mapper.toProductSummary(row, locale));
+    return this.withVariants(rows, locale);
   }
 
   async countVisible(): Promise<number> {

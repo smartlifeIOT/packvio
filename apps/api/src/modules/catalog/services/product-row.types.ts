@@ -42,6 +42,33 @@ export interface ProductSummaryRow {
   image_alt_en: string | null;
   image_is_primary: boolean | null;
   image_sort_order: number | null;
+  /** Variant family. NULL on the 41 products with no siblings. */
+  variant_group: string | null;
+  variant_axis: string | null;
+  variant_label_ar: string | null;
+  variant_label_en: string | null;
+  variant_group_name_ar: string | null;
+  variant_group_name_en: string | null;
+  variant_swatch: string | null;
+}
+
+/**
+ * One member of a variant family, loaded in a single follow-up query for every
+ * family on the page.
+ *
+ * Separate from ProductSummaryRow because a card needs only enough to draw a
+ * swatch and link to the sibling. Carrying a whole summary per member would put
+ * twelve nested product payloads on one Food Tray tile.
+ */
+export interface VariantMemberRow {
+  id: string;
+  code: string;
+  slug_ar: string;
+  slug_en: string;
+  variant_group: string;
+  variant_label_ar: string | null;
+  variant_label_en: string | null;
+  variant_swatch: string | null;
 }
 
 export interface SuggestionRow {

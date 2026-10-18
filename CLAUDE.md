@@ -774,15 +774,26 @@ Decisions that depart from the brand guide or the brief, with the reason. Read b
   have shipped that way to production. The seed now prints a loud multi-line
   warning when the manifest is absent rather than a single quiet line.
 
-- **The deploy script hands compose the image names it built.**
-  `docker-compose.prod.yml` resolves `${API_IMAGE:-packvio-api:local}`, but the
-  deploy builds and tags `:latest` — because `:latest` / `:previous` / `:failed`
-  is what makes a rebuild-free rollback possible. Without an explicit
-  `API_IMAGE` / `WEB_IMAGE` / `NGINX_IMAGE`, compose goes looking for
-  `packvio-api:local`, which nothing ever built, and `migrate` dies with a pull
-  error that names no cause. `deploy.sh`, `rollback.sh` and `seed.sh` all export
-  the three names before invoking compose. If you ever change the build tags,
-  change them in all three.
+- **The compose image defaults are `:latest`, because that is what the deploy builds.**
+  They used to be `:local`, which nothing ever built — `docker-compose.local.yml`
+  pins `:local` explicitly on every service, so the default was serving no one.
+  The deploy tags `:latest` / `:previous` / `:failed`, because that is what makes
+  a rebuild-free rollback possible, and `deploy.sh`, `rollback.sh` and `seed.sh`
+  all export the three names before invoking compose.
+
+  The hole was any compose command run BY HAND on the server. A bare
+
+      docker compose -f docker-compose.prod.yml up -d --force-recreate nginx
+
+  resolved `packvio-web:local`, found nothing locally, tried to pull it from
+  Docker Hub and died with `pull access denied ... repository does not exist` —
+  which names neither the tag nor the variable, and sends you looking for a
+  registry login you never needed. Worse, `nginx` depends on `web` and `api`, so
+  a command aimed at one container took down the other two on the way past.
+  Matching the default to reality means a hand-run compose command now does the
+  obvious thing, and the exports in the scripts are belt-and-braces rather than
+  load-bearing. **If the build tags ever change, change them in four places:
+  those three scripts and these defaults.**
 
   Relatedly, the deploy now copies the WHOLE of `deploy/nginx` (Dockerfile,
   nginx.conf, entrypoint, templates, snippets) to the server rather than just
@@ -971,3 +982,220 @@ Decisions that depart from the brand guide or the brief, with the reason. Read b
   because Docker creates a **directory** at a bind-mount source that does not
   exist, and that directory is what nginx trips over the day the gate goes back
   on. It also detects that directory and says how to remove it.
+
+- **The logo is the real one now, extracted from the identity PDF — and it is raster.**
+  `public/brand/packvio-mark.svg` and its two siblings were geometric
+  placeholders, because the PDFs under /docs are image-based and this machine
+  had no poppler to rasterise them. It does now (`apt-get install
+  poppler-utils`), so the artwork came out of `Packvio identity.pdf` page 5,
+  which carries all three variants side by side on white.
+
+  **There is no vector to extract.** `pdfimages -list` reports every page as a
+  300 ppi JPEG with a soft mask, and `pdftocairo -svg` produces an SVG wrapping
+  two `<image>` elements. So the shipped assets are WebP, not SVG, and a true
+  vector logo needs the designer's original AI/EPS file. A hand-trace was
+  rejected deliberately: it would be an approximation of the brand mark that
+  differs from the brand asset, which is worse than an honest raster.
+
+  Transparency is recovered by un-premultiplying against the white page —
+  `a = 255 − min(r,g,b)`, then `C = (c − 255(1−a)) / a` — rather than by keying
+  out white, which would have eaten the pale cyan in the gradient.
+
+  Five files, all from the one source so they cannot drift:
+
+  | file | what it is |
+  |---|---|
+  | `packvio-logo.webp` | horizontal lockup, colour — header |
+  | `packvio-logo-white.webp` | the SAME artwork with its own alpha filled white — footer |
+  | `packvio-mark.webp` | the P mark alone — the panel watermark |
+  | `packvio-mark-white.webp` | ditto, white |
+  | `packvio-logo-stacked.webp` | mark above wordmark; unused, kept for layouts that need it |
+
+  **Two aspect ratios are load-bearing and neither is square.** The lockup is
+  3.111:1 and the mark is 0.6156:1. The placeholders were declared `148x40`
+  (3.7:1) in the header and footer and `size x size` in `Watermark`, so the real
+  artwork dropped into those boxes would have been stretched 19% wide and
+  squashed 38% narrow respectively. Both call sites now carry the measured
+  ratio, `Watermark` has a `MARK_ASPECT` constant, and a re-export means
+  re-measuring. Nothing at build time catches this — they are raster files.
+
+  `src/app/icon.svg` is replaced by `icon.png`, the mark on a transparent
+  square with 18% breathing room.
+
+- **The announcement strip is the brand bar, and it is not sticky.**
+  The first line on the page — the one that says what this company sells — was
+  `text-caption text-ink-muted` on `bg-surface-alt`, `py-1.5`, and
+  `hidden lg:block`. The quietest element on the page, and absent entirely on
+  phones. It is now white on `bg-brand-purple` at a readable size and visible
+  at every width; the phone number and email stay desktop-only, because on a
+  phone they wrap the bar to two rows and they already live in the drawer.
+
+  **It moved OUT of `HeaderShell` in the same change, and that is not
+  cosmetic.** `HeaderShell` is `sticky top-0`, so the whole header sticks. A
+  26px desktop-only hairline could afford that; a 40px bar that also shows on
+  phones cannot — a sticky strip plus a sticky nav would hold ~100px of a 667px
+  screen permanently, on every page, to repeat a tagline the reader has already
+  read. Only the main bar is sticky now. The strip is unmissable where it is
+  and then gets out of the way, which is the better reading of "make it
+  prominent" than "make it permanent".
+
+  `LanguageSwitcher` gained an `on-dark` variant for it. `inline` could not be
+  reused: its rest state is `text-ink-muted` and its HOVER is
+  `text-brand-purple` — the new background colour, so the link would have
+  vanished on the one interaction meant to confirm it. A variant rather than a
+  `className` override, because two Tailwind utilities for the same property
+  resolve by STYLESHEET order, not by which is last in the attribute, so an
+  override would work or not depending on how the CSS happened to be emitted.
+
+- **Section spacing came back down; the previous revision over-corrected.**
+  The scale ran 48/112/160 at desktop on the reasoning that 96px reads as mean
+  at 1440px. True of one section in isolation, false of a stacked page: what a
+  reader experiences is the SUM of two paddings, so adjacent `md` sections sat
+  224px apart and `lg` sections 320px. At that distance the eye stops reading
+  rhythm and starts reading "the page has ended".
+
+  Now 48/64/80 for `md` and 48/64/96 for `lg` — a 160px gap between `md`
+  sections, which is still generous. Mobile came down too (64→48): the earlier
+  note was right that a phone should not GAIN space, but that did not make 64px
+  already correct. `--spacing-2xhalf` (80px) is the new desktop step; `4xl` and
+  `5xl` are no longer used by `Section` and stay defined for full-bleed features
+  where that much air is deliberate.
+
+- **Category tiles are photographs, keyed on the ENGLISH slug via the icon
+  registry's alias map.**
+  `public/categories/<slug>.webp`, 17 of the 18 top-level categories, 640×640
+  so the grid has one aspect ratio and no tile can contribute layout shift.
+  Each is the cleanest product shot in that category with the card's title band
+  and spec table trimmed off and the result squared on the card's own tint;
+  `docs/category-images.json` records which source image each came from.
+
+  Picking them was two passes, and the second one matters. An automatic score —
+  ink coverage in the top and bottom strips, where bands and tables live — got
+  12 right and **missed five**, because those cards' title bands are dark text
+  on a PALE fill, so no row was ever "full-width ink". Those five
+  (`cutlery`, `food-trays`, `soup-cup-lids`, `soup-cups`, `wrapping-paper`)
+  were chosen by eye from a contact sheet of every candidate and are marked
+  HAND in the generator. **Do not re-run the scorer and trust it.**
+
+  `hmr-containers` has no tile, because no photograph of an HMR container
+  exists anywhere in the supplied export. It falls back to its category icon —
+  the treatment the whole grid used to wear — so it reads as a category rather
+  than as a broken image.
+
+  `categoryImage()` accepts EITHER locale's slug and canonicalises through
+  `canonicalCategorySlug()`, newly exported from the icon registry. Keying on
+  English alone and passing `category.slug` would have produced a grid with no
+  photographs at all on the Arabic pages — the default locale, the ones most
+  visitors see — while looking perfect in English.
+
+- **Four Arabic category names were revised, and BOTH slugs stay aliased.**
+  Register and accuracy problems rather than preferences: `أوعية` (vessels) is
+  lab Arabic for a kraft bowl, `أدوات المائدة` means fine-dining cutlery rather
+  than counter disposables, `عبوات` (containers) says nothing where `برطمانات`
+  means jars, and the carry bags' handle is what distinguishes them from every
+  other bag in the catalogue.
+
+  The trap: the seed freezes a slug at INSERT and only re-syncs names, so an
+  existing database keeps the slug derived from the OLD name forever while a
+  database seeded from scratch derives the new one. `AR_TO_EN_SLUG` therefore
+  carries both spellings for all four. Drop either and the icon and the tile
+  vanish on the Arabic pages of one of the two deployments — the half that is
+  hardest to notice, because English stays perfect throughout.
+
+  Also fixed in the hero: `منشأتك الغذائية` is the register of a municipal
+  licence, not of someone buying cups, and `تُورَّد بالعبوة` is a literal
+  rendering of "by the case" that means little in the trade — Saudi wholesale
+  quotes **بالكرتون**, which is also what `caseQuantity` actually counts.
+
+- **"Leaf Spoon" is mistranslated throughout as "paper spoon", and it is a pun
+  bug.** `ملعقة ورقية` means *paper* spoon; `ورقة` means both "leaf" and "sheet
+  of paper", so the shape name collapsed into a material claim. These spoons
+  are `PS 2.05 G` — polystyrene. The name is therefore not just awkward, it
+  states the wrong material on a food-contact product, which is the category of
+  error the "Copy pending business sign-off" table exists for. **Not yet
+  fixed**, because the correct replacement is a naming decision for Packvio:
+  `ملعقة بلاستيك` loses the leaf shape that distinguishes these from the other
+  spoons in the catalogue.
+
+- **Colour and size variants roll up into one listing card; every SKU keeps its
+  own page.**
+  The catalogue lists each colour and each size as its own product, so
+  `/categories/cutlery` showed seven near-identical Leaf Spoon cards differing
+  only in the word Pearl, Candy Green, Blueberry… `docs/catalog.json` now
+  carries `variantGroup`, `variantAxis`, `variantLabel{En,Ar}`,
+  `variantGroupName{En,Ar}` and an optional `variantSwatch`, derived from the
+  shared code prefix and the trailing name token.
+
+  **45 groups cover 172 of 213 products, so the listing falls from 213 cards to
+  86.** The axis split is 26 size, 13 colour, 6 both; 91 products carry a hex
+  swatch. Where a colour could not be read out of the label with confidence
+  there is NO swatch and the chip falls back to its text — never a grey chip
+  standing in for an unknown colour, which is how a buyer orders the wrong
+  thing.
+
+  **The rollup is a LISTING concern only.** Each variant keeps its own `code`
+  (the SKU the Salla sync joins on), its own frozen slug and its own product
+  page, and `VariantPicker` is a row of LINKS rather than a client-side toggle.
+  Collapsing seven products onto one URL would cost six indexable pages and
+  leave a buyer unable to send a colleague a link to the colour they meant.
+  Pagination counts groups rather than SKUs, or the pager would lie about how
+  many pages there are.
+
+  The new columns are deliberately **absent from `WRITABLE_PRODUCT_COLUMNS`**,
+  like every other local-only field: they come from the printed catalogue, and
+  nothing in a Salla payload means any of them.
+
+  Note that the Leaf Spoon group still reads `ملعقة ورقية 11.5 سم` in Arabic —
+  see the mistranslation entry above. The grouping inherits the name; it did
+  not introduce the error and cannot fix it.
+
+- **Salla photography outranks the seeded catalogue cards, and nothing said so
+  until a real database was pointed at the suite.**
+  The delete guard above keeps a product's seeded cards when Salla images
+  arrive. What no rule covered was which of them is PRIMARY. The seed marks its
+  first picture `isPrimary` at `sortOrder` 0; the Salla parser marks its first
+  picture `isPrimary` at `sortOrder` 0 too. So after one sync PCS/08 held four
+  images, **two of them flagged primary**, with sort orders 0, 0, 1, 1 — and
+  whatever renders "the primary image" picked whichever row the query returned
+  first. The product page could show the catalogue card one day and the real
+  photograph the next, and the gallery order was undefined.
+
+  `planImageReconciliation` now demotes surviving seeded rows and re-sorts them
+  after the incoming ones **whenever `incoming` is non-empty**, and leaves them
+  completely alone when it is empty — with no Salla photography to defer to,
+  demoting the only picture a product has would leave the page with no primary
+  at all. Covered both ways round in the mapper spec.
+
+  **This is only visible with Postgres running.** `npm test` skips the three
+  database-backed suites and reports green, which is exactly how a two-primary
+  bug reached a live deployment. To run them:
+
+      pg_ctlcluster 16 main start
+      createdb -O packvio packvio_test     # role: packvio / packvio, superuser
+      export DATABASE_URL=postgres://packvio:packvio@127.0.0.1:5432/packvio_test
+      npm -w apps/api run migration:run && npm -w apps/api run seed
+      npm test
+
+  With it up the full suite is **260 API + 25 web, all passing and none
+  skipped**. Do that before shipping anything that touches the sync or the
+  catalogue read path; the skip is silent and it hides precisely the class of
+  bug that hand-written SQL produces.
+
+- **Category tiles count SKUs, not variant families — deliberately.**
+  Once variants grouped, `productCounts()` was changed to count families so the
+  tile would not say "3 products" in front of a listing showing one card. That
+  mismatch is real, and it is the lesser problem: counting families makes the
+  Carry Bags tile read **"1 product"** against ten bags, Lunch Boxes 1 against
+  nine, Shakers 2 against eighteen. A wholesale buyer reads that as "they
+  barely carry this". Understating the range on the page whose whole job is to
+  advertise it costs more than a count that differs from the number of cards.
+
+  It also keeps ONE meaning for the word across the site: the hero's "213
+  products in the catalog" is the sum of these tiles. Counting families here
+  left two different numbers both labelled "products".
+
+  The test that enforced `productCount === products.total` was rewritten rather
+  than deleted. It now asserts the invariant that equality was standing in for
+  — every SKU in the count is REACHABLE, as a card or inside some card's
+  variant list — plus that grouping is actually collapsing something, so it
+  cannot pass with the feature switched off.

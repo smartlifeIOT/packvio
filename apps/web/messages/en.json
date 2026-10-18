@@ -20,7 +20,7 @@
     "browseCategories": "Browse categories",
     "allCategories": "All categories",
     "viewAllProducts": "View all products",
-    "contactStripTagline": "Food packaging solutions — Riyadh, Saudi Arabia",
+    "contactStripTagline": "Packaging & serving supplies for cafés and restaurants — wholesale from Riyadh",
     "switchTo": "Switch language to {language}",
     "languageName": {
       "ar": "العربية",
@@ -71,6 +71,13 @@
       "caption": "Volume pricing for {name}",
       "minQuantity": "From (units)",
       "unitPrice": "Price per unit"
+    },
+    "variants": {
+      "chooseColour": "Choose a colour",
+      "chooseSize": "Choose a size",
+      "chooseOption": "Choose an option",
+      "count": "{count, plural, one {# option} other {# options}}",
+      "more": "+{count}"
     }
   },
   "products": {
@@ -133,7 +140,7 @@
       "description": "Wholesale paper cups, lids, kraft boxes, trays and bags supplied by the case, with custom logo printing. Request a quote from Packvio, Riyadh."
     },
     "hero": {
-      "eyebrow": "Wholesale packaging · Riyadh",
+      "eyebrow": "Wholesale packaging, tableware & custom printing · Riyadh",
       "headline": "Packaging your food business can rely on",
       "subhead": "Paper cups, lids, kraft boxes, trays and carry bags — supplied by the case, printed with your logo, and shipped across the Kingdom on request.",
       "primaryCta": "Browse Products",

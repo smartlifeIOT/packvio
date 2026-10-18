@@ -50,11 +50,14 @@ export async function SiteFooter({ locale, categories }: SiteFooterProps) {
         <div className="grid gap-xl md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="flex flex-col gap-4">
-            {/* eslint-disable-next-line @next/next/no-img-element -- static local SVG */}
+            {/* The white lockup is the SAME artwork as the header's, with its
+                own alpha channel filled white — not a repaint — so the two can
+                never drift apart. 124x40 is the artwork's 3.111:1 ratio. */}
+            {/* eslint-disable-next-line @next/next/no-img-element -- static local asset */}
             <img
-              src="/brand/packvio-logo-white.svg"
+              src="/brand/packvio-logo-white.webp"
               alt={tCommon('brand')}
-              width={148}
+              width={124}
               height={40}
               className="h-10 w-auto"
             />
@@ -72,15 +75,15 @@ export async function SiteFooter({ locale, categories }: SiteFooterProps) {
               {topLevelCategories(categories)
                 .slice(0, FOOTER_CATEGORY_LIMIT)
                 .map((category) => (
-                <li key={category.id}>
-                  <Link
-                    href={{ pathname: '/categories/[slug]', params: { slug: category.slug } }}
-                    className="text-body-sm text-surface/80 transition-colors hover:text-brand-cyan"
-                  >
-                    {category.name}
-                  </Link>
-                </li>
-              ))}
+                  <li key={category.id}>
+                    <Link
+                      href={{ pathname: '/categories/[slug]', params: { slug: category.slug } }}
+                      className="text-body-sm text-surface/80 transition-colors hover:text-brand-cyan"
+                    >
+                      {category.name}
+                    </Link>
+                  </li>
+                ))}
             </ul>
           </nav>
 
