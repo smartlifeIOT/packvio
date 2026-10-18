@@ -1199,3 +1199,42 @@ Decisions that depart from the brand guide or the brief, with the reason. Read b
   — every SKU in the count is REACHABLE, as a card or inside some card's
   variant list — plus that grouping is actually collapsing something, so it
   cannot pass with the feature switched off.
+
+- **Eight category tiles are the brochure's own section banners, and that is
+  where `hmr-containers` finally got a picture.**
+  The printed catalogue opens each chapter with a full lifestyle photograph —
+  SOUP CUPS & ICE CREAM CUPS, SHAKERS / PAPER TUBS, COFFEE CUPS, LUNCH BOX &
+  FOOD TRAYS, CLEAR CUPS, MICROWAVABLE HMR SERIES, CARRY BAGS & FOOD BAGS.
+  Those are better tiles than any crop of a product card, and the HMR one is
+  the only photograph of an HMR container that exists in any supplied asset, so
+  the one category that had no tile now has the best one.
+
+  Their English titles sit on a white swoosh across the bottom and are cropped
+  away rather than shown on an Arabic page; the crop finds the swoosh by
+  scanning up from the bottom for the last row that is not mostly white.
+
+  **`lunch-boxes` and `food-trays` share ONE banner** and take different crops
+  of it — the white box of chicken and wedges, and the kraft trays holding the
+  hot dog and burger. The first attempt anchored both crops horizontally, which
+  produced two nearly identical tiles, because a square crop of a 1280×1004
+  photo is almost the whole photo. They are now explicit pixel boxes.
+
+  The grid is therefore 8 lifestyle photographs and 10 product-on-tint crops,
+  which do not match in style. That is the honest state of the available
+  imagery, not a decision — prefer a banner whenever one turns up.
+
+  **The banners did NOT fix the product-level gaps.** They are category
+  photography. The 8 HMR SKUs are three bases and five lids, and a lid is not a
+  tray: putting a picture of a loaded meal tray on a page headed "HMR 2
+  Compartment Lid" is the same mistake as a spoon on a fork's page, which the
+  `representative` mechanism exists to avoid rather than to license. Those 8,
+  and `PET-JAR-M`, still need a supplier shoot.
+
+- **The footer logo was stretched by `align-items: stretch`, not by its own
+  dimensions.** The brand block is `flex flex-col`, whose default alignment
+  stretches children across the cross axis, and an `<img>` with `width: auto`
+  is stretchable — so `h-10 w-auto` pinned the height at 40px while the width
+  was blown out to the full column, squashing the lockup. `w-auto` does not
+  protect against this; only `self-start` does. The header is immune only
+  because it is a flex ROW, where the stretch axis is the one `h-9` already
+  fixes. Worth checking any other `<img>` dropped into a flex column.

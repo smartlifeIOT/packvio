@@ -52,14 +52,24 @@ export async function SiteFooter({ locale, categories }: SiteFooterProps) {
           <div className="flex flex-col gap-4">
             {/* The white lockup is the SAME artwork as the header's, with its
                 own alpha channel filled white — not a repaint — so the two can
-                never drift apart. 124x40 is the artwork's 3.111:1 ratio. */}
+                never drift apart. 124x40 is the artwork's 3.111:1 ratio.
+
+                `self-start` is load-bearing and is NOT a nudge to the left.
+                This block is `flex flex-col`, whose default `align-items` is
+                `stretch`, and an image whose width is `auto` is a stretchable
+                item — so the logo was blown out to the full column width while
+                `h-10` held the height at 40px, i.e. visibly squashed. The
+                header escapes the same bug only because it is a flex ROW, where
+                stretch applies to the vertical axis that `h-9` already fixes.
+                `w-auto` does not protect against this; only opting out of the
+                stretch does. */}
             {/* eslint-disable-next-line @next/next/no-img-element -- static local asset */}
             <img
               src="/brand/packvio-logo-white.webp"
               alt={tCommon('brand')}
               width={124}
               height={40}
-              className="h-10 w-auto"
+              className="h-10 w-auto self-start"
             />
             <p className="text-body-sm leading-relaxed text-surface/80">{t('blurb')}</p>
           </div>

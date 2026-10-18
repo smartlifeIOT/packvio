@@ -9,20 +9,29 @@
  * app can answer on its own — and `categoryIcon()` already establishes the
  * pattern of a slug-keyed presentation registry living here.
  *
- * WHERE THE FILES COME FROM
- * `public/categories/<slug>.webp`, generated from the printed-catalogue
- * photography: the cleanest product shot in that category, with the card's
- * title band and spec table trimmed off and the result squared on the card's
- * own tint. `docs/category-images.json` records which source image each tile
- * came from. Five of the seventeen were picked by eye rather than by the
- * scoring pass, because their title band was too pale for a full-width ink
- * test to see — those are marked in the generator.
+ * WHERE THE FILES COME FROM — two sources, and the better one came later.
  *
- * `hmr-containers` is ABSENT, and that is the honest state: there is no
- * photograph of an HMR container anywhere in the supplied export. It falls
- * back to its category icon, which is what every category looked like before.
- * Add the file and the slug here once a real photograph exists; nothing else
- * needs to change.
+ * EIGHT are the printed catalogue's own SECTION BANNERS: full lifestyle
+ * photographs that open each chapter of the brochure. They are what this grid
+ * always wanted, and they are why `hmr-containers` finally has a tile at all —
+ * no product shot of an HMR container exists anywhere in the image export, but
+ * the brochure opens that chapter with one. Their English titles sit on a white
+ * swoosh across the bottom and are cropped away rather than shown on an Arabic
+ * page. `lunch-boxes` and `food-trays` share ONE banner and take different
+ * crops of it — the white box of chicken and wedges, and the kraft trays
+ * holding the hot dog and burger — because the same picture on two adjacent
+ * tiles reads as a bug.
+ *
+ * TEN are product shots from the catalogue cards, with the card's title band
+ * and spec table trimmed off and the result squared on the card's own tint.
+ * Five of those were picked by eye rather than by the scoring pass, because
+ * their title band was too pale for a full-width ink test to see.
+ *
+ * The two sets do not match in style — lifestyle photography beside product-
+ * on-tint — and that is the honest state of the available imagery rather than
+ * a decision. If more banners turn up, prefer them.
+ *
+ * `docs/category-images.json` records the source of every tile.
  *
  * Every tile is square (640x640) so the grid has ONE aspect ratio and no image
  * can contribute layout shift.
@@ -40,6 +49,7 @@ const CATEGORY_TILES = new Set([
   'cutlery',
   'equipment',
   'food-trays',
+  'hmr-containers',
   'kraft-bowls',
   'lunch-boxes',
   'shakers',
