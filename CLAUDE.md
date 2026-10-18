@@ -860,3 +860,64 @@ Decisions that depart from the brand guide or the brief, with the reason. Read b
   second CSP header means the browser enforces the **intersection** of the two
   policies, and a second password would sit in front of the webhook exception
   and meet Salla with a 401 it cannot answer.
+
+- **Compose refuses to run on a missing variable rather than substituting a blank.**
+  Every `${VAR}` in `docker-compose.prod.yml` that is fatal when empty is now
+  `${VAR:?message}`. The first deploy to the shared server is why. `.env` was
+  missing `PACKVIO_DOMAIN` and `SITE_URL`; compose printed
+
+      level=warning msg="The \"SITE_URL\" variable is not set. Defaulting to a blank string."
+
+  and **carried on**. Migrations ran, every container was created, the deploy
+  reported each step as done, and the stack then failed in two places at once
+  for reasons that named neither variable:
+
+  - `api` crash-looped on `Config validation error: "WEB_ORIGIN" is not allowed
+    to be empty. "NEXT_PUBLIC_SITE_URL" is not allowed to be empty`. Both are
+    `${SITE_URL}`. The Joi schema gives each a `.default()`, which fires only
+    when a key is **undefined** — compose had supplied `''`, and
+    `Joi.string().uri()` rejects an empty string. A variable compose "defaults
+    to a blank string" is therefore *worse* than one that is absent.
+  - `nginx` would have rendered `server_name ;` and
+    `ssl_certificate /etc/letsencrypt/live//fullchain.pem` from the blank
+    `PACKVIO_DOMAIN`.
+
+  `${VAR:?}` makes compose exit with the message instead, for every invocation
+  including a manual one. The variables that may legitimately be blank —
+  `SALLA_CLIENT_ID`, `SALLA_CLIENT_SECRET`, `SALLA_WEBHOOK_SECRET`,
+  `ADMIN_API_KEY`, `REVALIDATE_SECRET`, all `.allow('')` in the schema — are
+  `${VAR-}` instead, so the blank is explicit rather than a warning. The four
+  with real Joi defaults (`SALLA_API_BASE`, `SALLA_OAUTH_TOKEN_URL`,
+  `SALLA_STORE_LOCALE`, `QUOTE_RATE_LIMIT`) mirror those defaults here.
+
+  **A `:?` message must not contain a `": "` sequence.** YAML reads that as a
+  mapping key inside a plain scalar and rejects the whole file; "generate with:
+  openssl rand -base64 32" broke it exactly once. Same trap as the certbot
+  command, which is a `>-` block scalar for the same reason.
+
+  `deploy.sh` repeats the check in preflight — before three Docker builds rather
+  than after them — and additionally rejects a `SITE_URL` with no scheme, which
+  the URI validator fails just as firmly as an empty one.
+
+- **A listener on the HOST is as fatal as a container, and the port preflight
+  failed to say so.**
+  The port check added with the edge modes treated another *container* on :80 as
+  fatal but a non-Docker listener as a warning. The server turned out to have a
+  **system nginx** on :80 and :443 — not DocGen's container — so the deploy
+  printed `! port 80 also has a non-Docker listener: nginx`, continued in
+  `standalone` mode, and left nginx crash-looping. Both cases now fail, with the
+  same remedy, and the message points at `/etc/nginx/conf.d/` for a host nginx
+  rather than assuming the front proxy is containerised.
+
+- **A failed health check prints the internal network's membership.**
+  `nginx: [emerg] host not found in upstream "web:3000"` while `compose ps`
+  shows `web` as `Up`, and Next reporting `EAI_AGAIN` for `api`, are the same
+  symptom: a container holding a **stale network endpoint**, left behind by an
+  earlier `up` that failed partway through creating it — in this case the one
+  that died on `failed to set up container networking`. `EAI_AGAIN` is the
+  resolver not answering at all, not a name that does not exist, which is the
+  tell. Nothing in `compose ps`, the logs or `docker inspect` of the container
+  says so, so the health-check failure path now lists what is actually attached
+  to `packvio_internal`. A container present in `ps` but absent from that list
+  is this bug, and the cure is a full `down` + `up -d`, which rebuilds the
+  network; named volumes, `pgdata` included, survive unless `-v` is passed.

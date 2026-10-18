@@ -109,42 +109,97 @@ DISK=$(df -Pm "$DEPLOY" | awk 'NR==2{print $4}')
 echo "   ${DISK}MB free on the deploy volume"
 [ "$DISK" -lt 4000 ] && echo "   ${Y}!${N} under 4GB free — docker builds may fail. 'docker system prune -f' frees layer cache."
 
+# ---- required variables -------------------------------------------------
+# docker-compose.prod.yml now uses ${VAR:?message} for everything that is fatal
+# when blank, so compose refuses to run rather than substituting an empty
+# string. This repeats the check BEFORE the build for one reason: compose is not
+# consulted until after three Docker builds, and waiting five minutes to be told
+# a variable is missing is five minutes you do not get back.
+#
+# The whole set is reported at once, so one pass through .env fixes all of it.
+say "Checking $DEPLOY/.env"
+REQUIRED="PACKVIO_DOMAIN SITE_URL POSTGRES_USER POSTGRES_PASSWORD POSTGRES_DB
+          SALLA_TOKEN_ENC_KEY QUOTE_IP_HASH_SALT"
+MISSING=""
+for key in $REQUIRED; do
+  eval "v=\${$key:-}"
+  [ -n "$v" ] || MISSING="$MISSING $key"
+done
+if [ -n "$MISSING" ]; then
+  fail "missing or empty in $DEPLOY/.env:$MISSING
+
+   Compose substitutes a blank string for an unset variable and carries on with
+   a WARNING, so the stack comes up and then fails in three different places at
+   once — the API rejects an empty WEB_ORIGIN at boot and crash-loops, and nginx
+   renders 'server_name ;' and refuses to start. Add them and redeploy.
+
+   PACKVIO_DOMAIN=$DOMAIN
+   SITE_URL=https://$DOMAIN
+
+   deploy/env.prod.example lists every variable and where its value comes from.
+   Compare against it:  diff <(grep -oE '^[A-Z_]+' $DEPLOY/.env | sort -u) \\
+                             <(grep -oE '^[A-Z_]+' $SRC/deploy/env.prod.example | sort -u)"
+fi
+echo "   $(echo $REQUIRED | wc -w) required variables present"
+# SITE_URL must carry its scheme — the API validates it as a URI and Joi rejects
+# a bare hostname just as firmly as an empty string.
+case "$SITE_URL" in
+  https://*|http://*) ;;
+  *) fail "SITE_URL is '$SITE_URL', which has no scheme.
+   The API validates it as a URI, so a bare hostname fails at boot exactly like
+   a blank one. Set:  SITE_URL=https://$DOMAIN" ;;
+esac
+
 # ---- edge ports ---------------------------------------------------------
 # Checked HERE, before several minutes of Docker build, because a port conflict
 # is otherwise discovered by `up -d` at the very end and reported by the daemon
 # as a container-networking error that names a container id and not the thing
 # actually holding the port.
 EDGE_MODE="${EDGE_MODE:-standalone}"
+say "Checking the edge ports"
 echo "   edge mode: $EDGE_MODE"
 for publish in "${EDGE_HTTP_PUBLISH:-80}" "${EDGE_HTTPS_PUBLISH:-443}"; do
   # "127.0.0.1:8080" -> 8080, "80" -> 80.
   p="${publish##*:}"
-  # Our own nginx holding the port is the expected steady state — `up -d`
-  # recreates it — so only a DIFFERENT container counts as a conflict.
-  other=$(docker ps --format '{{.Names}}\t{{.Ports}}' 2>/dev/null \
-            | grep -E ":$p->" | grep -v '^packvio-nginx' | cut -f1 | tr '\n' ' ' || true)
-  if [ -n "$other" ]; then
-    fail "host port $p is already published by: $other
 
-   Two containers cannot bind one host port, so this deploy would fail at the
-   last step with 'address already in use'. Put Packvio behind the nginx that
-   already owns the port — in $DEPLOY/.env:
+  # 1. Another CONTAINER publishing it. Our own nginx holding the port is the
+  #    expected steady state — `up -d` recreates it — so it does not count.
+  holder=$(docker ps --format '{{.Names}}\t{{.Ports}}' 2>/dev/null \
+            | grep -E ":$p->" | grep -v '^packvio-nginx' | cut -f1 | tr '\n' ' ' || true)
+
+  # 2. A listener on the HOST — a system nginx, Apache, Caddy. Just as fatal,
+  #    and this used to be only a warning, which is how a deploy got all the way
+  #    to the health check with a system nginx sitting on :80 and :443.
+  #    docker-proxy entries are excluded because case 1 already covers those,
+  #    and our own nginx's proxy would otherwise look like a conflict.
+  if [ -z "$holder" ] && command -v ss >/dev/null 2>&1; then
+    holder=$(ss -tlnpH "( sport = :$p )" 2>/dev/null \
+               | grep -v 'docker-proxy' \
+               | sed -E 's/.*users:\(\("([^"]+)".*/\1 (on the host, not in Docker)/' \
+               | sort -u | tr '\n' ' ' || true)
+  fi
+
+  if [ -n "$holder" ]; then
+    # In behind-proxy mode the front proxy is SUPPOSED to hold 80/443 — the
+    # conflict only matters for the ports this stack is about to publish, which
+    # by then are the loopback ones.
+    fail "host port $p is already held by: $holder
+
+   A host port can be bound once, so this deploy fails at the last step with
+   'address already in use' — or, worse, nginx crash-loops and the site is
+   simply down. Put Packvio behind whatever already owns the port.
+
+   In $DEPLOY/.env:
 
        EDGE_MODE=behind-proxy
        EDGE_HTTP_PUBLISH=127.0.0.1:8080
        EDGE_HTTPS_PUBLISH=127.0.0.1:8443
 
-   then add deploy/nginx/front-proxy/packvio.conf.example to that nginx's
-   config and reload it. See the comments in deploy/env.prod.example."
+   Then give that proxy a vhost for $DOMAIN pointing at 127.0.0.1:8080 —
+   deploy/nginx/front-proxy/packvio.conf.example is the server block, and goes
+   in /etc/nginx/conf.d/ for a host nginx. Reload it, then redeploy."
   fi
-  # A non-container listener — a system nginx, Apache — shows up here instead.
-  if command -v ss >/dev/null 2>&1; then
-    host_holder=$(ss -tlnpH "( sport = :$p )" 2>/dev/null \
-                    | grep -v 'docker-proxy' | head -1 | sed -E 's/.*users:\(\("([^"]+)".*/\1/' || true)
-    if [ -n "$host_holder" ]; then
-      echo "   ${Y}!${N} port $p also has a non-Docker listener: $host_holder"
-    fi
-  fi
+  echo "   port $p free"
 done
 
 # ---- fetch --------------------------------------------------------------
@@ -274,6 +329,20 @@ if [ "$OK" != "1" ]; then
   echo "   ${R}✗${N} not healthy — nginx $n · api $a · web $w"
   echo ""
   $C ps
+  echo ""
+  # Which containers are actually ON the internal network, and under what
+  # aliases. Printed because the alternative is guessing: nginx reporting
+  # "host not found in upstream web:3000" while `ps` shows web Up, and Next
+  # reporting EAI_AGAIN for `api`, are both the same symptom — a container
+  # holding a STALE network endpoint, usually left behind by an earlier `up`
+  # that failed partway through creating it. A container missing from this list
+  # while present in `ps` above is that case, and the cure is a full
+  # `down` + `up -d`: it rebuilds the network from scratch, and the named
+  # volumes (pgdata included) are untouched unless you pass -v.
+  echo "   on the internal network:"
+  docker network inspect "$(docker network ls --format '{{.Name}}' | grep -E '^packvio_internal$' | head -1)" \
+    --format '{{range .Containers}}     {{.Name}}{{println}}{{end}}' 2>/dev/null \
+    || echo "     (could not inspect packvio_internal)"
   echo ""
   $C logs --tail=40 api web nginx
   fail "deploy finished but the stack is not answering. 'npm run deploy:rollback' restores the previous images."

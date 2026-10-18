@@ -35,9 +35,9 @@ services:
     image: postgres:16
     <<: [*restart, *logging]
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER is required}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+      POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB is required}
       # Postgres only initialises a database on an EMPTY data directory, so this
       # applies on first boot and never again. Changing it later does nothing,
       # which is a common source of "why is my new password not working".
@@ -51,7 +51,7 @@ services:
     healthcheck:
       # `-U`/`-d` matter: bare pg_isready answers for the server, not for the
       # database and role the API will actually connect as.
-      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:?POSTGRES_USER is required} -d ${POSTGRES_DB:?POSTGRES_DB is required}']
       interval: 10s
       timeout: 5s
       retries: 10
@@ -75,11 +75,11 @@ services:
     restart: 'no'
     environment:
       NODE_ENV: production
-      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      DATABASE_URL: postgres://${POSTGRES_USER:?POSTGRES_USER is required}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}@postgres:5432/${POSTGRES_DB:?POSTGRES_DB is required}
       # Joi validates the whole schema at import time even for the CLI, so the
       # required secrets have to be present even though a migration uses neither.
-      SALLA_TOKEN_ENC_KEY: ${SALLA_TOKEN_ENC_KEY}
-      QUOTE_IP_HASH_SALT: ${QUOTE_IP_HASH_SALT}
+      SALLA_TOKEN_ENC_KEY: ${SALLA_TOKEN_ENC_KEY:?SALLA_TOKEN_ENC_KEY is required - generate it with openssl rand -base64 32}
+      QUOTE_IP_HASH_SALT: ${QUOTE_IP_HASH_SALT:?QUOTE_IP_HASH_SALT is required - generate it with openssl rand -base64 32}
     depends_on:
       postgres:
         condition: service_healthy
@@ -106,9 +106,9 @@ services:
     restart: 'no'
     environment:
       NODE_ENV: production
-      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
-      SALLA_TOKEN_ENC_KEY: ${SALLA_TOKEN_ENC_KEY}
-      QUOTE_IP_HASH_SALT: ${QUOTE_IP_HASH_SALT}
+      DATABASE_URL: postgres://${POSTGRES_USER:?POSTGRES_USER is required}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}@postgres:5432/${POSTGRES_DB:?POSTGRES_DB is required}
+      SALLA_TOKEN_ENC_KEY: ${SALLA_TOKEN_ENC_KEY:?SALLA_TOKEN_ENC_KEY is required - generate it with openssl rand -base64 32}
+      QUOTE_IP_HASH_SALT: ${QUOTE_IP_HASH_SALT:?QUOTE_IP_HASH_SALT is required - generate it with openssl rand -base64 32}
     depends_on:
       postgres:
         condition: service_healthy
@@ -123,24 +123,24 @@ services:
     environment:
       NODE_ENV: production
       API_PORT: 4000
-      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      DATABASE_URL: postgres://${POSTGRES_USER:?POSTGRES_USER is required}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}@postgres:5432/${POSTGRES_DB:?POSTGRES_DB is required}
       # Still set, though the RFQ no longer needs it: the browser posts to the
       # site's own origin now and Next forwards over this network, so CORS is
       # off the conversion path entirely. It stays correct for anything that
       # might call the API cross-origin later, and costs nothing.
-      WEB_ORIGIN: ${SITE_URL}
-      NEXT_PUBLIC_SITE_URL: ${SITE_URL}
-      SALLA_CLIENT_ID: ${SALLA_CLIENT_ID}
-      SALLA_CLIENT_SECRET: ${SALLA_CLIENT_SECRET}
-      SALLA_WEBHOOK_SECRET: ${SALLA_WEBHOOK_SECRET}
-      SALLA_API_BASE: ${SALLA_API_BASE}
-      SALLA_OAUTH_TOKEN_URL: ${SALLA_OAUTH_TOKEN_URL}
-      SALLA_STORE_LOCALE: ${SALLA_STORE_LOCALE}
-      SALLA_TOKEN_ENC_KEY: ${SALLA_TOKEN_ENC_KEY}
-      ADMIN_API_KEY: ${ADMIN_API_KEY}
-      QUOTE_IP_HASH_SALT: ${QUOTE_IP_HASH_SALT}
-      QUOTE_RATE_LIMIT: ${QUOTE_RATE_LIMIT}
-      REVALIDATE_SECRET: ${REVALIDATE_SECRET}
+      WEB_ORIGIN: ${SITE_URL:?SITE_URL is required - the API rejects an empty WEB_ORIGIN/NEXT_PUBLIC_SITE_URL at boot}
+      NEXT_PUBLIC_SITE_URL: ${SITE_URL:?SITE_URL is required - the API rejects an empty WEB_ORIGIN/NEXT_PUBLIC_SITE_URL at boot}
+      SALLA_CLIENT_ID: ${SALLA_CLIENT_ID-}
+      SALLA_CLIENT_SECRET: ${SALLA_CLIENT_SECRET-}
+      SALLA_WEBHOOK_SECRET: ${SALLA_WEBHOOK_SECRET-}
+      SALLA_API_BASE: ${SALLA_API_BASE:-https://api.salla.dev/admin/v2}
+      SALLA_OAUTH_TOKEN_URL: ${SALLA_OAUTH_TOKEN_URL:-https://accounts.salla.sa/oauth2/token}
+      SALLA_STORE_LOCALE: ${SALLA_STORE_LOCALE:-ar}
+      SALLA_TOKEN_ENC_KEY: ${SALLA_TOKEN_ENC_KEY:?SALLA_TOKEN_ENC_KEY is required - generate it with openssl rand -base64 32}
+      ADMIN_API_KEY: ${ADMIN_API_KEY-}
+      QUOTE_IP_HASH_SALT: ${QUOTE_IP_HASH_SALT:?QUOTE_IP_HASH_SALT is required - generate it with openssl rand -base64 32}
+      QUOTE_RATE_LIMIT: ${QUOTE_RATE_LIMIT:-5}
+      REVALIDATE_SECRET: ${REVALIDATE_SECRET-}
     depends_on:
       postgres:
         # service_healthy, not service_started. `started` means the container is
@@ -166,7 +166,7 @@ services:
       # in apps/web/Dockerfile and in the CI workflow, and setting them here
       # would do nothing at all.
       API_INTERNAL_URL: http://api:4000/api/v1
-      REVALIDATE_SECRET: ${REVALIDATE_SECRET}
+      REVALIDATE_SECRET: ${REVALIDATE_SECRET-}
     depends_on:
       api:
         condition: service_started
@@ -179,7 +179,7 @@ services:
     image: ${NGINX_IMAGE:-packvio-nginx:local}
     <<: [*restart, *logging]
     environment:
-      PACKVIO_DOMAIN: ${PACKVIO_DOMAIN}
+      PACKVIO_DOMAIN: ${PACKVIO_DOMAIN:?PACKVIO_DOMAIN is required - nginx substitutes it into server_name and the certificate paths}
       # standalone (default) — this nginx owns :80/:443 and terminates TLS.
       # behind-proxy          — plain HTTP on a loopback port, TLS owned by an
       #                         nginx already running on this host.
@@ -273,9 +273,9 @@ services:
     image: postgres:16
     <<: [*restart, *logging]
     environment:
-      PGUSER: ${POSTGRES_USER}
-      PGPASSWORD: ${POSTGRES_PASSWORD}
-      PGDATABASE: ${POSTGRES_DB}
+      PGUSER: ${POSTGRES_USER:?POSTGRES_USER is required}
+      PGPASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+      PGDATABASE: ${POSTGRES_DB:?POSTGRES_DB is required}
       PGHOST: postgres
       BACKUP_RETENTION_DAYS: ${BACKUP_RETENTION_DAYS:-7}
       BACKUP_HOUR_UTC: ${BACKUP_HOUR_UTC:-23}
