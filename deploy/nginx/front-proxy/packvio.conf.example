@@ -50,9 +50,25 @@ server {
 # Port 443 — terminate TLS, hand everything to Packvio's nginx.
 # ---------------------------------------------------------------------------
 server {
-    listen 443 ssl;
-    listen [::]:443 ssl;
-    http2 on;
+    # `listen ... http2` and NOT `http2 on;`, which is the form used in
+    # Packvio's own templates. The difference is which nginx runs this file.
+    #
+    # `http2 on;` arrived in nginx 1.25.1 (June 2023). Packvio's container is
+    # Alpine 3.21, which ships 1.27, so it uses the modern directive. THIS file
+    # runs on whatever nginx the host happens to have — Ubuntu 24.04 still ships
+    # 1.24 — and an older one fails the whole config with
+    #
+    #     [emerg] unknown directive "http2"
+    #
+    # `listen 443 ssl http2;` has worked since 1.9.5 and still works on 1.25+,
+    # where it only logs a deprecation warning. For a file that may land on any
+    # version, the old spelling is the portable one.
+    #
+    # If nginx -t says `Address family not supported by protocol` for [::],
+    # the host has no IPv6 — delete the two [::] lines here and in the port 80
+    # block above.
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
     server_name packvio.smart-life.sa;
 
     ssl_certificate     /etc/letsencrypt/live/packvio.smart-life.sa/fullchain.pem;

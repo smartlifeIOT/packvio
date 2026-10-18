@@ -185,6 +185,10 @@ services:
       #                         nginx already running on this host.
       # Picks which template docker-entrypoint.sh renders. See env.prod.example.
       PACKVIO_EDGE_MODE: ${EDGE_MODE:-standalone}
+      # on (default) = Basic Auth over the whole site; off = publicly reachable.
+      # docker-entrypoint.sh generates /etc/nginx/gate/gate.conf from this and
+      # refuses to start with the gate on and an empty password file.
+      PACKVIO_STAGING_GATE: ${STAGING_GATE:-on}
       # Only PACKVIO_-prefixed names are substituted into the config templates.
       # Without this filter envsubst would also eat nginx's own $host,
       # $remote_addr and $upstream_addr, producing a config full of empty
@@ -214,6 +218,10 @@ services:
       - ./deploy/nginx/templates:/etc/nginx/templates:ro
       - ./deploy/nginx/snippets:/etc/nginx/snippets:ro
       # Generated on the server by `htpasswd`, never committed. See DEPLOYMENT.md.
+      # Mounted even when STAGING_GATE=off, because Docker creates a DIRECTORY at
+      # a bind-mount source that does not exist — and a directory here is what
+      # nginx trips over the day the gate is switched back on. deploy.sh keeps an
+      # empty file present for that reason.
       - ./deploy/nginx/htpasswd:/etc/nginx/htpasswd:ro
       - certbot-conf:/etc/letsencrypt
       - certbot-www:/var/www/certbot

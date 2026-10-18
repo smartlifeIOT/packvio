@@ -921,3 +921,53 @@ Decisions that depart from the brand guide or the brief, with the reason. Read b
   to `packvio_internal`. A container present in `ps` but absent from that list
   is this bug, and the cure is a full `down` + `up -d`, which rebuilds the
   network; named volumes, `pgdata` included, survive unless `-v` is passed.
+
+- **The front-proxy example uses `listen ... http2`; Packvio's own templates use `http2 on;`.**
+  Not an inconsistency — the two files run on different nginx builds.
+  `deploy/nginx/templates/*` run in Packvio's container, Alpine 3.21, nginx 1.27.
+  `deploy/nginx/front-proxy/packvio.conf.example` runs on whatever nginx the HOST
+  has, and Ubuntu 24.04 still ships 1.24. `http2 on;` arrived in 1.25.1, so on the
+  host it fails the entire config with `[emerg] unknown directive "http2"` — which
+  it did, on the real server. `listen 443 ssl http2;` has worked since 1.9.5 and
+  still works on 1.25+, where it only logs a deprecation warning, so it is the
+  portable spelling for a file that may land anywhere.
+
+  Worth noting how this was missed: the same error appeared while validating the
+  edge-mode work against a local nginx 1.24 and was written off as a sandbox
+  artifact, which was correct for the container template and wrong for this file.
+  **Anything under `front-proxy/` is validated against the OLDEST nginx likely to
+  run it, not the one in our image.** Re-verified on 1.24: passes.
+
+- **The staging gate is a switch, not two lines of committed config.**
+  `STAGING_GATE` in the server's `.env` — `on` by default — decides whether
+  Basic Auth covers the site. `docker-entrypoint.sh` writes
+  `/etc/nginx/gate/gate.conf` from it and `snippets/site.conf` includes that
+  file unconditionally; nginx has no `if` for this, and `snippets/` is a
+  read-only bind mount, so the generated fragment needs a directory of its own.
+
+  A switch rather than an edit because the alternative is predictable: someone
+  wants the password gone, deletes two lines from committed config, and it is
+  never put back. This way `off` is a one-line `.env` change and `on` is the
+  default anyone gets without thinking about it.
+
+  Three properties worth preserving:
+
+  1. **Declared at SERVER level, disabled per-location.** Protection is the
+     default and the three open paths say so explicitly, so a location added
+     later inherits the gate instead of appearing on the public internet
+     because somebody forgot a line.
+  2. **The gate cannot fail OPEN.** With `STAGING_GATE=on` the entrypoint tests
+     the password file with `-s`, not `-f`, and refuses to start if it is
+     missing *or empty*. An empty file is the dangerous one: nginx starts
+     normally and rejects every correct password, which reads as a forgotten
+     password rather than a broken deploy. Verified: on+file → exit 0,
+     on+empty → exit 1, on+absent → exit 1, off+absent → exit 0, nonsense → exit 1.
+  3. **`off` does not put the site in Google.** `X-Robots-Tag: noindex` and
+     `robots.txt Disallow: /` are separate mechanisms and both still apply —
+     confirmed by test in both states. Going properly public means removing all
+     three deliberately, together.
+
+  `deploy.sh` keeps an empty `htpasswd` file present even when the gate is off,
+  because Docker creates a **directory** at a bind-mount source that does not
+  exist, and that directory is what nginx trips over the day the gate goes back
+  on. It also detects that directory and says how to remove it.

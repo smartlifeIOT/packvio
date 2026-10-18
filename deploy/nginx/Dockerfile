@@ -17,7 +17,7 @@ RUN apk add --no-cache \
       nginx-mod-http-brotli \
       gettext \
       curl \
- && mkdir -p /etc/nginx/templates /etc/nginx/snippets /var/www/certbot /var/cache/nginx \
+ && mkdir -p /etc/nginx/templates /etc/nginx/snippets /etc/nginx/gate /var/www/certbot /var/cache/nginx \
  && rm -f /etc/nginx/http.d/default.conf
 
 COPY nginx.conf /etc/nginx/nginx.conf

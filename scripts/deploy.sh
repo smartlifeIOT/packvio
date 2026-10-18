@@ -180,10 +180,10 @@ for publish in "${EDGE_HTTP_PUBLISH:-80}" "${EDGE_HTTPS_PUBLISH:-443}"; do
   fi
 
   if [ -n "$holder" ]; then
-    # In behind-proxy mode the front proxy is SUPPOSED to hold 80/443 — the
-    # conflict only matters for the ports this stack is about to publish, which
-    # by then are the loopback ones.
-    fail "host port $p is already held by: $holder
+    # The remedy differs by mode, and telling someone already in behind-proxy
+    # mode to switch to behind-proxy mode is how a useful error becomes noise.
+    if [ "$EDGE_MODE" = "standalone" ]; then
+      fail "host port $p is already held by: $holder
 
    A host port can be bound once, so this deploy fails at the last step with
    'address already in use' — or, worse, nginx crash-loops and the site is
@@ -196,8 +196,34 @@ for publish in "${EDGE_HTTP_PUBLISH:-80}" "${EDGE_HTTPS_PUBLISH:-443}"; do
        EDGE_HTTPS_PUBLISH=127.0.0.1:8443
 
    Then give that proxy a vhost for $DOMAIN pointing at 127.0.0.1:8080 —
-   deploy/nginx/front-proxy/packvio.conf.example is the server block, and goes
-   in /etc/nginx/conf.d/ for a host nginx. Reload it, then redeploy."
+   deploy/nginx/front-proxy/packvio.conf.example is the server block. On a host
+   nginx it belongs in sites-available/ with a symlink from sites-enabled/, the
+   same as every other site on the box. Reload it, then redeploy."
+    fi
+
+    # Already behind a proxy: the mode is right, the port number is not.
+    suggestion=""
+    for cand in 8085 8086 8087 8088 8089 8090 8091 8092; do
+      [ "$cand" = "$p" ] && continue
+      if ! ss -tlnH "( sport = :$cand )" 2>/dev/null | grep -q .; then
+        suggestion="$cand"; break
+      fi
+    done
+    fail "host port $p is already held by: $holder
+
+   EDGE_MODE is already behind-proxy, so the mode is right — this port number
+   just belongs to something else. Pick one nothing is using${suggestion:+; $suggestion is free right now}.
+
+   TWO PLACES have to agree, and a mismatch is a 502 that looks like a dead app:
+
+   1. $DEPLOY/.env
+          EDGE_HTTP_PUBLISH=127.0.0.1:${suggestion:-<port>}
+   2. the front proxy's vhost for $DOMAIN
+          proxy_pass http://127.0.0.1:${suggestion:-<port>};
+      then:  nginx -t && systemctl reload nginx
+
+   What is currently listening:
+$(ss -tlnp 2>/dev/null | awk 'NR==1 || /127.0.0.1:(80|84)[0-9][0-9] |0.0.0.0:(80|84)[0-9][0-9] /' | sed 's/^/      /')"
   fi
   echo "   port $p free"
 done
@@ -279,9 +305,36 @@ done
 cp "$SRC"/deploy/scripts/*.sh "$DEPLOY/deploy/scripts/"
 chmod +x "$DEPLOY/deploy/scripts/"*.sh
 
-[ -f "$DEPLOY/deploy/nginx/htpasswd" ] || fail "No deploy/nginx/htpasswd on the server.
-   Create it once:  htpasswd -Bc $DEPLOY/deploy/nginx/htpasswd packvio
-   (Docker would otherwise create a DIRECTORY there and nginx would not start.)"
+# The password file, if the staging gate is on. Docker creates a DIRECTORY at a
+# bind-mount source that does not exist, and nginx then fails in a way that
+# names neither the gate nor the file — so a file must exist either way, even
+# an empty one the gate never reads.
+STAGING_GATE="${STAGING_GATE:-on}"
+HTPASSWD="$DEPLOY/deploy/nginx/htpasswd"
+if [ "$STAGING_GATE" = "off" ]; then
+  echo "   ${Y}!${N} STAGING_GATE=off — the site will be reachable by anyone with the URL."
+  echo "     (noindex and robots.txt Disallow are separate and still apply.)"
+  [ -e "$HTPASSWD" ] || : > "$HTPASSWD"
+elif [ -s "$HTPASSWD" ]; then
+  :
+else
+  # -s catches BOTH the missing file and the empty one. An empty password file
+  # lets nginx start and rejects every correct password, which looks like a
+  # forgotten password rather than a broken deploy.
+  [ -d "$HTPASSWD" ] && fail "$HTPASSWD is a DIRECTORY.
+   Docker created it that way when the file was absent at an earlier 'up'.
+   Remove it and create the real file:
+       rmdir $HTPASSWD && htpasswd -Bc $HTPASSWD packvio"
+  fail "No usable deploy/nginx/htpasswd on the server (missing or empty).
+   Create it once:
+       htpasswd -Bc $HTPASSWD packvio
+   If htpasswd is a stub that only knows -c, either install the real one
+   (apt-get install -y apache2-utils) or generate the line directly:
+       printf 'packvio:%s\\n' \"\$(openssl passwd -apr1)\" > $HTPASSWD
+
+   Or drop the gate entirely — set STAGING_GATE=off in $DEPLOY/.env and the
+   site is served publicly, with no password file needed."
+fi
 
 cd "$DEPLOY"
 C="docker compose -f docker-compose.prod.yml"

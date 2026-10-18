@@ -51,6 +51,42 @@ fi
 # expects, built from the current environment and the filter.
 VARS=$(env | cut -d= -f1 | grep -E "$FILTER" | sed 's/^/$/' | tr '\n' ' ')
 
+# --- the staging gate ------------------------------------------------------
+# snippets/ is a read-only bind mount, so the generated fragment goes in its
+# own directory, created in the image.
+GATE="${PACKVIO_STAGING_GATE:-on}"
+case "$GATE" in
+  on)
+    # -s, not -f: an EMPTY password file is the subtle failure. nginx starts
+    # happily, and then every correct password is rejected, which reads as "I
+    # forgot the password" rather than "the file is empty". Docker also
+    # silently creates a DIRECTORY at a bind-mount source that does not exist,
+    # which fails differently and just as confusingly.
+    if [ ! -s /etc/nginx/htpasswd ]; then
+      echo "[entrypoint] STAGING_GATE=on but /etc/nginx/htpasswd is missing or empty." >&2
+      echo "[entrypoint] Create it on the server:" >&2
+      echo "[entrypoint]     htpasswd -Bc <deploy dir>/deploy/nginx/htpasswd packvio" >&2
+      echo "[entrypoint] Or set STAGING_GATE=off in .env to serve the site publicly." >&2
+      exit 1
+    fi
+    printf 'auth_basic "Packvio staging";\nauth_basic_user_file /etc/nginx/htpasswd;\n' \
+      > /etc/nginx/gate/gate.conf
+    echo "[entrypoint] staging gate: ON (Basic Auth over the whole site)"
+    ;;
+  off)
+    # An empty file, not a missing one — site.conf includes it unconditionally.
+    printf '# STAGING_GATE=off - no Basic Auth. The site is publicly reachable.\n' \
+      > /etc/nginx/gate/gate.conf
+    echo "[entrypoint] staging gate: OFF - this site is PUBLIC to anyone with the URL"
+    echo "[entrypoint]   (X-Robots-Tag noindex and robots.txt Disallow are still set,"
+    echo "[entrypoint]    so it stays out of search engines - those are separate.)"
+    ;;
+  *)
+    echo "[entrypoint] PACKVIO_STAGING_GATE='$GATE' is not valid. Use 'on' or 'off'." >&2
+    exit 1
+    ;;
+esac
+
 echo "[entrypoint] edge mode: $MODE"
 echo "[entrypoint] rendering $(basename "$TEMPLATE") -> $OUTPUT_DIR/packvio.conf (substituting: ${VARS:-none})"
 envsubst "$VARS" < "$TEMPLATE" > "$OUTPUT_DIR/packvio.conf"
