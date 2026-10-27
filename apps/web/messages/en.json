@@ -83,7 +83,7 @@
   "products": {
     "title": "Products",
     "heading": "Products",
-    "intro": "Cups, lids, boxes, trays and bags — supplied by the case for food businesses across Saudi Arabia.",
+    "intro": "All paper, plastic, detergents and more .",
     "searchHeading": "Search results for “{query}”",
     "inCategory": "{category} — Products",
     "resultCount": "{count, plural, =0 {No products} =1 {1 product} other {{formatted} products}}",
@@ -137,12 +137,12 @@
     "meta": {
       "siteName": "Packvio",
       "title": "Packvio — Wholesale Food & Beverage Packaging in Saudi Arabia",
-      "description": "Wholesale paper cups, lids, kraft boxes, trays and bags supplied by the case, with custom logo printing. Request a quote from Packvio, Riyadh."
+      "description": "Wholesale paper and plastic cups,apaer and plastic soup bowls lids, kraft boxes,and bags supplied by the case, with custom logo printing. Request a quote from Packvio, Riyadh."
     },
     "hero": {
       "eyebrow": "Packaging and more · Riyadh",
       "headline": "Packaging your food business can rely on",
-      "subhead": "Paper cups, lids, kraft boxes, trays and carry bags — supplied by the case, printed with your logo, and shipped across the Kingdom on request.",
+      "subhead": "Wholesale paper and plastic cups,apaer and plastic soup bowls lids, kraft boxes,and bags supplied by the case — supplied by the case, printed with your logo, and shipped across the Kingdom on request.",
       "primaryCta": "Browse Products",
       "secondaryCta": "Request a Quote",
       "statProducts": "Products in the catalog",
@@ -164,11 +164,11 @@
       },
       "printing": {
         "title": "Custom logo printing",
-        "body": "Put your brand on the cup. We print your logo in one to four colours, available on selected products, with artwork checked and a proof approved before anything goes on press."
+        "body": "Put your brand on the product, with artwork checked and a proof approved before anything goes on press."
       },
       "wholesale": {
         "title": "Wholesale by the case",
-        "body": "Case quantities from 200 up to 6,000 units, priced for volume. Fast delivery in Riyadh from stock, and shipping across the Kingdom on request."
+        "body": "priced for volume. Fast delivery in Riyadh from stock, and shipping across the Kingdom on request."
       }
     },
     "featured": {
@@ -182,16 +182,16 @@
     },
     "customPrinting": {
       "eyebrow": "Custom printing",
-      "heading": "Your logo, on every cup you hand over",
-      "body": "A printed cup keeps working long after the drink is finished — on the desk, in the car, in a photo. We print your logo on selected products, from a single colour on kraft to full four-colour work.",
+      "heading": "Your logo, on every product you hand over",
+      "body": "A printed cup keeps working long after the drink is finished — on the desk, in the car, in a photo. We print your logo on selected products, from a single colour to many colours work.",
       "bullets": {
-        "one": "One to four colours, on selected cups, sleeves, boxes and bags",
+        "one": "One to many colours, on cups, bowls, boxes and bags and more",
         "two": "Free artwork check and a digital proof before we print",
         "three": "Minimum order quantities apply, and vary by item"
       },
       "cta": "See custom printing",
       "panelTitle": "Your logo here",
-      "panelSubtitle": "1–4 colours · selected products"
+      "panelSubtitle": "1–many colours · many products"
     },
     "quote": {
       "heading": "Tell us what you need",
@@ -205,9 +205,9 @@
   "about": {
     "title": "About",
     "heading": "About Packvio",
-    "lead": "Packvio is the packaging brand of Smavio Limited Trading Co., supplying food and beverage packaging by the case to businesses across Saudi Arabia.",
+    "lead": "Packvio is the packaging brand of Smavio Limited Trading Co.,with a long professional experience, supplying food and beverage packaging by the case to businesses across Saudi Arabia.",
     "body1": "We work with cafés, restaurants, bakeries, cloud kitchens and catering companies — the businesses that get through thousands of cups and boxes a month and cannot afford a supplier who runs out. Our range covers the whole service journey: the cup a drink is served in, the lid that keeps it there, the box a meal travels in and the bag it is handed over in.",
-    "body2": "Everything is sold by the case, in quantities from 200 to 6,000 units, and most of the range can carry your logo. We hold stock in Riyadh, and we quote from a product code and a quantity — no account to open, no minimum spend to qualify for an answer.",
+    "body2": "Everything is sold by the case, and most of the range can carry your logo, and we quote from a product code and a quantity, service and value.",
     "cta": "Request a quote",
     "contactCta": "Contact us",
     "stats": {
@@ -241,22 +241,22 @@
     "title": "Custom Printing",
     "heading": "Custom logo printing",
     "lead": "Turn everything you hand over into something that carries your name.",
-    "body": "We print on selected products across the Packvio range — paper cups, sleeves, kraft boxes, lunch boxes, carry bags and wrapping paper. Send us your logo and we'll check the artwork, advise on colours for the material, and send a digital proof for approval before anything goes on press.",
+    "body": "We print on many products across the Packvio range — paper cups, paper and plastic , kraft boxes, lunch boxes, carry bags and wrapping paper. Send us your logo and we'll check the artwork, advise on colours for the material, and send a digital proof for approval before anything goes on press.",
     "cta": "Request a printing quote",
     "browsePrintable": "{count, plural, =1 {Browse 1 printable product} other {Browse {formatted} printable products}}",
     "panel": {
       "title": "Your logo here",
-      "body": "Cups, sleeves, boxes and bags carrying your brand — printed to order in one to four colours."
+      "body": "Cups, bowls, boxes and bags carrying your brand — printed to order in one to four colours."
     },
     "capabilities": {
       "heading": "What we can print",
       "colours": {
-        "title": "One to four colours",
-        "body": "Single-colour work on kraft through to full four-colour print, matched to your brand palette."
+        "title": "One to many colours",
+        "body": "Single-colour work to many colours print, matched to your brand palette."
       },
       "materials": {
         "title": "Selected products",
-        "body": "Paper cups, sleeves, kraft boxes, lunch boxes, carry bags and wrapping paper. Lids, cutlery and equipment are not printed."
+        "body": "Paper cups, bowls, kraft boxes, lunch boxes, carry bags and wrapping paper."
       },
       "finishes": {
         "title": "Material-aware advice",
@@ -477,7 +477,7 @@
     },
     "prose": {
       "heading": "About Packvio",
-      "paragraph": "We supply wholesale food and beverage packaging to restaurants, cafés and food businesses across the Kingdom, in case quantities from 200 up to 6,000 units.",
+      "paragraph": "We supply wholesale food and beverage packaging to restaurants, cafés and food businesses across the Kingdom.",
       "listIntro": "What we supply:",
       "listOne": "Paper cups and lids in multiple sizes",
       "listTwo": "Kraft boxes and serving containers",
@@ -529,7 +529,7 @@
         },
         "caseOnly": {
           "q": "Do you sell single units, or only by the case?",
-          "a": "By the case. Packvio is a wholesale supplier, and every line is priced and shipped in case quantities — from 200 units up to 6,000 depending on the item. The exact case size is shown on each product page under \"Units per case\"."
+          "a": "By the case. Packvio is a wholesale supplier, and every line is priced and shipped in case quantities depending on the item. The exact case size is shown on each product page under \"Units per case\"."
         },
         "notListed": {
           "q": "Can I order something that isn't on the site?",
@@ -555,7 +555,7 @@
       "printing": {
         "canYouPrint": {
           "q": "Can you print my logo on the packaging?",
-          "a": "Yes, on selected products. We print in one to four colours, matched to your brand palette. Paper cups, sleeves, kraft boxes, lunch boxes, carry bags and wrapping paper all take print; lids, cutlery and equipment do not."
+          "a": "Yes, on selected products. We print in one to many colours, matched to your brand palette. Paper cups,bowls, plastic, kraft boxes, lunch boxes, carry bags and wrapping paper all take print."
         },
         "artworkFormat": {
           "q": "What artwork do you need from me?",
@@ -567,7 +567,7 @@
         },
         "whichProducts": {
           "q": "Which products can be printed?",
-          "a": "Cups, sleeves, kraft boxes, lunch boxes, carry bags and wrapping paper. Lids, cutlery and sealing equipment are not printed. You can see the full printable range by filtering the products listing on \"Custom printing available\"."
+          "a": "Cups, bowls , plastic, kraft boxes, lunch boxes, carry bags and wrapping paper. Lids, You can see the full printable range by filtering the products listing on \"Custom printing available\"."
         },
         "printMinimum": {
           "q": "What is the minimum order for a printed item?",
