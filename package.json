@@ -28,6 +28,8 @@
     "deploy:watch": "bash scripts/watch.sh",
     "deploy:rollback": "bash scripts/rollback.sh",
     "deploy:seed": "bash scripts/seed.sh",
+    "deploy:prune": "bash scripts/prune.sh",
+    "deploy:purge": "bash scripts/purge.sh",
     "deploy:ssh": "bash scripts/ssh.sh",
     "verify:local": "bash deploy/scripts/local-verify.sh"
   },

@@ -16,7 +16,8 @@
     "migration:create": "typeorm-ts-node-commonjs migration:create",
     "migration:run": "typeorm-ts-node-commonjs migration:run -d src/database/data-source.ts",
     "migration:revert": "typeorm-ts-node-commonjs migration:revert -d src/database/data-source.ts",
-    "seed": "ts-node -P tsconfig.json src/database/seeds/seed.ts"
+    "seed": "ts-node -P tsconfig.json src/database/seeds/seed.ts",
+    "prune": "ts-node -P tsconfig.json src/database/seeds/prune.ts"
   },
   "dependencies": {
     "@nestjs/axios": "^4.0.1",

@@ -41,6 +41,75 @@ echo ""
 echo "${C_BOLD}Packvio — deploy${C_RESET}"
 info "$SERVER · $BRANCH · https://$DOMAIN"
 
+# ---------------------------------------------------------------------------
+# WHAT THIS DEPLOY ACTUALLY SHIPS: origin/$BRANCH, not your working tree.
+#
+# The server does `git fetch` + `git reset --hard origin/$BRANCH` and builds
+# from that. So edits that are only on your disk — a zip pasted into the repo,
+# a change saved but not committed, a commit not yet pushed — are invisible to
+# it. The deploy then rebuilds the SAME commit, every step succeeds, the health
+# check passes, and the site is unchanged. Nothing is wrong and nothing has
+# happened, which is the most confusing pair of facts a deploy can present.
+#
+# So say it before spending five minutes proving it.
+# ---------------------------------------------------------------------------
+if [ "$SKIP_BUILD" != "1" ] && git -C "$ROOT_DIR" rev-parse --git-dir >/dev/null 2>&1; then
+  step "Checking what will be shipped"
+
+  # `|| true` on every one of these. This whole block is advisory, and
+  # `set -euo pipefail` is on: a `| head` that closes the pipe early gives git
+  # a SIGPIPE, pipefail promotes it, and an informational check would abort a
+  # deploy that is otherwise perfectly fine. Nothing here may be fatal.
+  dirty_count=$(git -C "$ROOT_DIR" status --porcelain 2>/dev/null | wc -l || true)
+  ahead=0
+
+  if [ "${dirty_count:-0}" -gt 0 ]; then
+    warn "You have UNCOMMITTED changes. They will NOT be deployed:"
+    git -C "$ROOT_DIR" status --porcelain 2>/dev/null | head -20 | sed 's/^/       /' || true
+    if [ "$dirty_count" -gt 20 ]; then
+      echo "       … and $(( dirty_count - 20 )) more"
+    fi
+  fi
+
+  # Unpushed commits. `@{upstream}` fails when the branch has no tracking ref,
+  # so fall back to origin/$BRANCH, and stay quiet if neither resolves — not
+  # every checkout has a remote configured, and this check is advisory.
+  upstream=$(git -C "$ROOT_DIR" rev-parse --abbrev-ref '@{upstream}' 2>/dev/null \
+             || echo "origin/$BRANCH")
+  upstream_known=0
+  if git -C "$ROOT_DIR" rev-parse --verify "$upstream" >/dev/null 2>&1; then
+    upstream_known=1
+    ahead=$(git -C "$ROOT_DIR" rev-list --count "$upstream..HEAD" 2>/dev/null || echo 0)
+    if [ "${ahead:-0}" -gt 0 ]; then
+      warn "$ahead commit(s) on HEAD are NOT pushed to $upstream. They will NOT be deployed:"
+      git -C "$ROOT_DIR" log --oneline "$upstream..HEAD" 2>/dev/null \
+        | head -10 | sed 's/^/       /' || true
+    fi
+  fi
+
+  if [ "${dirty_count:-0}" -gt 0 ] || [ "${ahead:-0}" -gt 0 ]; then
+    echo ""
+    echo "   ${C_BOLD}The deploy builds origin/$BRANCH on the server.${C_RESET}"
+    echo "   To ship the work above:"
+    echo "       git add -A && git commit -m 'your message' && git push"
+    echo ""
+    if [ -t 0 ]; then
+      confirm "Deploy origin/$BRANCH anyway (your local changes stay behind)?" || {
+        echo ""; info "Nothing deployed."; exit 0;
+      }
+    else
+      warn "Not a terminal — continuing with origin/$BRANCH."
+    fi
+  elif [ "$upstream_known" = "1" ]; then
+    ok "Working tree clean and pushed"
+  else
+    # Clean, but there is no local ref for $upstream to compare against — a
+    # fresh clone with a different remote name, or a checkout that has never
+    # fetched. Saying "pushed" here would be a claim this has not checked.
+    ok "Working tree clean (could not compare against $upstream)"
+  fi
+fi
+
 setup_ssh
 trap close_ssh EXIT
 
@@ -243,6 +312,24 @@ if [ "$SKIP_BUILD" != "1" ]; then
   # Strip the token so it is not left sitting in .git/config on the server.
   git -C "$SRC" remote set-url origin "$(echo "$REPO" | sed -E 's#https://[^@]*@#https://#')"
   echo "   $(git -C "$SRC" log --oneline -1)"
+
+  # Is this the same commit we already shipped? A deploy of an unchanged commit
+  # is a legitimate thing to want (re-release after an .env edit, recover from a
+  # half-broken container) — so this does NOT stop. But it is also what every
+  # "deploy succeeded and the site didn't change" report turns out to be, and
+  # the honest success line at the end is no help in telling the two apart.
+  # Printing the comparison is what tells them apart.
+  NEW_SHA=$(git -C "$SRC" rev-parse HEAD)
+  OLD_SHA=""
+  [ -f "$DEPLOY/.last-deployed-sha" ] && OLD_SHA=$(cat "$DEPLOY/.last-deployed-sha" 2>/dev/null || true)
+
+  if [ -n "$OLD_SHA" ] && [ "$OLD_SHA" = "$NEW_SHA" ]; then
+    echo "${Y}!${N} SAME COMMIT as the last deploy (${NEW_SHA:0:7})."
+    echo "   Rebuilding it will produce an identical site. If you expected a change,"
+    echo "   it has not reached origin/$BRANCH yet — commit and push, then deploy again."
+  elif [ -n "$OLD_SHA" ]; then
+    echo "   new commits since the last deploy: ${OLD_SHA:0:7} → ${NEW_SHA:0:7}"
+  fi
 fi
 
 cd "$SRC"
@@ -400,6 +487,11 @@ if [ "$OK" != "1" ]; then
   $C logs --tail=40 api web nginx
   fail "deploy finished but the stack is not answering. 'npm run deploy:rollback' restores the previous images."
 fi
+
+# Recorded only now, once the stack has actually answered — so a failed deploy
+# does not claim the new commit as the deployed one, and the next run still
+# reports the real difference against what is serving.
+[ -n "${NEW_SHA:-}" ] && printf '%s\n' "$NEW_SHA" > "$DEPLOY/.last-deployed-sha"
 
 $C ps --format "   {{.Service}}  {{.Status}}"
 echo ""

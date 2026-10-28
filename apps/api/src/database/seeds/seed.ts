@@ -18,7 +18,7 @@ import {
   loadProductImageSource,
   syncSeededProductImages,
 } from './product-images';
-import { slugSuffixFromCode, slugifyAr, slugifyEn } from './slugify';
+import { planProductSlugs, slugSuffixFromCode, slugifyAr, slugifyEn } from './slugify';
 
 /**
  * Seeds the catalog taxonomy and SKUs from docs/catalog.json.
@@ -141,31 +141,16 @@ function validateProducts(
  * changes under a later re-extraction.
  */
 function planSlugs(products: CatalogSourceProduct[]): Map<string, { en: string; ar: string }> {
-  const enBaseCount = new Map<string, number>();
-  const arBaseCount = new Map<string, number>();
+  // The planning itself lives in slugify.ts, because prune.ts has to compute
+  // the identical answer to decide which slugs it may reclaim. This wrapper
+  // exists only to fold the coercions into the seed's summary.
+  const { plan, coerced } = planProductSlugs(products);
 
-  for (const product of products) {
-    const en = slugifyEn(product.nameEn);
-    const ar = slugifyAr(product.nameAr);
-    enBaseCount.set(en, (enBaseCount.get(en) ?? 0) + 1);
-    arBaseCount.set(ar, (arBaseCount.get(ar) ?? 0) + 1);
-  }
-
-  const plan = new Map<string, { en: string; ar: string }>();
-  for (const product of products) {
-    const suffix = slugSuffixFromCode(product.code);
-    const enBase = slugifyEn(product.nameEn);
-    const arBase = slugifyAr(product.nameAr);
-    const en = (enBaseCount.get(enBase) ?? 0) > 1 ? `${enBase}-${suffix}` : enBase;
-    const ar = (arBaseCount.get(arBase) ?? 0) > 1 ? `${arBase}-${suffix}` : arBase;
-
-    if (en !== enBase || ar !== arBase) {
-      summary.coerced.push({
-        what: `product ${product.code}`,
-        reason: `slug collision on "${en !== enBase ? enBase : arBase}" — code suffix appended`,
-      });
-    }
-    plan.set(product.code, { en, ar });
+  for (const entry of coerced) {
+    summary.coerced.push({
+      what: `product ${entry.code}`,
+      reason: `slug collision on "${entry.base}" — code suffix appended`,
+    });
   }
 
   return plan;
@@ -257,7 +242,10 @@ async function upsertProducts(
   // Slugs already spoken for by a product this seed is not touching.
   const takenEn = new Set<string>();
   const takenAr = new Set<string>();
-  for (const product of await repository.find({ withDeleted: true, select: ['code', 'slugEn', 'slugAr'] })) {
+  for (const product of await repository.find({
+    withDeleted: true,
+    select: ['code', 'slugEn', 'slugAr'],
+  })) {
     if (byCode.has(product.code)) continue;
     takenEn.add(product.slugEn);
     takenAr.add(product.slugAr);
@@ -406,8 +394,7 @@ async function syncProductCategoryLinks(
     const key = `${product.id}:${category.id}`;
     wanted.add(key);
     const found = byKey.get(key);
-    const link =
-      found ?? repository.create({ productId: product.id, categoryId: category.id });
+    const link = found ?? repository.create({ productId: product.id, categoryId: category.id });
     link.sortOrder = position;
     await repository.save(link);
     if (found) summary.links.updated += 1;
@@ -513,12 +500,7 @@ async function run(): Promise<void> {
         const nameByCode = new Map(
           products.map((item) => [item.code, { en: item.nameEn, ar: item.nameAr }]),
         );
-        const counts = await syncSeededProductImages(
-          manager,
-          imageSource,
-          productRows,
-          nameByCode,
-        );
+        const counts = await syncSeededProductImages(manager, imageSource, productRows, nameByCode);
         summary.images.created = counts.created;
         summary.images.updated = counts.updated;
         summary.imagesRemoved = counts.removed;

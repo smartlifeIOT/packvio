@@ -51,7 +51,11 @@ services:
     healthcheck:
       # `-U`/`-d` matter: bare pg_isready answers for the server, not for the
       # database and role the API will actually connect as.
-      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:?POSTGRES_USER is required} -d ${POSTGRES_DB:?POSTGRES_DB is required}']
+      test:
+        [
+          'CMD-SHELL',
+          'pg_isready -U ${POSTGRES_USER:?POSTGRES_USER is required} -d ${POSTGRES_DB:?POSTGRES_DB is required}',
+        ]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -93,7 +97,13 @@ services:
     # which has no node_modules of its own, and fails with MODULE_NOT_FOUND.
     entrypoint: ['dumb-init', '--']
     command:
-      ['node', '/app/node_modules/typeorm/cli.js', 'migration:run', '-d', 'dist/database/data-source.js']
+      [
+        'node',
+        '/app/node_modules/typeorm/cli.js',
+        'migration:run',
+        '-d',
+        'dist/database/data-source.js',
+      ]
 
   # -------------------------------------------------------------------------
   # Catalog seed, same shape as migrate. Idempotent — see CLAUDE.md.
@@ -115,6 +125,34 @@ services:
     networks: [internal]
     entrypoint: ['dumb-init', '--']
     command: ['node', 'dist/database/seeds/seed.js']
+
+  # -------------------------------------------------------------------------
+  # Catalog prune — the only thing in this project that removes products.
+  #
+  # DRY RUN by default: it prints what it would do and writes nothing. Pass
+  # --apply to make it act. Use `npm run deploy:prune` rather than this
+  # directly; the script carries the flag through.
+  #
+  #   docker compose -f docker-compose.prod.yml --profile tools run --rm prune
+  #   docker compose -f docker-compose.prod.yml --profile tools run --rm prune --apply
+  prune:
+    image: ${API_IMAGE:-packvio-api:latest}
+    <<: *logging
+    profiles: ['tools']
+    restart: 'no'
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://${POSTGRES_USER:?POSTGRES_USER is required}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}@postgres:5432/${POSTGRES_DB:?POSTGRES_DB is required}
+      SALLA_TOKEN_ENC_KEY: ${SALLA_TOKEN_ENC_KEY:?SALLA_TOKEN_ENC_KEY is required - generate it with openssl rand -base64 32}
+      QUOTE_IP_HASH_SALT: ${QUOTE_IP_HASH_SALT:?QUOTE_IP_HASH_SALT is required - generate it with openssl rand -base64 32}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [internal]
+    # No `command:` — so `run prune` runs the script with no arguments (dry
+    # run) and `run prune --apply` appends the flag instead of replacing a
+    # default command with it.
+    entrypoint: ['dumb-init', '--', 'node', 'dist/database/seeds/prune.js']
 
   # -------------------------------------------------------------------------
   api:
@@ -151,6 +189,32 @@ services:
         condition: service_healthy
     # NO `ports:`. nginx reaches it as http://api:4000 on the internal network.
     networks: [internal]
+    # Declared here as well as in apps/api/Dockerfile, and the `test` is
+    # SPELLED OUT rather than inherited. Omitting `test` and overriding only
+    # the timings is valid compose and is documented to inherit the image's
+    # probe — but if that inheritance does not happen, the container has no
+    # probe at all, never reports healthy, and `web` below (which now waits for
+    # healthy) never starts. That turns a cosmetic log error into the site
+    # being down, so this does not rely on it. If the Dockerfile's probe
+    # changes, change this one too; they must stay the same command.
+    #
+    # `node -e` because neither curl nor wget is in that image. The route
+    # answers 200 with a degraded dependency reported in the body, so this asks
+    # "is Nest serving HTTP" and nothing more.
+    #
+    # 40 retries at 3s is up to 2 minutes, generous on purpose: this box builds
+    # and restarts at the same time, and a Nest boot plus the TypeORM
+    # connection on a loaded 4GB VPS is not always quick.
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "require('node:http').get('http://127.0.0.1:'+(process.env.API_PORT||4000)+'/api/v1/health',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))"
+      interval: 3s
+      timeout: 5s
+      start_period: 10s
+      retries: 40
 
   # -------------------------------------------------------------------------
   web:
@@ -169,7 +233,18 @@ services:
       REVALIDATE_SECRET: ${REVALIDATE_SECRET-}
     depends_on:
       api:
-        condition: service_started
+        # service_HEALTHY, not service_started — this is the fix for the
+        # ECONNREFUSED 172.x.x.x:4000 pair that appeared in the web logs after
+        # every deploy. `service_started` only means the api CONTAINER started.
+        # Next is "Ready in 180ms" and server-renders the home page straight
+        # away; Nest needs seconds to bootstrap and bind :4000. web won that
+        # race nearly every time. `apiFetch` turns an unreachable API into a
+        # thrown ApiUnreachableError rather than empty data — deliberately, so
+        # a half-empty page is impossible — which means every request landing
+        # in that window got an ERROR PAGE, and the deploy's own health check
+        # (which fetches /ar) could fail on a stack that was about to be fine.
+        # The health check on `api` above is what makes this wait real.
+        condition: service_healthy
     networks: [internal]
 
   # -------------------------------------------------------------------------

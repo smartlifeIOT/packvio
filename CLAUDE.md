@@ -1,15 +1,18 @@
 # Packvio — Project Brief
 
 ## What this is
+
 Bilingual (ar default / en) wholesale food & beverage packaging website. Brand: Packvio, owned by
 Smavio Limited Trading Co., Riyadh, KSA. B2B wholesale: case quantities of 200–6000 units, plus
 custom logo printing. The primary conversion is a QUOTE REQUEST (RFQ), not the cart. Cart checkout
 is secondary and hands off to Salla.
 
 ## Architecture
+
 Monorepo, npm workspaces:
-- apps/api  — NestJS 11 + TypeORM + PostgreSQL. Owns Salla integration and is the site's data source.
-- apps/web  — Next.js 15 App Router + next-intl + Tailwind v4. Reads from apps/api. No direct Salla calls.
+
+- apps/api — NestJS 11 + TypeORM + PostgreSQL. Owns Salla integration and is the site's data source.
+- apps/web — Next.js 15 App Router + next-intl + Tailwind v4. Reads from apps/api. No direct Salla calls.
 - packages/shared — shared TypeScript types (DTOs) consumed by both.
 
 Salla = merchant back office (products, payments, ZATCA invoicing, shipping).
@@ -17,6 +20,7 @@ Nest mirrors Salla's catalog into Postgres via webhooks + a nightly reconcile jo
 Next renders from Nest with ISR; Nest triggers on-demand revalidation after writes.
 
 ## Non-negotiable rules
+
 - Arabic is the DEFAULT locale. `/` redirects to `/ar`. English lives at `/en`.
 - RTL: use ONLY logical CSS properties (ms-/me-/ps-/pe-/start-/end-/text-start/text-end).
   Never left/right physical properties in layout. Test every component in both directions.
@@ -28,77 +32,85 @@ Next renders from Nest with ISR; Nest triggers on-demand revalidation after writ
 - Every DB change is a generated TypeORM migration. Never use synchronize:true outside tests.
 
 ## Brand tokens
-Primary cyan:      #4FC0DF
-Deep purple:       #39255F
-Panel tint:        #EAF4FB   (light-blue product panel background, matches the printed catalog)
-Neutral ink:       #1B1B1F
+
+Primary cyan: #4FC0DF
+Deep purple: #39255F
+Panel tint: #EAF4FB (light-blue product panel background, matches the printed catalog)
+Neutral ink: #1B1B1F
 Fonts: Poppins (Latin display + headings), IBM Plex Sans Arabic (Arabic body/headings),
-       a monospace face for product codes/specs.
+a monospace face for product codes/specs.
 Visual devices from the printed catalog to reuse:
-  - a thin checkerboard band as a section divider
-  - a rotated vertical category tab on the page edge (flips side under RTL)
-  - the Packvio "P" mark as a 3–5% opacity background watermark on product panels
+
+- a thin checkerboard band as a section divider
+- a rotated vertical category tab on the page edge (flips side under RTL)
+- the Packvio "P" mark as a 3–5% opacity background watermark on product panels
 
 ## Content sources
+
 Company profile, product catalog and brand identity PDFs live in /docs. Product data ultimately
 comes from Salla; the PDFs are the reference for categories, product codes, specs and case quantities.
 
 ## Reference site (structure only, not visuals)
+
 promopack.sa — pages: shop, catalog, faq, about, contact; home has category tiles, a three-pillar
 value band, latest-products rail, and an inline enquiry form. We are building a better version of this.
 
 ## Commands
+
 docker compose up --build
-                   — THE WHOLE STACK on your machine, one command. Postgres,
-                     migrations, the catalogue seed, the API and the site.
-                     No .env needed; every value has a dev default.
-                       http://localhost:3000        the site
-                       http://localhost:4000/api/v1 the API (+ /docs for Swagger)
-                       localhost:5433               Postgres
-                     Built images, so a code change needs `up --build` again.
-                     For fast iteration use dev:api / dev:web below against the
-                     same Postgres. Production is docker-compose.prod.yml, a
-                     different shape — see the header of docker-compose.yml.
-npm run dev:api    — Nest in watch mode (port 4000)
-npm run dev:web    — Next dev server (port 3000)
-npm run build      — build both workspaces
-npm run typecheck  — tsc --noEmit in both workspaces, then lint:rtl
-npm test           — jest in BOTH workspaces. apps/api: unit tests always run; the
-                     database-backed catalog suite runs when Postgres is reachable and skips
-                     (loudly) when it is not. apps/web: pure logic and server-rendered markup
-                     via react-dom/server — no jsdom, no browser. `tsconfig.jest.json` exists
-                     only because ts-jest needs `jsx: react-jsx` and CommonJS where the app
-                     build wants `preserve` and ESM; do not move those overrides into
-                     tsconfig.json.
+— THE WHOLE STACK on your machine, one command. Postgres,
+migrations, the catalogue seed, the API and the site.
+No .env needed; every value has a dev default.
+http://localhost:3000 the site
+http://localhost:4000/api/v1 the API (+ /docs for Swagger)
+localhost:5433 Postgres
+Built images, so a code change needs `up --build` again.
+For fast iteration use dev:api / dev:web below against the
+same Postgres. Production is docker-compose.prod.yml, a
+different shape — see the header of docker-compose.yml.
+npm run dev:api — Nest in watch mode (port 4000)
+npm run dev:web — Next dev server (port 3000)
+npm run build — build both workspaces
+npm run typecheck — tsc --noEmit in both workspaces, then lint:rtl
+npm test — jest in BOTH workspaces. apps/api: unit tests always run; the
+database-backed catalog suite runs when Postgres is reachable and skips
+(loudly) when it is not. apps/web: pure logic and server-rendered markup
+via react-dom/server — no jsdom, no browser. `tsconfig.jest.json` exists
+only because ts-jest needs `jsx: react-jsx` and CommonJS where the app
+build wants `preserve` and ESM; do not move those overrides into
+tsconfig.json.
 NEXT_DIST_DIR=.next-build npm run build
-                   — build apps/web without evicting a running `npm run dev:web`; on Windows
-                     the two fight over .next and the build dies with EPERM.
-npm -w apps/api run migration:run     — apply pending migrations
-npm -w apps/api run migration:revert  — undo the last migration
-npm -w apps/api run seed              — seed the catalog from docs/catalog.json (idempotent)
-npm run lint:rtl   — fails if any .tsx/.css under apps/web/src uses a physical
-                     direction (ml-/mr-/pl-/pr-/left-/right-/text-left/text-right/
-                     border-l/border-r, margin-left/right, padding-left/right, left:/right:).
-                     Escape hatch: a same-line comment `rtl-ok: <reason>`.
+— build apps/web without evicting a running `npm run dev:web`; on Windows
+the two fight over .next and the build dies with EPERM.
+npm -w apps/api run migration:run — apply pending migrations
+npm -w apps/api run migration:revert — undo the last migration
+npm -w apps/api run seed — seed the catalog from docs/catalog.json (idempotent)
+npm run lint:rtl — fails if any .tsx/.css under apps/web/src uses a physical
+direction (ml-/mr-/pl-/pr-/left-/right-/text-left/text-right/
+border-l/border-r, margin-left/right, padding-left/right, left:/right:).
+Escape hatch: a same-line comment `rtl-ok: <reason>`.
 
 ## Copy pending business sign-off
+
 Four claims were written in a stronger form, then weakened because nobody has confirmed them.
 The site currently ships the DEFENSIBLE version. **Restore the original verbatim once Packvio
 confirms it — do not re-weaken it, and do not invent a third wording.**
 
-| Claim | Shipping now (ar / en) | Original, pending sign-off (ar / en) | What must be confirmed |
-|---|---|---|---|
-| Food safety | `مواد صالحة لملامسة الأغذية` / `Food-contact grade materials` | `خامات آمنة غذائيًا … مختارة لتتوافق مع اشتراطات الهيئة العامة للغذاء والدواء لملامسة الأغذية` / `Food-safe materials … sourced to comply with SFDA requirements for food contact` | That supplier certificates actually evidence SFDA food-contact compliance. Naming a regulator without documentation is the highest-risk claim on the site. |
-| Delivery speed | `توصيل سريع داخل الرياض` / `Fast delivery in Riyadh`, hero stat value `سريع` / `Fast` | `التوصيل داخل الرياض 24–48 ساعة` / `Delivery inside Riyadh 24–48h`, and `الأصناف المتوفرة في المستودع تخرج من مستودعنا بالرياض خلال 24 إلى 48 ساعة` / `Stocked lines leave our Riyadh warehouse within 24 to 48 hours` | That 24–48h is a commitment operations will stand behind, not a best case. A published numeric SLA is quotable back at you. |
-| Colour printing | `… وهي متاحة على منتجات مختارة` / `… available on selected products` | `على معظم أصناف التشكيلة` / `across most of the range` | Which products actually print. See the `customPrinting` per-category flags in docs/catalog.json — that split is the same open question in data form. |
-| Shipping reach | `الشحن داخل المملكة عند الطلب` / `Shipping across the Kingdom on request` | `تصل إليك في جميع أنحاء المملكة` / `delivered across the Kingdom` | Whether nationwide shipping is a standing service or arranged case by case. |
+| Claim           | Shipping now (ar / en)                                                                | Original, pending sign-off (ar / en)                                                                                                                                                                                   | What must be confirmed                                                                                                                                     |
+| --------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Food safety     | `مواد صالحة لملامسة الأغذية` / `Food-contact grade materials`                         | `خامات آمنة غذائيًا … مختارة لتتوافق مع اشتراطات الهيئة العامة للغذاء والدواء لملامسة الأغذية` / `Food-safe materials … sourced to comply with SFDA requirements for food contact`                                     | That supplier certificates actually evidence SFDA food-contact compliance. Naming a regulator without documentation is the highest-risk claim on the site. |
+| Delivery speed  | `توصيل سريع داخل الرياض` / `Fast delivery in Riyadh`, hero stat value `سريع` / `Fast` | `التوصيل داخل الرياض 24–48 ساعة` / `Delivery inside Riyadh 24–48h`, and `الأصناف المتوفرة في المستودع تخرج من مستودعنا بالرياض خلال 24 إلى 48 ساعة` / `Stocked lines leave our Riyadh warehouse within 24 to 48 hours` | That 24–48h is a commitment operations will stand behind, not a best case. A published numeric SLA is quotable back at you.                                |
+| Colour printing | `… وهي متاحة على منتجات مختارة` / `… available on selected products`                  | `على معظم أصناف التشكيلة` / `across most of the range`                                                                                                                                                                 | Which products actually print. See the `customPrinting` per-category flags in docs/catalog.json — that split is the same open question in data form.       |
+| Shipping reach  | `الشحن داخل المملكة عند الطلب` / `Shipping across the Kingdom on request`             | `تصل إليك في جميع أنحاء المملكة` / `delivered across the Kingdom`                                                                                                                                                      | Whether nationwide shipping is a standing service or arranged case by case.                                                                                |
 
 Two further items are flagged but NOT weakened, because they are choices rather than claims:
+
 - **Arabic numerals are Latin digits** (`ar-SA-u-nu-latn` in `lib/format.ts`) — `1,000`, not `١٬٠٠٠`.
 - **Business hours** in `messages/*.json` `contact.hours` are assumed (Sun–Thu 9–18, Sat 10–16,
   Fri closed). Nothing in /docs states them.
 
 ## Deviations
+
 Decisions that depart from the brand guide or the brief, with the reason. Read before
 "correcting" any of them.
 
@@ -113,7 +125,7 @@ Decisions that depart from the brand guide or the brief, with the reason. Read b
 
 - **Cyan is a fill colour only, never text on light surfaces.**
   #4FC0DF on white measures 2.11:1. That fails the WCAG AA floor for body text (4.5:1)
-  *and* the large-text floor (3:1), so it is not usable for display type either — which
+  _and_ the large-text floor (3:1), so it is not usable for display type either — which
   is a stricter rule than the brief assumed. Links and small text on white use
   brand-purple (#39255F, 13.09:1). Ink on a cyan fill is fine (8.12:1), and cyan as text
   on purple is fine (6.20:1).
@@ -189,7 +201,7 @@ Decisions that depart from the brand guide or the brief, with the reason. Read b
 - **The webhook route validates its body by hand, outside the global ValidationPipe.**
   `main.ts` installs a pipe with `forbidNonWhitelisted: true`, which is right for our own
   endpoints and wrong for a third party's. Salla adding a field to a payload would 400 the
-  delivery, and rejecting a webhook because the sender got *more* informative is exactly the
+  delivery, and rejecting a webhook because the sender got _more_ informative is exactly the
   wrong failure mode. So the controller types `@Body()` as `unknown` — no class metatype, so
   the pipe skips it — and `parseWebhookEnvelope()` runs class-validator with `whitelist: false`
   on just the envelope fields we depend on. A test asserts a payload with an unmodelled field
@@ -259,7 +271,7 @@ Decisions that depart from the brand guide or the brief, with the reason. Read b
   it keep appearing in the rail and reasonably conclude the flag does nothing.
 
   The flag is the ONE editorial column the seed re-syncs on every run (`product.isFeatured =
-  item.featured === true`), because it belongs to the printed-catalog selection rather than to
+item.featured === true`), because it belongs to the printed-catalog selection rather than to
   copy written in the admin — everything else editorial (slugs, descriptions, `meta_*`) is still
   left alone. Consequence: un-flagging a product means editing catalog.json, not the database,
   or the next re-seed puts it back.
@@ -601,7 +613,7 @@ Decisions that depart from the brand guide or the brief, with the reason. Read b
 
   Two variants per card. `card` is the whole catalogue card — trimmed of its page
   margin, squared on the card's own tint — and is what the seed makes PRIMARY,
-  because it is reliable and on-brand (the card's field *is* the panel tint).
+  because it is reliable and on-brand (the card's field _is_ the panel tint).
   `shot` is an automated crop of just the product photograph: it reads better in
   a grid, but roughly one in five clips a title band or a table edge, so it ships
   as the second gallery image rather than the first. After a human pass over the
@@ -810,7 +822,7 @@ Decisions that depart from the brand guide or the brief, with the reason. Read b
       failed to bind host port 0.0.0.0:80/tcp: address already in use
 
   A host port can be bound once, and DocGen's nginx on the same server already
-  had it. The collision is at Docker's port-publishing layer, *before* nginx
+  had it. The collision is at Docker's port-publishing layer, _before_ nginx
   runs, so nothing inside the nginx config could have fixed it. There are three
   real answers — give Packvio its own IP, move the other application, or put one
   proxy in front of both — and the third is the only one that does not touch
@@ -842,8 +854,8 @@ Decisions that depart from the brand guide or the brief, with the reason. Read b
   3. **`set_real_ip_from` in `nginx.conf`, or the RFQ rate limit silently
      becomes global.** Docker NATs the loopback hop, so without it every
      request reaches this nginx from the bridge gateway, `proxy.conf`'s
-     `X-Forwarded-For $remote_addr` writes that one address, and *every
-     enquiry on the site shares one per-IP bucket* — the fifth of the hour
+     `X-Forwarded-For $remote_addr` writes that one address, and _every
+     enquiry on the site shares one per-IP bucket_ — the fifth of the hour
      throttles every buyer. Only private ranges are trusted, which is what
      lets the directives live in `nginx.conf` unconditionally: in standalone
      mode a public client matches none of them and an invented
@@ -884,11 +896,11 @@ Decisions that depart from the brand guide or the brief, with the reason. Read b
   for reasons that named neither variable:
 
   - `api` crash-looped on `Config validation error: "WEB_ORIGIN" is not allowed
-    to be empty. "NEXT_PUBLIC_SITE_URL" is not allowed to be empty`. Both are
+to be empty. "NEXT_PUBLIC_SITE_URL" is not allowed to be empty`. Both are
     `${SITE_URL}`. The Joi schema gives each a `.default()`, which fires only
     when a key is **undefined** — compose had supplied `''`, and
     `Joi.string().uri()` rejects an empty string. A variable compose "defaults
-    to a blank string" is therefore *worse* than one that is absent.
+    to a blank string" is therefore _worse_ than one that is absent.
   - `nginx` would have rendered `server_name ;` and
     `ssl_certificate /etc/letsencrypt/live//fullchain.pem` from the blank
     `PACKVIO_DOMAIN`.
@@ -912,7 +924,7 @@ Decisions that depart from the brand guide or the brief, with the reason. Read b
 
 - **A listener on the HOST is as fatal as a container, and the port preflight
   failed to say so.**
-  The port check added with the edge modes treated another *container* on :80 as
+  The port check added with the edge modes treated another _container_ on :80 as
   fatal but a non-Docker listener as a warning. The server turned out to have a
   **system nginx** on :80 and :443 — not DocGen's container — so the deploy
   printed `! port 80 also has a non-Docker listener: nginx`, continued in
@@ -969,7 +981,7 @@ Decisions that depart from the brand guide or the brief, with the reason. Read b
      because somebody forgot a line.
   2. **The gate cannot fail OPEN.** With `STAGING_GATE=on` the entrypoint tests
      the password file with `-s`, not `-f`, and refuses to start if it is
-     missing *or empty*. An empty file is the dangerous one: nginx starts
+     missing _or empty_. An empty file is the dangerous one: nginx starts
      normally and rejects every correct password, which reads as a forgotten
      password rather than a broken deploy. Verified: on+file → exit 0,
      on+empty → exit 1, on+absent → exit 1, off+absent → exit 0, nonsense → exit 1.
@@ -987,7 +999,7 @@ Decisions that depart from the brand guide or the brief, with the reason. Read b
   `public/brand/packvio-mark.svg` and its two siblings were geometric
   placeholders, because the PDFs under /docs are image-based and this machine
   had no poppler to rasterise them. It does now (`apt-get install
-  poppler-utils`), so the artwork came out of `Packvio identity.pdf` page 5,
+poppler-utils`), so the artwork came out of `Packvio identity.pdf` page 5,
   which carries all three variants side by side on white.
 
   **There is no vector to extract.** `pdfimages -list` reports every page as a
@@ -1003,12 +1015,12 @@ Decisions that depart from the brand guide or the brief, with the reason. Read b
 
   Five files, all from the one source so they cannot drift:
 
-  | file | what it is |
-  |---|---|
-  | `packvio-logo.webp` | horizontal lockup, colour — header |
-  | `packvio-logo-white.webp` | the SAME artwork with its own alpha filled white — footer |
-  | `packvio-mark.webp` | the P mark alone — the panel watermark |
-  | `packvio-mark-white.webp` | ditto, white |
+  | file                        | what it is                                                 |
+  | --------------------------- | ---------------------------------------------------------- |
+  | `packvio-logo.webp`         | horizontal lockup, colour — header                         |
+  | `packvio-logo-white.webp`   | the SAME artwork with its own alpha filled white — footer  |
+  | `packvio-mark.webp`         | the P mark alone — the panel watermark                     |
+  | `packvio-mark-white.webp`   | ditto, white                                               |
   | `packvio-logo-stacked.webp` | mark above wordmark; unused, kept for layouts that need it |
 
   **Two aspect ratios are load-bearing and neither is square.** The lockup is
@@ -1108,7 +1120,7 @@ Decisions that depart from the brand guide or the brief, with the reason. Read b
   quotes **بالكرتون**, which is also what `caseQuantity` actually counts.
 
 - **"Leaf Spoon" is mistranslated throughout as "paper spoon", and it is a pun
-  bug.** `ملعقة ورقية` means *paper* spoon; `ورقة` means both "leaf" and "sheet
+  bug.** `ملعقة ورقية` means _paper_ spoon; `ورقة` means both "leaf" and "sheet
   of paper", so the shape name collapsed into a material claim. These spoons
   are `PS 2.05 G` — polystyrene. The name is therefore not just awkward, it
   states the wrong material on a food-contact product, which is the category of
@@ -1126,8 +1138,7 @@ Decisions that depart from the brand guide or the brief, with the reason. Read b
   `variantGroupName{En,Ar}` and an optional `variantSwatch`, derived from the
   shared code prefix and the trailing name token.
 
-  **45 groups cover 172 of 213 products, so the listing falls from 213 cards to
-  86.** The axis split is 26 size, 13 colour, 6 both; 91 products carry a hex
+  **45 groups cover 172 of 213 products, so the listing falls from 213 cards to 86.** The axis split is 26 size, 13 colour, 6 both; 91 products carry a hex
   swatch. Where a colour could not be read out of the label with confidence
   there is NO swatch and the chip falls back to its text — never a grey chip
   standing in for an unknown colour, which is how a buyer orders the wrong
@@ -1238,3 +1249,116 @@ Decisions that depart from the brand guide or the brief, with the reason. Read b
   protect against this; only `self-start` does. The header is immune only
   because it is a flex ROW, where the stretch axis is the one `h-9` already
   fixes. Worth checking any other `<img>` dropped into a flex column.
+
+- **`web` waited for `service_started`, not `service_healthy` — which is why
+  `ECONNREFUSED 172.x.x.x:4000` appeared after every deploy.** `service_started`
+  means the api CONTAINER has been started. It says nothing about Nest having
+  finished bootstrapping and bound :4000. Next is "Ready in 180ms" and
+  server-renders the home page immediately, so it won that race nearly every
+  time. `apiFetch` throws `ApiUnreachableError` on an unreachable API rather
+  than rendering empty data — deliberately, so a half-empty page is impossible
+  — which means the reader got an ERROR PAGE, and the deploy's own health check
+  (which fetches `/ar`) could fail on a stack that was seconds from fine.
+
+  Fixed to `condition: service_healthy` in BOTH compose files. The thing that
+  makes that wait real is a healthcheck on `api`, which neither file had.
+
+  **The probe is spelled out in all three places rather than inherited.**
+  Declaring `healthcheck:` with only timings and no `test:` is valid compose and
+  is documented to inherit the image's probe — but if that inheritance did not
+  happen, the container would have NO probe, never report healthy, and `web`
+  would never start: a cosmetic log error turned into the site being down. That
+  is not a risk worth an avoided duplication, so the `node -e` command now
+  appears in `apps/api/Dockerfile`, `docker-compose.yml` and
+  `docker-compose.prod.yml`, and `apps/api/test/deploy-startup-order.spec.ts`
+  fails when the three drift apart.
+
+  That suite also guards the silent failure mode directly: `condition:
+service_healthy` against a service with no healthcheck does not error —
+  compose just does not wait, and nothing in any log says why. Verified by
+  mutation: reverting the condition, changing the probe path, and deleting the
+  healthcheck block each make it fail.
+
+- **"`npm run deploy` says successful but the website is not changing" was
+  never a deploy bug.** The server does `git fetch` + `git reset --hard
+origin/$BRANCH` and builds that. A zip pasted into the working tree, or a
+  commit not yet pushed, is invisible to it — so the server rebuilt the
+  identical commit, produced identical images, and reported success honestly.
+  Nothing was wrong and nothing had happened, which is the most confusing pair
+  of facts a deploy can present.
+
+  Two checks now say so instead of leaving it to be deduced:
+
+  1. **Locally, before anything is uploaded** (`scripts/deploy.sh`, before
+     `setup_ssh`): lists uncommitted changes and unpushed commits, prints the
+     `git add -A && git commit && git push` line, and asks for confirmation
+     when stdin is a tty. Advisory, never fatal — every git call carries
+     `|| true` because `set -euo pipefail` is on and a `| head` closing a pipe
+     early would otherwise abort a perfectly good deploy via SIGPIPE.
+  2. **On the server, after the fetch**: compares the checked-out SHA against
+     `$DEPLOY/.last-deployed-sha` and prints either `new commits since the last
+deploy: abc1234 → def5678` or a loud SAME COMMIT warning. It does NOT
+     stop: redeploying an unchanged commit is a legitimate thing to want after
+     an `.env` edit or a half-broken container. The marker is written only
+     after the health check passes, so a failed deploy never claims the new
+     commit as the deployed one.
+
+- **The seed's "slug already held by another product in the database" line is a
+  report of DUPLICATE PRODUCTS, not a cosmetic note.** It means a product's
+  `code` changed between two generations of `docs/catalog.json`. The seed
+  matches on `code` and never deletes, so the old row survives as an orphan —
+  still holding the clean slug. The new product is then filed under
+  `carry-bag-white-19-cm-cb19` while the stale one keeps `carry-bag-white-19-cm`
+  and sorts first. Two of everything affected, with the old one in front, which
+  is indistinguishable from a deploy that did not take effect. It cost a long
+  diagnosis once; the seed script now says so in its own output.
+
+  `npm run deploy:prune` (`apps/api/src/database/seeds/prune.ts`) is the only
+  thing in this project that removes products. Dry run by default.
+
+  **Soft-deleting an orphan is not enough to free its slug.**
+  `uq_products_slug_en` is a plain unique index, not a partial one, so a
+  soft-deleted row holds its slug forever — which is why the seed reads
+  `withDeleted: true` to work out what is taken. The prune therefore renames as
+  well as soft-deletes: `archived-<code suffix>-<old slug>`, prefixed so the
+  archived rows sort together and keyed on the code so two of them can never
+  collide. There is a test that fails if the rename is ever dropped as
+  redundant.
+
+  **The slug reclaim is deliberately narrow.** Slugs are frozen for life
+  everywhere else, because they are public URLs. The prune will move one only
+  when it is exactly `<planned slug>-<that product's own code suffix>` — the one
+  shape the seed itself produces on a collision — and only when the base has
+  just been freed. A slug that merely looks similar, or whose base is still held
+  by a live product, is left alone.
+
+- **The prune has a blast-radius guard, and it exists because the test suite
+  triggered the disaster first.** Its input is whatever `docs/catalog.json` is
+  inside the running API image, so a stale or truncated catalogue makes every
+  absent product an orphan. The first version of the test helper passed a
+  one-product source against the seeded database and `--apply` archived all 213
+  products in one transaction — correctly, by its own rules. So `--apply` now
+  refuses when the prune would remove more than 25% of live products (floor of
+  10, so a young catalogue is not frozen), exits non-zero, and names the stale
+  catalogue as the likely cause. `--force` is the override.
+
+  The 22-product case this was built for is about 10% — comfortably inside the
+  guard, which is the balance it was tuned for.
+
+- **`npm run deploy:seed` changed data and left the site serving the old pages,
+  silently.** Catalog fetches carry `revalidate: 300`, so a seed is invisible
+  for up to five minutes and the first visitor after that still gets the stale
+  page while the fresh one renders behind them. A rebuild masked this — a new
+  container starts with an empty cache — so it only showed up once data changed
+  on its own. `npm run deploy:purge` now calls the same `/api/revalidate`
+  endpoint the Salla sync uses with the `catalog` tag, and `deploy:seed` and
+  `deploy:prune` both end by pointing at it. With no `REVALIDATE_SECRET` the
+  endpoint disables itself rather than running unauthenticated, so the script
+  falls back to restarting `web` and says why.
+
+- **`planSlugs` moved into `slugify.ts` as `planProductSlugs`.** The prune has to
+  decide whether a product's current slug is its planned slug plus a collision
+  suffix, which is only safe if "planned" means exactly what the seed meant by
+  it. Two copies of that function would be two definitions of a public URL. The
+  version in `seed.ts` is now a thin wrapper that folds the coercions into the
+  seed summary.

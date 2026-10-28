@@ -60,3 +60,55 @@ export function slugifyAr(input: string): string {
 export function slugSuffixFromCode(code: string): string {
   return slugifyEn(code.replace(/\//g, '-'));
 }
+
+/** The three fields slug planning needs. Structural, so this file imports nothing. */
+export type SluggableProduct = { code: string; nameEn: string; nameAr: string };
+
+export type SlugPlan = {
+  plan: Map<string, { en: string; ar: string }>;
+  coerced: Array<{ code: string; base: string }>;
+};
+
+/**
+ * The slug every product in a catalog source WANTS, before the database gets a
+ * say. Two products with the same name both get the code suffix, so neither
+ * one's slug depends on the order they happen to appear in the file.
+ *
+ * Lives here rather than in seed.ts because `prune.ts` has to compute the same
+ * answer — it decides whether a product's current slug is its planned slug plus
+ * a collision suffix, which is only a safe thing to reclaim if "planned" means
+ * exactly what the seed meant by it. Two copies of this would be two
+ * definitions of a public URL.
+ *
+ * Pure: it reports coercions rather than recording them anywhere, so the seed
+ * can fold them into its summary and the prune can ignore them.
+ */
+export function planProductSlugs(products: readonly SluggableProduct[]): SlugPlan {
+  const enBaseCount = new Map<string, number>();
+  const arBaseCount = new Map<string, number>();
+
+  for (const product of products) {
+    const en = slugifyEn(product.nameEn);
+    const ar = slugifyAr(product.nameAr);
+    enBaseCount.set(en, (enBaseCount.get(en) ?? 0) + 1);
+    arBaseCount.set(ar, (arBaseCount.get(ar) ?? 0) + 1);
+  }
+
+  const plan = new Map<string, { en: string; ar: string }>();
+  const coerced: Array<{ code: string; base: string }> = [];
+
+  for (const product of products) {
+    const suffix = slugSuffixFromCode(product.code);
+    const enBase = slugifyEn(product.nameEn);
+    const arBase = slugifyAr(product.nameAr);
+    const en = (enBaseCount.get(enBase) ?? 0) > 1 ? `${enBase}-${suffix}` : enBase;
+    const ar = (arBaseCount.get(arBase) ?? 0) > 1 ? `${arBase}-${suffix}` : arBase;
+
+    if (en !== enBase || ar !== arBase) {
+      coerced.push({ code: product.code, base: en !== enBase ? enBase : arBase });
+    }
+    plan.set(product.code, { en, ar });
+  }
+
+  return { plan, coerced };
+}
