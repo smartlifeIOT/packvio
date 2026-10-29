@@ -682,16 +682,6 @@
       "variantGroupNameAr": "علب شوربة"
     },
     {
-      "code": "BB/01",
-      "category": "soup-cups",
-      "nameEn": "Bowl 600 cc",
-      "nameAr": "علب 600 سم³",
-      "size": "600 CC",
-      "material": "16+295+17 PE",
-      "caseQuantity": 600,
-      "quoteOnly": false
-    },
-    {
       "code": "PSC/650W",
       "category": "soup-cups",
       "nameEn": "Soup Cup 650 cc",
