@@ -57,6 +57,20 @@ const CATEGORY_TILES = new Set([
   'soup-cups',
   'sushi-trays',
   'wrapping-paper',
+
+  // --- subcategories ------------------------------------------------------
+  // Shown on a parent category page and in the mega menu, where these used to
+  // be icons. Straws is the one without a tile: no photograph of a straw
+  // exists in any supplied asset, so it keeps its icon until one does.
+  'spoons',
+  'forks-and-knives',
+  'napkins',
+  'stirrers',
+  'other-tableware',
+  'drink-cups',
+  'portion-cups',
+  'wraps',
+  'bakery-and-burger-bags',
 ]);
 
 /** Natural size of every tile, in px. Square by construction. */

@@ -967,14 +967,74 @@
    "shot": "/products/w7-3-shot.webp",
    "background": "#D0E0F0",
    "codesOnCard": []
+  },
+  "x-pack-3-1-01": {
+   "card": "/products/pack-3-1-01-card.webp",
+   "shot": "/products/pack-3-1-01-shot.webp",
+   "background": "#E6F1F7",
+   "codesOnCard": [
+    "3/1-01"
+   ]
+  },
+  "x-pack-3-1-02": {
+   "card": "/products/pack-3-1-02-card.webp",
+   "shot": "/products/pack-3-1-02-shot.webp",
+   "background": "#E6F1F7",
+   "codesOnCard": [
+    "3/1-02"
+   ]
+  },
+  "x-npk230": {
+   "card": "/products/npk230-card.webp",
+   "shot": "/products/npk230-shot.webp",
+   "background": "#E6F1F7",
+   "codesOnCard": [
+    "NPK230"
+   ]
+  },
+  "x-fork-black": {
+   "card": "/products/cut-fork-black-card.webp",
+   "shot": null,
+   "background": "#E6F1F7",
+   "codesOnCard": []
+  },
+  "x-knife-black": {
+   "card": "/products/cut-knife-black-card.webp",
+   "shot": null,
+   "background": "#E6F1F7",
+   "codesOnCard": []
+  },
+  "x-spoon-black": {
+   "card": "/products/cut-spoon-black-card.webp",
+   "shot": null,
+   "background": "#E6F1F7",
+   "codesOnCard": []
+  },
+  "x-pet-jar-m": {
+   "card": "/products/pet-jar-m-card.webp",
+   "shot": null,
+   "background": "#EBF4FD",
+   "codesOnCard": []
+  },
+  "x-hmr-2c": {
+   "card": "/products/hmr-2c-card.webp",
+   "shot": null,
+   "background": "#8E8E8E",
+   "codesOnCard": []
+  },
+  "x-hmr-3c": {
+   "card": "/products/hmr-3c-card.webp",
+   "shot": null,
+   "background": "#8E8E8E",
+   "codesOnCard": []
   }
  },
  "products": {
   "3/1-01": [
-   "w1-1"
+   "x-pack-3-1-01"
   ],
   "3/1-02": [
-   "w1-1"
+   "x-pack-3-1-02"
   ],
   "BAKB02K": [
    "w6-2"
@@ -1148,7 +1208,7 @@
    "w2-1"
   ],
   "NPK230": [
-   "w1-1"
+   "x-npk230"
   ],
   "P250": [
    "t2-6"
@@ -1396,45 +1456,48 @@
   "U-CC/16PET": [
    "t15-1"
   ],
-  "WT-CB19": [
+  "CB19": [
    "w4-1"
   ],
-  "WT-CB19K": [
+  "CB19K": [
    "t11-5"
   ],
-  "WT-CB22": [
+  "CB22": [
    "w4-1"
   ],
-  "WT-CB22K": [
+  "CB22K": [
    "t13-2"
   ],
-  "WT-CB25": [
+  "CB25": [
    "w4-1"
   ],
-  "WT-CB25K": [
+  "CB25K": [
    "t3-4"
   ],
-  "WT-CB32K": [
+  "CB32K": [
    "t3-3"
   ],
-  "WT-CB36": [
+  "CB36": [
    "t1-1",
    "t4-1"
   ],
-  "WT-CB36K": [
+  "CB36K": [
    "t15-2"
   ],
-  "WT-KS508": [
+  "KS508": [
    "t11-3"
   ],
-  "WT-KSS12": [
+  "KSS12": [
    "t11-3"
   ],
-  "WT-PT-2": [
+  "PT-2": [
    "t9-3"
   ],
-  "WT-PT-4": [
+  "PT-4": [
    "t9-3"
+  ],
+  "PET-JAR-M": [
+   "x-pet-jar-m"
   ]
  },
  "representative": {
@@ -1453,7 +1516,7 @@
    "kind": "size-variant",
    "note": "kraft shaker lid; card shows the 16 oz"
   },
-  "WT-CB32": {
+  "CB32": {
    "image": "t1-1",
    "kind": "size-variant",
    "note": "white carry bag; card shows the 36 cm"
@@ -1474,7 +1537,7 @@
    "note": "white soup cup; card shows the 20/25 oz"
   },
   "NPK-2PLY": {
-   "image": "w1-1",
+   "image": "x-npk230",
    "kind": "size-variant",
    "note": "napkin; card shows NPK230"
   },
@@ -1482,6 +1545,181 @@
    "image": "t6-1",
    "kind": "variant",
    "note": "same 14–20 oz PET dome lid as CCL/D/14PET-H, cross hole rather than round"
+  },
+  "TC-160-PP-SPN-B": {
+   "image": "x-spoon-black",
+   "kind": "variant",
+   "note": "single piece cut out of the 3/1 cutlery-pack card (black PP); exact SKU not photographed separately"
+  },
+  "TC-170-PS-SPN-B": {
+   "image": "x-spoon-black",
+   "kind": "variant",
+   "note": "single piece cut out of the 3/1 cutlery-pack card (black PP); exact SKU not photographed separately"
+  },
+  "TC-160-PP-SPN-W": {
+   "image": "x-spoon-black",
+   "kind": "variant",
+   "note": "single piece cut out of the 3/1 cutlery-pack card (black PP); exact SKU not photographed separately; shape shown in black, this SKU is white"
+  },
+  "TC-170-PS-SPN-W": {
+   "image": "x-spoon-black",
+   "kind": "variant",
+   "note": "single piece cut out of the 3/1 cutlery-pack card (black PP); exact SKU not photographed separately; shape shown in black, this SKU is white"
+  },
+  "TC-180-PP-SPN-B": {
+   "image": "x-spoon-black",
+   "kind": "variant",
+   "note": "parfait spoon; shape family shown with the black PP spoon from the 3/1 cutlery-pack card"
+  },
+  "TC-180-PP-SPN-W": {
+   "image": "x-spoon-black",
+   "kind": "variant",
+   "note": "parfait spoon; shape family shown with the black PP spoon from the 3/1 cutlery-pack card"
+  },
+  "TC-180-PP-SPN-RP": {
+   "image": "x-spoon-black",
+   "kind": "variant",
+   "note": "parfait spoon; shape family shown with the black PP spoon from the 3/1 cutlery-pack card"
+  },
+  "TC-180-PP-SPN-AG": {
+   "image": "x-spoon-black",
+   "kind": "variant",
+   "note": "parfait spoon; shape family shown with the black PP spoon from the 3/1 cutlery-pack card"
+  },
+  "TC-160-PP-FRK-B": {
+   "image": "x-fork-black",
+   "kind": "variant",
+   "note": "single piece cut out of the 3/1 cutlery-pack card (black PP); exact SKU not photographed separately"
+  },
+  "TC-170-PS-FRK-B": {
+   "image": "x-fork-black",
+   "kind": "variant",
+   "note": "single piece cut out of the 3/1 cutlery-pack card (black PP); exact SKU not photographed separately"
+  },
+  "TC-160-PP-FRK-W": {
+   "image": "x-fork-black",
+   "kind": "variant",
+   "note": "single piece cut out of the 3/1 cutlery-pack card (black PP); exact SKU not photographed separately; shape shown in black, this SKU is white"
+  },
+  "TC-170-PS-FRK-W": {
+   "image": "x-fork-black",
+   "kind": "variant",
+   "note": "single piece cut out of the 3/1 cutlery-pack card (black PP); exact SKU not photographed separately; shape shown in black, this SKU is white"
+  },
+  "TC-170-PP-KNF-B": {
+   "image": "x-knife-black",
+   "kind": "variant",
+   "note": "single piece cut out of the 3/1 cutlery-pack card (black PP); exact SKU not photographed separately"
+  },
+  "TC-170-PS-KNF-B": {
+   "image": "x-knife-black",
+   "kind": "variant",
+   "note": "single piece cut out of the 3/1 cutlery-pack card (black PP); exact SKU not photographed separately"
+  },
+  "TC-170-PP-KNF-W": {
+   "image": "x-knife-black",
+   "kind": "variant",
+   "note": "single piece cut out of the 3/1 cutlery-pack card (black PP); exact SKU not photographed separately; shape shown in black, this SKU is white"
+  },
+  "TC-170-PS-KNF-W": {
+   "image": "x-knife-black",
+   "kind": "variant",
+   "note": "single piece cut out of the 3/1 cutlery-pack card (black PP); exact SKU not photographed separately; shape shown in black, this SKU is white"
+  },
+  "TC-100-PS-CFRK-B": {
+   "image": "x-fork-black",
+   "kind": "variant",
+   "note": "10 cm dessert fork; fork family shown with the 16 cm black PP fork"
+  },
+  "TC-100-PS-CFRK-P": {
+   "image": "x-fork-black",
+   "kind": "variant",
+   "note": "10 cm dessert fork; fork family shown with the 16 cm black PP fork"
+  },
+  "TC-100-PS-CFRK-MN": {
+   "image": "x-fork-black",
+   "kind": "variant",
+   "note": "10 cm dessert fork; fork family shown with the 16 cm black PP fork"
+  },
+  "TC-100-PS-CFRK-BBRY": {
+   "image": "x-fork-black",
+   "kind": "variant",
+   "note": "10 cm dessert fork; fork family shown with the 16 cm black PP fork"
+  },
+  "TC-100-PS-CFRK-LVNR": {
+   "image": "x-fork-black",
+   "kind": "variant",
+   "note": "10 cm dessert fork; fork family shown with the 16 cm black PP fork"
+  },
+  "TC-100-PS-FRK-W": {
+   "image": "x-fork-black",
+   "kind": "variant",
+   "note": "10 cm dessert fork; fork family shown with the 16 cm black PP fork"
+  },
+  "TC-100-PS-FRK-B": {
+   "image": "x-fork-black",
+   "kind": "variant",
+   "note": "10 cm dessert fork; fork family shown with the 16 cm black PP fork"
+  },
+  "TC-100-PS-SPN-W": {
+   "image": "t7-3",
+   "kind": "variant",
+   "note": "small dessert spoon; family shown with the 11.5 cm coloured leaf spoons"
+  },
+  "TC-100-PS-SPN-B": {
+   "image": "t7-3",
+   "kind": "variant",
+   "note": "small dessert spoon; family shown with the 11.5 cm coloured leaf spoons"
+  },
+  "TC-900-PS-SPN-B": {
+   "image": "t7-3",
+   "kind": "variant",
+   "note": "small dessert spoon; family shown with the 11.5 cm coloured leaf spoons"
+  },
+  "TC-950-PS-SPN-MIX": {
+   "image": "t7-3",
+   "kind": "variant",
+   "note": "small dessert spoon; family shown with the 11.5 cm coloured leaf spoons"
+  },
+  "R-04637": {
+   "image": "x-hmr-2c",
+   "kind": "variant",
+   "note": "HMR 2-compartment container; brochure section photo (base and lid sold as a set)"
+  },
+  "R-0467H": {
+   "image": "x-hmr-2c",
+   "kind": "variant",
+   "note": "HMR 2-compartment container; brochure section photo (base and lid sold as a set)"
+  },
+  "R-0463B": {
+   "image": "x-hmr-3c",
+   "kind": "variant",
+   "note": "HMR 3-compartment container; brochure section photo (base and lid sold as a set)"
+  },
+  "R-0466H3": {
+   "image": "x-hmr-3c",
+   "kind": "variant",
+   "note": "HMR 3-compartment container; brochure section photo (base and lid sold as a set)"
+  },
+  "R946J8B": {
+   "image": "x-hmr-2c",
+   "kind": "variant",
+   "note": "HMR container family; brochure section photo shows the 2-compartment, no 1-compartment shot exists"
+  },
+  "R946J8F": {
+   "image": "x-hmr-2c",
+   "kind": "variant",
+   "note": "HMR container family; brochure section photo shows the 2-compartment, no 1-compartment shot exists"
+  },
+  "R-046J6": {
+   "image": "x-hmr-2c",
+   "kind": "variant",
+   "note": "HMR container family; brochure section photo shows the 2-compartment, no 1-compartment shot exists"
+  },
+  "R-0466H": {
+   "image": "x-hmr-2c",
+   "kind": "variant",
+   "note": "HMR container family; brochure section photo shows the 2-compartment, no 1-compartment shot exists"
   }
  }
 }

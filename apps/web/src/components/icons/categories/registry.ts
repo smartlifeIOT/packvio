@@ -142,6 +142,25 @@ const AR_TO_EN_SLUG: Record<string, string> = {
   'ادوات-التقديم': 'cutlery',
   'زجاجات-وبرطمانات': 'bottles-jars',
   'اكياس-توصيل-بمقابض': 'carry-bags',
+
+  // ---------------------------------------------------------------------
+  // Arabic slugs as docs/catalog.json spells them NOW. These were revised in
+  // the catalogue after the map above was written, and a database seeded from
+  // scratch freezes whatever catalog.json says at insert — so without these
+  // the tile photo and icon vanish on the Arabic pages of a fresh deployment.
+  // Three were briefly written with spaces; both spellings resolve.
+  // ---------------------------------------------------------------------
+  'اغطية-علب-الشوربة': 'soup-cup-lids',
+  'علب-الشيكر-او-النودلز': 'shakers',
+  'علب-الشيكر او النودلز': 'shakers',
+  'صواني-الطعام-شكل-قارب': 'food-trays',
+  'صواني-الطعام شكل قارب': 'food-trays',
+  'علب-الوجبات-الميكرويف-السوداء': 'hmr-containers',
+  'علب-الوجبات-الميكرويف السوداء': 'hmr-containers',
+  'جارات-وعبوات': 'bottles-jars',
+  مصاصات: 'straws',
+  'محراك-المشروبات': 'stirrers',
+  'اكواب-الصوصات': 'portion-cups',
 };
 
 /** Every slug the registry covers — the styleguide and its test iterate this. */
@@ -171,7 +190,7 @@ export function categoryIcon(
 }
 
 function resolve(slug: string): CategoryIconComponent | undefined {
-  return CATEGORY_ICONS[slug] ?? CATEGORY_ICONS[AR_TO_EN_SLUG[slug] ?? ''];
+  return CATEGORY_ICONS[slug] ?? CATEGORY_ICONS[canonicalCategorySlug(slug)];
 }
 
 /**
@@ -185,5 +204,14 @@ function resolve(slug: string): CategoryIconComponent | undefined {
  * throw.
  */
 export function canonicalCategorySlug(slug: string): string {
-  return AR_TO_EN_SLUG[slug] ?? slug;
+  return AR_TO_EN_SLUG[slug] ?? AR_TO_EN_SLUG[safeDecode(slug)] ?? slug;
+}
+
+/** A slug that arrived percent-encoded (from a URL) resolves like the raw one. */
+function safeDecode(slug: string): string {
+  try {
+    return decodeURIComponent(slug);
+  } catch {
+    return slug;
+  }
 }

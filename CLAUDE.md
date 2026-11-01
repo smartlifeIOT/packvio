@@ -1362,3 +1362,35 @@ deploy: abc1234 → def5678` or a loud SAME COMMIT warning. It does NOT
   it. Two copies of that function would be two definitions of a public URL. The
   version in `seed.ts` is now a thin wrapper that folds the coercions into the
   seed summary.
+
+- **Image pass, Nov 2026: three regressions fixed, subcategories got photos,
+  coverage 195 of 212.**
+  1. **14 product codes lost the `WT-` prefix in catalog.json** (`WT-CB19` →
+     `CB19`, `WT-PT-4` → `PT-4`, `WT-KS508` → `KS508`, …) while
+     product-images.json still keyed them with it, so every carry bag, both
+     pulp trays and both sleeves silently fell back to a placeholder. The
+     manifest now uses the new codes. A database seeded under the old codes
+     still holds the `WT-*` rows as orphans — run `npm run deploy:prune`
+     (dry run first) after re-seeding.
+  2. **The shakers category slug became `"shakers or noodles"`** and six of its
+     products pointed at `"shakers / noodles"` / `"shakers/ noodles"`, neither of
+     which existed — the seed skipped all 18 products as "unknown category" and
+     created an empty category. Slug restored to `shakers` (the display name
+     "Shakers or noodles" kept); three Arabic slugs that had spaces now use
+     hyphens. Every Arabic slug catalog.json currently uses is in
+     `AR_TO_EN_SLUG`, with the spaced spellings aliased too.
+  3. **`3/1-01` and `3/1-02` both showed the whole three-product "related
+     products" card**, so two adjacent cards looked identical. Each now has its
+     own pane cut from that card (`pack-3-1-0x-card/shot.webp`), and NPK230 has
+     the third.
+  Subcategory tiles (`public/categories/<child>.webp`) exist for 9 of 10
+  children and are used on the parent category page and in the mega menu in
+  place of icons. **Straws has none** — no straw photograph exists in any asset.
+  New REPRESENTATIVE images, all caveated in alt text: black PP spoon/fork/knife
+  cut out of the 3/1 card for the plain spoons, forks and knives (white SKUs
+  included — shape shown in black), small dessert spoons → leaf-spoon card,
+  10 cm forks → the black fork, and the HMR brochure photo for all eight HMR
+  SKUs **including lids** — the owner asked for every HMR item to carry a
+  picture, overriding the earlier "a lid is not a tray" call. `PET-JAR-M` has
+  its own card now. Still placeholder (17): sporks (4), straws (6), plastic
+  stirrers (2), cake servers (2), chopsticks, face masks (2).

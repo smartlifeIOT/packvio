@@ -1,6 +1,7 @@
 {
   "$comment": "Source of every public/categories/<slug>.webp tile. Brochure banners are lifestyle photographs from the printed catalogue section openers and are preferred; the rest are product shots cropped out of catalogue cards.",
   "tiles": {
+    "bakery-and-burger-bags": "lifestyle photo of bakery bags (WhatsApp export Oct 2026)",
     "bottles-jars": "catalogue card t12-4 (product shot, bands trimmed)",
     "carry-bags": "brochure banner: CARRY BAGS & FOOD BAGS",
     "clear-cup-lids": "catalogue card t14-3 (product shot, bands trimmed)",
@@ -8,16 +9,24 @@
     "coffee-accessories": "catalogue card t7-6 (product shot, bands trimmed)",
     "coffee-cup-lids": "catalogue card t11-1 (product shot, bands trimmed)",
     "coffee-cups": "brochure banner: COFFEE CUPS",
-    "cutlery": "catalogue card t7-3 (product shot, bands trimmed)",
+    "cutlery": "brochure banner: CUTLERY SECTION (WhatsApp export Oct 2026, title cropped off)",
+    "drink-cups": "PP clear cup card (CC/16PP), dimension diagram masked",
     "equipment": "catalogue card t2-4 (product shot, bands trimmed)",
     "food-trays": "brochure banner: LUNCH BOX & FOOD TRAYS (lower crop, kraft trays)",
+    "forks-and-knives": "black PP knife + fork cut out of the 3/1 cutlery-pack card, composed on panel tint",
     "hmr-containers": "brochure banner: MICROWAVABLE HMR SERIES",
-    "kraft-bowls": "catalogue card t6-2 (product shot, bands trimmed)",
+    "kraft-bowls": "lifestyle photo of kraft bowls with salads (WhatsApp export Oct 2026)",
     "lunch-boxes": "brochure banner: LUNCH BOX & FOOD TRAYS (left crop, white box)",
+    "napkins": "NPK230 napkin cut from the 3/1 cutlery-pack card",
+    "other-tableware": "3/1-01 cutlery pack cut from its card",
+    "portion-cups": "catalogue card t2-6 (portion cup + lid shot)",
     "shakers": "brochure banner: SHAKERS / PAPER TUBS",
     "soup-cup-lids": "catalogue card t1-6 (product shot, bands trimmed)",
     "soup-cups": "brochure banner: SOUP CUPS & ICE CREAM CUPS",
+    "spoons": "catalogue card t7-3 (leaf-spoon fan, bands trimmed)",
+    "stirrers": "catalogue card t7-6 (wooden stirrer shot)",
     "sushi-trays": "catalogue card t8-6 (product shot, bands trimmed)",
-    "wrapping-paper": "catalogue card w4-2 (product shot, bands trimmed)"
+    "wrapping-paper": "catalogue card w4-2 (product shot, bands trimmed)",
+    "wraps": "lifestyle photo of printed wrapping papers (WhatsApp export Oct 2026)"
   }
 }

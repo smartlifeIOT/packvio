@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { notFound, permanentRedirect } from 'next/navigation';
 import type { Locale } from '@packvio/shared';
 import { Breadcrumbs } from '@/components/catalog/breadcrumbs';
+import { CATEGORY_TILE_SIZE, categoryImage } from '@/components/catalog/category-image';
 import { EmptyResults } from '@/components/catalog/empty-results';
 import { FilterChips } from '@/components/catalog/filter-chips';
 import { Pagination } from '@/components/catalog/pagination';
@@ -205,27 +206,49 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
               // Falls back to the parent's icon while a child is undrawn — see
               // categoryIcon's fallback ladder.
               const ChildIcon = categoryIcon(child.slug, { parentSlug: category.slug });
+              // A photograph when one exists (every child but straws today);
+              // the icon otherwise, inside the same square so the row of
+              // cards keeps one shape either way.
+              const childImage = categoryImage(child.slug);
 
               return (
                 <li key={child.id}>
                   <Link
                     href={{ pathname: '/categories/[slug]', params: { slug: child.slug } }}
                     className={cx(
-                      'flex h-full flex-col gap-3 rounded-md border border-border bg-panel p-lg',
+                      'group flex h-full flex-col overflow-hidden rounded-md border border-border bg-panel',
                       'transition-shadow duration-200 hover:shadow-raised',
                       'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-purple',
                     )}
                   >
-                    <ChildIcon size={32} className="text-brand-purple/85" />
-                    <span className="mt-auto text-body font-medium text-brand-purple">
-                      {child.name}
-                    </span>
-                    <span className="text-caption text-ink-muted">
-                      {t('productCount', {
-                        count: child.productCount,
-                        formatted: formatNumber(child.productCount, locale),
-                      })}
-                    </span>
+                    <div className="relative aspect-square overflow-hidden bg-panel">
+                      {childImage ? (
+                        // eslint-disable-next-line @next/next/no-img-element -- static
+                        // local tile at a fixed square size, same as the home grid.
+                        <img
+                          src={childImage}
+                          alt=""
+                          width={CATEGORY_TILE_SIZE}
+                          height={CATEGORY_TILE_SIZE}
+                          loading="lazy"
+                          decoding="async"
+                          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                        />
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center">
+                          <ChildIcon size={56} className="text-brand-purple/80" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex flex-1 flex-col gap-1 p-md">
+                      <span className="text-body font-medium text-brand-purple">{child.name}</span>
+                      <span className="mt-auto text-caption text-ink-muted">
+                        {t('productCount', {
+                          count: child.productCount,
+                          formatted: formatNumber(child.productCount, locale),
+                        })}
+                      </span>
+                    </div>
                   </Link>
                 </li>
               );

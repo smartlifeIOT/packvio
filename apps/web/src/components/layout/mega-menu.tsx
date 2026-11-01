@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import type { CatalogCategoryDto } from '@packvio/shared';
+import { categoryImage } from '@/components/catalog/category-image';
 import { categoryIcon } from '@/components/icons/categories';
 import { Icon } from '@/components/ui';
 import { Link } from '@/i18n/navigation';
@@ -160,7 +161,7 @@ export function MegaMenu({ categories, label }: MegaMenuProps) {
                         'hover:bg-panel hover:text-brand-purple',
                       )}
                     >
-                      <CategoryIcon size={20} className="shrink-0 text-brand-purple/80" />
+                      <CategoryThumb slug={category.slug} Icon={CategoryIcon} size="md" />
                       <span className="min-w-0 flex-1 truncate">{category.name}</span>
                       <span className="bidi-latin shrink-0 font-mono text-caption text-ink-muted">
                         {category.productCount}
@@ -170,7 +171,7 @@ export function MegaMenu({ categories, label }: MegaMenuProps) {
                     {children.length > 0 && (
                       // ps-* is padding-inline-start, so the indent that signals
                       // "child of the row above" flips with the direction.
-                      <ul className="mt-0.5 ps-[1.9rem]">
+                      <ul className="mt-0.5 ps-[2.6rem]">
                         {children.map((child) => (
                           <li key={child.id}>
                             <Link
@@ -180,12 +181,17 @@ export function MegaMenu({ categories, label }: MegaMenuProps) {
                               }}
                               onClick={() => setIsOpen(false)}
                               className={cx(
-                                'flex items-baseline justify-between gap-2 rounded-sm px-2 py-1',
+                                'flex items-center gap-2 rounded-sm px-2 py-1',
                                 'text-body-sm text-ink-muted transition-colors',
                                 'hover:bg-panel hover:text-brand-purple',
                               )}
                             >
-                              <span className="min-w-0 truncate">{child.name}</span>
+                              <CategoryThumb
+                                slug={child.slug}
+                                Icon={categoryIcon(child.slug, { parentSlug: category.slug })}
+                                size="sm"
+                              />
+                              <span className="min-w-0 flex-1 truncate">{child.name}</span>
                               <span className="bidi-latin shrink-0 font-mono text-caption text-ink-muted">
                                 {child.productCount}
                               </span>
@@ -202,5 +208,51 @@ export function MegaMenu({ categories, label }: MegaMenuProps) {
         </div>
       )}
     </div>
+  );
+}
+
+/**
+ * A category's tile photograph at menu size, or its icon when it has none.
+ *
+ * Same square box either way, so a row with a photo and a row without one line
+ * up. The image is decorative — the category name sits right beside it — so
+ * alt is empty and screen readers hear the name once.
+ */
+function CategoryThumb({
+  slug,
+  Icon: FallbackIcon,
+  size,
+}: {
+  slug: string;
+  Icon: ReturnType<typeof categoryIcon>;
+  size: 'sm' | 'md';
+}) {
+  const src = categoryImage(slug);
+  const box = size === 'md' ? 'h-9 w-9' : 'h-7 w-7';
+  const px = size === 'md' ? 36 : 28;
+
+  return (
+    <span
+      className={cx(
+        'flex shrink-0 items-center justify-center overflow-hidden rounded-sm bg-panel',
+        box,
+      )}
+    >
+      {src ? (
+        // eslint-disable-next-line @next/next/no-img-element -- static local tile,
+        // shown tiny; the 640px source is cached after the first category view.
+        <img
+          src={src}
+          alt=""
+          width={px}
+          height={px}
+          loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover"
+        />
+      ) : (
+        <FallbackIcon size={size === 'md' ? 20 : 16} className="text-brand-purple/80" />
+      )}
+    </span>
   );
 }
