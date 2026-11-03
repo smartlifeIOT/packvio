@@ -60,9 +60,9 @@ const CATEGORY_TILES = new Set([
 
   // --- subcategories ------------------------------------------------------
   // Shown on a parent category page and in the mega menu, where these used to
-  // be icons. Straws is the one without a tile: no photograph of a straw
-  // exists in any supplied asset, so it keeps its icon until one does.
+  // be icons. All ten children have one.
   'spoons',
+  'straws',
   'forks-and-knives',
   'napkins',
   'stirrers',

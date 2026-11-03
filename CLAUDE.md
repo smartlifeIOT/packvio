@@ -1394,3 +1394,27 @@ deploy: abc1234 → def5678` or a loud SAME COMMIT warning. It does NOT
   picture, overriding the earlier "a lid is not a tray" call. `PET-JAR-M` has
   its own card now. Still placeholder (17): sporks (4), straws (6), plastic
   stirrers (2), cake servers (2), chopsticks, face masks (2).
+
+- **Nov 3 2026: one card per tableware TYPE, Shakers merged, prune hides stale categories.**
+  1. **Variant families now span types in Cutlery & Tableware.** `cutlery-spoons`
+     (19 SKUs), `cutlery-forks` (11), `cutlery-knives`, `cutlery-sporks`,
+     `cutlery-straws`, `cutlery-stirrers`, `cutlery-napkins`,
+     `cutlery-cake-servers`, `cutlery-face-masks`, `cutlery-packs` — 56 SKUs, 11
+     cards. Labels are `"<type> · <option>"` ("Leaf Spoon 11.5 cm · Pearl");
+     `splitIntoSections()` in `variant-picker.tsx` turns that into one row per
+     type on the product page, and the card shows each distinct colour once plus
+     "N options". Hand-written in catalog.json — **re-running
+     `scripts/derive-variants.mjs --write` would undo it.**
+  2. **Shakers:** one category, slug `shakers`, named "Shakers or Noodles". The
+     empty `shakers or noodles` row an earlier slug edit created is hidden by
+     the prune (below).
+  3. **`deploy:prune` also hides categories** that are not in catalog.json and
+     hold no live product after the orphan pass (`is_active = false`, never
+     deleted). That covers a category renamed by editing its slug, and the
+     categories a Salla DEMO store sync creates (dresses, skirts…) once their
+     sample products are pruned as orphans.
+  4. **Synced Salla photos from an unlisted host rendered as broken images**
+     (the optimiser 400s). `lib/image-src.ts` now renders those `unoptimized`;
+     `**.salla.sa` / `**.salla.network` were added to remotePatterns and CSP.
+  5. Chopsticks, face masks and straws got the photos Packvio supplied (straws
+     as a caveated representative, plus the straws subcategory tile).

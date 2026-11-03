@@ -1,12 +1,13 @@
 import { useLocale, useTranslations } from 'next-intl';
 import { ArrowRight, FileText } from 'lucide-react';
-import type { CatalogProductSummaryDto, Locale } from '@packvio/shared';
+import type { CatalogProductSummaryDto, CatalogVariantRefDto, Locale } from '@packvio/shared';
 import { Icon } from '@/components/ui';
 import { Link } from '@/i18n/navigation';
 import { isLocale } from '@/i18n/routing';
 import { cx } from '@/lib/cx';
 import { formatNumber } from '@/lib/format';
 import { ProductMedia } from './product-media';
+import { splitIntoSections } from './variant-picker';
 
 /**
  * How many swatches a card shows before collapsing to "+N".
@@ -53,6 +54,8 @@ export function ProductCard({ product, sizes, priority = false, className }: Pro
    * with no siblings has `variantGroup: null` and renders exactly as before.
    */
   const group = product.variantGroup;
+  const chips = group ? cardChips(group.variants) : [];
+  const multiType = group ? splitIntoSections(group.variants) !== null : false;
 
   return (
     <Link
@@ -90,7 +93,7 @@ export function ProductCard({ product, sizes, priority = false, className }: Pro
 
         {group && (
           <ul aria-label={group.name} className="flex flex-wrap items-center gap-1 pt-0.5">
-            {group.variants.slice(0, SWATCH_LIMIT).map((variant) =>
+            {chips.slice(0, SWATCH_LIMIT).map((variant) =>
               variant.swatch === null ? (
                 /* No confident colour reading — show the label. Never a grey
                    chip standing in for an unknown colour: a buyer reads that
@@ -115,9 +118,16 @@ export function ProductCard({ product, sizes, priority = false, className }: Pro
                 </li>
               ),
             )}
-            {group.count > SWATCH_LIMIT && (
+            {chips.length > SWATCH_LIMIT && (
               <li className="text-caption text-ink-muted">
-                {t('variants.more', { count: group.count - SWATCH_LIMIT })}
+                {t('variants.more', { count: chips.length - SWATCH_LIMIT })}
+              </li>
+            )}
+            {multiType && (
+              // A multi-type family (every spoon) — the dots above are its
+              // distinct colours, so say how many options sit behind them.
+              <li className="ms-1 text-caption text-ink-muted">
+                {t('variants.count', { count: group.count })}
               </li>
             )}
           </ul>
@@ -141,4 +151,25 @@ export function ProductCard({ product, sizes, priority = false, className }: Pro
       </div>
     </Link>
   );
+}
+
+/**
+ * The chips a family card shows.
+ *
+ * A plain colour family shows every member, as it always has. A family that
+ * spans several types ("Spoons": leaf, parfait, plastic…) would otherwise
+ * repeat Black and White once per type and print "Leaf Spoon 11.5 cm · Pearl"
+ * as a chip label, so it shows each distinct COLOUR once and nothing without a
+ * swatch — the option count beside them carries the rest.
+ */
+function cardChips(variants: CatalogVariantRefDto[]): CatalogVariantRefDto[] {
+  if (!splitIntoSections(variants)) return variants;
+  const seen = new Set<string>();
+  return variants.filter((variant) => {
+    if (variant.swatch === null) return false;
+    const key = variant.swatch.toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }

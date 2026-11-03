@@ -1027,6 +1027,24 @@
    "shot": null,
    "background": "#8E8E8E",
    "codesOnCard": []
+  },
+  "x-chopsticks": {
+   "card": "/products/chopsticks-card.webp",
+   "shot": null,
+   "background": "#FFFFFF",
+   "codesOnCard": []
+  },
+  "x-straws": {
+   "card": "/products/straws-card.webp",
+   "shot": null,
+   "background": "#F2F2F2",
+   "codesOnCard": []
+  },
+  "x-masks": {
+   "card": "/products/masks-card.webp",
+   "shot": null,
+   "background": "#FFFFFF",
+   "codesOnCard": []
   }
  },
  "products": {
@@ -1498,6 +1516,15 @@
   ],
   "PET-JAR-M": [
    "x-pet-jar-m"
+  ],
+  "CST23": [
+   "x-chopsticks"
+  ],
+  "MSK-BLACK": [
+   "x-masks"
+  ],
+  "MSK-BLUE": [
+   "x-masks"
   ]
  },
  "representative": {
@@ -1720,6 +1747,36 @@
    "image": "x-hmr-2c",
    "kind": "variant",
    "note": "HMR container family; brochure section photo shows the 2-compartment, no 1-compartment shot exists"
+  },
+  "STR02/08B": {
+   "image": "x-straws",
+   "kind": "variant",
+   "note": "straw family photo supplied by Packvio (Nov 2026); exact SKU not photographed"
+  },
+  "STR02/08C": {
+   "image": "x-straws",
+   "kind": "variant",
+   "note": "straw family photo supplied by Packvio (Nov 2026); exact SKU not photographed"
+  },
+  "STR06/08M": {
+   "image": "x-straws",
+   "kind": "variant",
+   "note": "straw family photo supplied by Packvio (Nov 2026); exact SKU not photographed"
+  },
+  "STO-POB21": {
+   "image": "x-straws",
+   "kind": "variant",
+   "note": "straw family photo supplied by Packvio (Nov 2026); exact SKU not photographed"
+  },
+  "STO-P1218": {
+   "image": "x-straws",
+   "kind": "variant",
+   "note": "straw family photo supplied by Packvio (Nov 2026); exact SKU not photographed"
+  },
+  "STO-P1222": {
+   "image": "x-straws",
+   "kind": "variant",
+   "note": "straw family photo supplied by Packvio (Nov 2026); exact SKU not photographed"
   }
  }
 }

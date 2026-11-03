@@ -1,4 +1,6 @@
-import { DataSource, IsNull, type EntityManager } from 'typeorm';
+import { DataSource, In, IsNull, type EntityManager } from 'typeorm';
+import { Category } from '../../modules/catalog/entities/category.entity';
+import { ProductCategory } from '../../modules/catalog/entities/product-category.entity';
 import { Product } from '../../modules/catalog/entities/product.entity';
 import dataSource from '../data-source';
 import { CATALOG_JSON_PATH, loadCatalogSource } from './catalog-source';
@@ -90,6 +92,14 @@ type Orphan = {
   slugAr: string;
   archivedEn: string;
   archivedAr: string;
+};
+
+/** A category that will be hidden (is_active = false), never deleted. */
+type StaleCategory = {
+  id: string;
+  slugEn: string;
+  nameEn: string;
+  fromSalla: boolean;
 };
 
 type Reclaim = {
@@ -208,6 +218,74 @@ async function plan(
   return { orphans, reclaims };
 }
 
+/**
+ * Categories that are NOT in docs/catalog.json and will hold no live product
+ * once the orphans are archived — hidden rather than deleted.
+ *
+ * Two real cases produced these:
+ *   - a category renamed in catalog.json by editing its `slug`. The seed
+ *     upserts on slug, so it CREATED a second, empty category and left the old
+ *     one (with every product) in place — "Shakers" and "Shakers or noodles"
+ *     side by side, one of them showing 0.
+ *   - categories created by the Salla sync from a DEMO store (dresses, skirts…),
+ *     whose sample products are orphans by the same rule as any other.
+ *
+ * Hidden, not deleted: a category row is cheap, its URL may be bookmarked, and
+ * an inactive category already disappears from every listing, menu and count.
+ * A category that still holds a live product, or has a child that survives, is
+ * left alone whatever its slug — products are the evidence it is in use.
+ */
+async function planCategories(
+  manager: EntityManager,
+  sourceCategorySlugs: ReadonlySet<string>,
+  orphanIds: ReadonlySet<string>,
+): Promise<StaleCategory[]> {
+  const categories = await manager.getRepository(Category).find({
+    where: { isActive: true },
+    select: ['id', 'slugEn', 'nameEn', 'parentId', 'sallaId'],
+  });
+  const liveIds = (
+    await manager.getRepository(Product).find({ where: { deletedAt: IsNull() }, select: ['id'] })
+  )
+    .map((product) => product.id)
+    .filter((id) => !orphanIds.has(id));
+
+  const inUse = new Set<string>();
+  if (liveIds.length > 0) {
+    const links = await manager
+      .getRepository(ProductCategory)
+      .find({ where: { productId: In(liveIds) }, select: ['categoryId'] });
+    for (const link of links) inUse.add(link.categoryId);
+  }
+
+  const candidates = categories.filter(
+    (category) => !sourceCategorySlugs.has(category.slugEn) && !inUse.has(category.id),
+  );
+  const candidateIds = new Set(candidates.map((category) => category.id));
+  // A parent survives if any child of it survives.
+  const survivingParents = new Set(
+    categories
+      .filter((category) => !candidateIds.has(category.id) && category.parentId)
+      .map((category) => category.parentId as string),
+  );
+
+  return candidates
+    .filter((category) => !survivingParents.has(category.id))
+    .map((category) => ({
+      id: category.id,
+      slugEn: category.slugEn,
+      nameEn: category.nameEn,
+      fromSalla: category.sallaId !== null,
+    }));
+}
+
+async function applyCategories(manager: EntityManager, stale: StaleCategory[]): Promise<void> {
+  if (stale.length === 0) return;
+  await manager
+    .getRepository(Category)
+    .update({ id: In(stale.map((category) => category.id)) }, { isActive: false });
+}
+
 async function apply(
   manager: EntityManager,
   orphans: Orphan[],
@@ -231,7 +309,28 @@ async function apply(
   }
 }
 
-function report(orphans: Orphan[], reclaims: Reclaim[], live: number, blocked: boolean): void {
+function reportCategories(stale: StaleCategory[]): void {
+  if (stale.length === 0) {
+    console.log('No stale categories.');
+  } else {
+    console.log(
+      `${stale.length} categor${stale.length === 1 ? 'y is' : 'ies are'} NOT in catalog.json and ` +
+        'hold no live product — to be hidden (is_active = false):',
+    );
+    for (const category of stale) {
+      console.log(`  - ${category.slugEn}  ${category.nameEn}${category.fromSalla ? '  (from Salla)' : ''}`);
+    }
+  }
+  console.log('');
+}
+
+function report(
+  orphans: Orphan[],
+  reclaims: Reclaim[],
+  live: number,
+  blocked: boolean,
+  staleCategories: StaleCategory[] = [],
+): void {
   console.log(`Reconciling against ${CATALOG_JSON_PATH}`);
   console.log(`${live} live product(s) in the database.`);
   console.log('');
@@ -268,7 +367,9 @@ function report(orphans: Orphan[], reclaims: Reclaim[], live: number, blocked: b
 
   console.log('');
 
-  if (orphans.length === 0 && reclaims.length === 0) {
+  reportCategories(staleCategories);
+
+  if (orphans.length === 0 && reclaims.length === 0 && staleCategories.length === 0) {
     console.log('Nothing to do.');
     return;
   }
@@ -303,13 +404,22 @@ async function run(): Promise<void> {
   const connection: DataSource = await dataSource.initialize();
   try {
     await connection.transaction(async (manager) => {
-      const { orphans, reclaims } = await plan(manager, loadCatalogSource().products);
+      const source = loadCatalogSource();
+      const { orphans, reclaims } = await plan(manager, source.products);
+      const staleCategories = await planCategories(
+        manager,
+        new Set(source.categories.map((category) => category.slug)),
+        new Set(orphans.map((orphan) => orphan.id)),
+      );
 
       const live = await manager.getRepository(Product).count();
       const blocked = !FORCE && pruneExceedsBlastRadius(orphans.length, live);
 
-      if (APPLY && !blocked) await apply(manager, orphans, reclaims);
-      report(orphans, reclaims, live, APPLY && blocked);
+      if (APPLY && !blocked) {
+        await apply(manager, orphans, reclaims);
+        await applyCategories(manager, staleCategories);
+      }
+      report(orphans, reclaims, live, APPLY && blocked, staleCategories);
 
       // Nothing was written when blocked, but make the exit code say so too —
       // `npm run deploy:prune -- --apply` must not look like it succeeded.
@@ -320,8 +430,14 @@ async function run(): Promise<void> {
   }
 }
 
-export type { Orphan, Reclaim };
-export { archivedSlug, plan as planPrune, apply as applyPrune };
+export type { Orphan, Reclaim, StaleCategory };
+export {
+  archivedSlug,
+  plan as planPrune,
+  apply as applyPrune,
+  planCategories as planPruneCategories,
+  applyCategories as applyPruneCategories,
+};
 
 // Only when run as a script. The exports above are for the test suite, and
 // importing this file must not open a database connection.

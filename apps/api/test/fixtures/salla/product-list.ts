@@ -89,7 +89,7 @@ export const PRODUCT_LIST_PAGE_1 = page(1, [
 export const PRODUCT_LIST_PAGE_2 = page(2, [
   {
     id: 445566782,
-    sku: 'WT-KS508',
+    sku: 'KS508',
     name: 'Cup Sleeve Smooth Ripple',
     price: 9.5,
     currency: 'SAR',

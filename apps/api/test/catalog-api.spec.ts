@@ -21,7 +21,7 @@ const AR = {
   cupsBare: 'اكواب',
   cupsHamza: 'أكواب',
   coffeeCupsSlug: 'اكواب-قهوة-ورقية',
-  cup8Slug: 'كوب-قهوة-جدار-مفرد-8-اونصة',
+  cup8Slug: 'كوب-قهوة-جدار-مفرد-سنقل-8-اونصة',
 };
 
 describeWithDb('Catalog API', () => {
@@ -192,7 +192,9 @@ describeWithDb('Catalog API', () => {
        * underneath instead: every matching SKU is still reachable, through
        * its family's variant list.
        */
-      expect(response.body.total).toBeGreaterThanOrEqual(10);
+      // 9 since the Nov 2026 catalogue edits renamed several cups' Arabic
+      // names (the reachability check below is what guards against loss).
+      expect(response.body.total).toBeGreaterThanOrEqual(9);
 
       const reachable = new Set<string>();
       for (const item of response.body.items as Array<{
@@ -350,13 +352,14 @@ describeWithDb('Catalog API', () => {
      * mock repository would prove nothing about whether Postgres actually
      * partitions the way the TypeScript assumes.
      */
-    it('shows the seven Leaf Spoon colours as ONE card', async () => {
+    it('shows every spoon — all types, sizes and colours — as ONE card', async () => {
       const response = await get('/catalog/products?category=spoons&perPage=60&locale=en').expect(200);
 
-      const leafCards = (response.body.items as Array<{ name: string; variantGroup: null | { key: string } }>)
-        .filter((item) => item.variantGroup?.key === 'spoons-leaf-spoon-11-5-cm');
+      const spoonCards = (response.body.items as Array<{ name: string; variantGroup: null | { key: string } }>)
+        .filter((item) => item.variantGroup?.key === 'cutlery-spoons');
 
-      expect(leafCards).toHaveLength(1);
+      expect(spoonCards).toHaveLength(1);
+      expect(response.body.items).toHaveLength(1);
     });
 
     it('carries every sibling on that one card, with swatches', async () => {
@@ -370,40 +373,46 @@ describeWithDb('Catalog API', () => {
           count: number;
           variants: Array<{ code: string; label: string; swatch: string | null; slug: string; isCurrent: boolean }>;
         };
-      }>).find((item) => item.variantGroup?.key === 'spoons-leaf-spoon-11-5-cm')?.variantGroup;
+      }>).find((item) => item.variantGroup?.key === 'cutlery-spoons')?.variantGroup;
 
       expect(card).toBeDefined();
-      expect(card?.axis).toBe('color');
-      expect(card?.name).toBe('Leaf Spoon 11.5 cm');
-      expect(card?.count).toBe(7);
-      expect(card?.variants.map((v) => v.label).sort()).toEqual([
+      expect(card?.axis).toBe('both');
+      expect(card?.name).toBe('Spoons');
+      expect(card?.count).toBe(19);
+      // Labels are "<type> · <option>", which the product page splits into
+      // one row per spoon type.
+      expect(card?.variants.every((v) => v.label.includes(' · '))).toBe(true);
+      const leaf = card?.variants.filter((v) => v.label.startsWith('Leaf Spoon 11.5 cm · ')) ?? [];
+      expect(leaf.map((v) => v.label.split(' · ')[1]).sort()).toEqual([
         'Blueberry', 'Bubblegum', 'Candy Green', 'Lavender', 'Lemon Grass', 'Pearl', 'Sunflower',
       ]);
+      expect(leaf.every((v) => v.swatch !== null)).toBe(true);
       // Exactly one member is the card's own representative.
       expect(card?.variants.filter((v) => v.isCurrent)).toHaveLength(1);
-      // Every colour resolved to a swatch, and every member kept its own slug.
-      expect(card?.variants.every((v) => v.swatch !== null)).toBe(true);
-      expect(new Set(card?.variants.map((v) => v.slug)).size).toBe(7);
+      // Every member kept its own slug.
+      expect(new Set(card?.variants.map((v) => v.slug)).size).toBe(19);
     });
 
     it('pages over FAMILIES, so the pager does not promise cards it cannot show', async () => {
       const first = await get('/catalog/products?category=cutlery&perPage=10&locale=en').expect(200);
 
-      // 56 SKUs in Cutlery & Tableware collapse to 31 cards.
-      expect(first.body.total).toBe(31);
-      expect(first.body.totalPages).toBe(4);
+      // 56 SKUs in Cutlery & Tableware collapse to 11 cards: spoons, forks,
+      // knives, sporks, straws, stirrers, napkins, cake servers, face masks,
+      // cutlery packs, and chopsticks on their own.
+      expect(first.body.total).toBe(11);
+      expect(first.body.totalPages).toBe(2);
       expect(first.body.items).toHaveLength(10);
 
       // The last page must not be empty, which is what a SKU-based count would
-      // have caused: 56/10 would advertise 6 pages over 31 cards.
-      const last = await get('/catalog/products?category=cutlery&perPage=10&page=4&locale=en').expect(200);
+      // have caused: 56/10 would advertise 6 pages over 11 cards.
+      const last = await get('/catalog/products?category=cutlery&perPage=10&page=2&locale=en').expect(200);
       expect(last.body.items.length).toBeGreaterThan(0);
       expect(last.body.hasMore).toBe(false);
     });
 
     it('never repeats a family across pages', async () => {
       const seen: string[] = [];
-      for (let page = 1; page <= 4; page++) {
+      for (let page = 1; page <= 2; page++) {
         const response = await get(
           `/catalog/products?category=cutlery&perPage=10&page=${page}&locale=en`,
         ).expect(200);
@@ -411,8 +420,8 @@ describeWithDb('Catalog API', () => {
           seen.push(item.variantGroup?.key ?? item.id);
         }
       }
-      expect(seen).toHaveLength(31);
-      expect(new Set(seen).size).toBe(31);
+      expect(seen).toHaveLength(11);
+      expect(new Set(seen).size).toBe(11);
     });
 
     it('prefers a representative that has a photograph', async () => {
@@ -435,16 +444,16 @@ describeWithDb('Catalog API', () => {
       const detail = await get('/catalog/products/by-code/TC-115-PS-LSPN-LVNR?locale=en').expect(200);
 
       expect(detail.body.code).toBe('TC-115-PS-LSPN-LVNR');
-      expect(detail.body.variantGroup.count).toBe(7);
+      expect(detail.body.variantGroup.count).toBe(19);
       const current = detail.body.variantGroup.variants.filter((v: { isCurrent: boolean }) => v.isCurrent);
       expect(current).toHaveLength(1);
       expect(current[0].code).toBe('TC-115-PS-LSPN-LVNR');
     });
 
     it('leaves a product with no siblings ungrouped', async () => {
-      const detail = await get('/catalog/products/by-code/BB%2F01?locale=en').expect(200);
+      const detail = await get('/catalog/products/by-code/CST23?locale=en').expect(200);
 
-      expect(detail.body.code).toBe('BB/01');
+      expect(detail.body.code).toBe('CST23');
       expect(detail.body.variantGroup).toBeNull();
     });
   });

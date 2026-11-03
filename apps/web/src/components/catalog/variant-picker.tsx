@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl';
 import { Check } from 'lucide-react';
-import type { CatalogVariantGroupDto } from '@packvio/shared';
+import type { CatalogVariantGroupDto, CatalogVariantRefDto } from '@packvio/shared';
 import { Link } from '@/i18n/navigation';
 import { cx } from '@/lib/cx';
 
@@ -38,6 +38,53 @@ export function VariantPicker({ group, className }: VariantPickerProps) {
         ? t('variants.chooseOption')
         : t('variants.chooseColour');
 
+  const renderChip = (variant: CatalogVariantRefDto, label: string) => {
+    const body = (
+      <>
+        {variant.swatch !== null && (
+          <span
+            aria-hidden="true"
+            className="size-4 shrink-0 rounded-full border border-border"
+            style={{ backgroundColor: variant.swatch }}
+          />
+        )}
+        <span className="whitespace-nowrap">{label}</span>
+        {variant.isCurrent && <Check size={14} aria-hidden="true" />}
+      </>
+    );
+
+    const shared = 'inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-body-sm';
+
+    return (
+      <li key={variant.id}>
+        {variant.isCurrent ? (
+          /* Not a link: this is the page you are on. aria-current tells a
+             screen reader the same thing the tick tells everyone else. */
+          <span
+            aria-current="true"
+            className={cx(shared, 'border-brand-purple bg-brand-purple/5 font-medium text-brand-purple')}
+          >
+            {body}
+          </span>
+        ) : (
+          <Link
+            href={{ pathname: '/product/[slug]', params: { slug: variant.slug } }}
+            className={cx(
+              shared,
+              'border-border text-ink transition-colors',
+              'hover:border-brand-purple hover:text-brand-purple',
+              'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-purple',
+            )}
+          >
+            {body}
+          </Link>
+        )}
+      </li>
+    );
+  };
+
+  const sections = splitIntoSections(group.variants);
+
   return (
     <div className={cx('flex flex-col gap-2', className)}>
       <h2 className="text-body-sm font-medium text-ink-muted">
@@ -48,52 +95,53 @@ export function VariantPicker({ group, className }: VariantPickerProps) {
         </span>
       </h2>
 
-      <ul className="flex flex-wrap gap-2">
-        {group.variants.map((variant) => {
-          const body = (
-            <>
-              {variant.swatch !== null && (
-                <span
-                  aria-hidden="true"
-                  className="size-4 shrink-0 rounded-full border border-border"
-                  style={{ backgroundColor: variant.swatch }}
-                />
-              )}
-              <span className="whitespace-nowrap">{variant.label}</span>
-              {variant.isCurrent && <Check size={14} aria-hidden="true" />}
-            </>
-          );
-
-          const shared = 'inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-body-sm';
-
-          return (
-            <li key={variant.id}>
-              {variant.isCurrent ? (
-                /* Not a link: this is the page you are on. aria-current tells a
-                   screen reader the same thing the tick tells everyone else. */
-                <span
-                  aria-current="true"
-                  className={cx(shared, 'border-brand-purple bg-brand-purple/5 font-medium text-brand-purple')}
-                >
-                  {body}
-                </span>
-              ) : (
-                <Link
-                  href={{ pathname: '/product/[slug]', params: { slug: variant.slug } }}
-                  className={cx(
-                    shared,
-                    'border-border text-ink transition-colors',
-                    'hover:border-brand-purple hover:text-brand-purple',
-                    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-purple',
-                  )}
-                >
-                  {body}
-                </Link>
-              )}
-            </li>
-          );
-        })}
-      </ul>
+      {sections ? (
+        // A family that spans several product types (every spoon, every fork)
+        // reads as one row per type — "Leaf Spoon 11.5 cm: ● ● ● ●" — rather
+        // than nineteen chips in one undifferentiated run.
+        <div className="flex flex-col gap-3">
+          {sections.map((section) => (
+            <div key={section.title} className="flex flex-col gap-1.5">
+              <h3 className="text-caption font-medium text-ink">{section.title}</h3>
+              <ul className="flex flex-wrap gap-2">
+                {section.variants.map(({ variant, label }) => renderChip(variant, label))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <ul className="flex flex-wrap gap-2">
+          {group.variants.map((variant) => renderChip(variant, variant.label))}
+        </ul>
+      )}
     </div>
   );
+}
+
+/** Separates "<product type>" from "<option>" in a variant label. */
+export const VARIANT_SECTION_SEPARATOR = ' · ';
+
+type Section = { title: string; variants: { variant: CatalogVariantRefDto; label: string }[] };
+
+/**
+ * Splits "Leaf Spoon 11.5 cm · Pearl" style labels into one section per type.
+ *
+ * Only when EVERY label carries the separator — a family of plain colour
+ * labels ("Pearl", "Blueberry") stays one row exactly as before. Section order
+ * follows the first appearance of each type, which is the catalogue order.
+ */
+export function splitIntoSections(variants: CatalogVariantRefDto[]): Section[] | null {
+  if (variants.length === 0) return null;
+  if (!variants.every((variant) => variant.label.includes(VARIANT_SECTION_SEPARATOR))) return null;
+
+  const sections = new Map<string, Section>();
+  for (const variant of variants) {
+    const at = variant.label.indexOf(VARIANT_SECTION_SEPARATOR);
+    const title = variant.label.slice(0, at).trim();
+    const label = variant.label.slice(at + VARIANT_SECTION_SEPARATOR.length).trim();
+    const section = sections.get(title) ?? { title, variants: [] };
+    section.variants.push({ variant, label });
+    sections.set(title, section);
+  }
+  return [...sections.values()];
 }

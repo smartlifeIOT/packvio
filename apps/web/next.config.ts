@@ -70,6 +70,10 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'cdn.salla.sa' },
       { protocol: 'https', hostname: 'cdn.assets.salla.network' },
       { protocol: 'https', hostname: 'i.salla.sa' },
+      // Any other Salla subdomain (demo/dev stores use different CDN hosts).
+      // Keep in step with SALLA_IMAGE_HOST_SUFFIXES in src/lib/image-src.ts.
+      { protocol: 'https', hostname: '**.salla.sa' },
+      { protocol: 'https', hostname: '**.salla.network' },
     ],
   },
 };

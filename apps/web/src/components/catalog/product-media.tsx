@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { canOptimizeImage } from '@/lib/image-src';
 import type { CatalogImageDto } from '@packvio/shared';
 import { ProductPanel, type ProductPanelRatio } from '@/components/ui';
 import { ImagePlaceholder } from './image-placeholder';
@@ -64,6 +65,7 @@ export function ProductMedia({
       <div className="relative h-full w-full">
         <Image
           src={image.url}
+          unoptimized={!canOptimizeImage(image.url)}
           alt={image.alt ?? code}
           fill
           sizes={sizes}
