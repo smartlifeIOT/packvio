@@ -143,7 +143,7 @@ export class CatalogProductSummaryResponse implements CatalogProductSummaryDto {
   @ApiProperty({ nullable: true, example: '301 GSM Ø80' }) material!: string | null;
   @ApiProperty({ nullable: true, description: 'Units per case — the B2B ordering unit.' })
   caseQuantity!: number | null;
-  @ApiProperty({ nullable: true, description: 'Null until the Salla sync fills it.' })
+  @ApiProperty({ nullable: true, description: 'Null until a price is set.' })
   price!: number | null;
   @ApiProperty({ nullable: true }) salePrice!: number | null;
   @ApiProperty({ example: 'SAR' }) currency!: string;
@@ -206,7 +206,6 @@ export class CatalogProductDetailResponse
   @ApiProperty() slugMatchedOtherLocale!: boolean;
   @ApiProperty({ nullable: true }) stockQuantity!: number | null;
   @ApiProperty() isStockUnlimited!: boolean;
-  @ApiProperty({ nullable: true }) sallaUrl!: string | null;
   @ApiProperty({ nullable: true }) metaTitle!: string | null;
   @ApiProperty({ nullable: true }) metaDescription!: string | null;
   @ApiProperty({ type: () => [CatalogImageResponse] }) images!: CatalogImageResponse[];

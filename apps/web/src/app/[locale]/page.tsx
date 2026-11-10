@@ -25,11 +25,11 @@ export async function generateMetadata({ params }: HomePageProps): Promise<Metad
   const t = await getTranslations({ locale, namespace: 'home.meta' });
 
   return {
-    title: t('title'),
+    title: { absolute: t('title') },
     description: t('description'),
     alternates: {
       canonical: `/${locale}`,
-      languages: { ar: '/ar', en: '/en' },
+      languages: { ar: '/ar', en: '/en', 'x-default': '/ar' },
     },
   };
 }

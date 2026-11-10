@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import { Product } from './product.entity';
 
-/** A product gallery image. Fully mirrored from Salla once the sync runs. */
+/** A product gallery image, seeded from docs/product-images.json. */
 @Entity({ name: 'product_images' })
 export class ProductImage {
   @PrimaryGeneratedColumn('uuid', { name: 'id' })
@@ -24,15 +24,10 @@ export class ProductImage {
   @JoinColumn({ name: 'product_id' })
   product!: Product;
 
-  /** Salla's image id — the diff key for reconciling a gallery. */
-  @Index('uq_product_images_salla_id', { unique: true })
-  @Column({ name: 'salla_id', type: 'bigint', nullable: true })
-  sallaId!: string | null;
-
   @Column({ name: 'url', type: 'text' })
   url!: string;
 
-  /** LOCAL-ONLY: alt text is accessibility copy we author, not Salla content. */
+  /** LOCAL-ONLY: alt text is accessibility copy we author. */
   @Column({ name: 'alt_en', type: 'varchar', length: 250, nullable: true })
   altEn!: string | null;
 

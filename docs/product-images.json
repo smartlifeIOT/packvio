@@ -1045,6 +1045,12 @@
    "shot": null,
    "background": "#FFFFFF",
    "codesOnCard": []
+  },
+  "x-spork-black": {
+   "card": "/products/cut-spork-black-card.webp",
+   "shot": null,
+   "background": "#E6F1F7",
+   "codesOnCard": []
   }
  },
  "products": {
@@ -1777,6 +1783,26 @@
    "image": "x-straws",
    "kind": "variant",
    "note": "straw family photo supplied by Packvio (Nov 2026); exact SKU not photographed"
+  },
+  "TC-130-PS-SPORK-B": {
+   "image": "x-spork-black",
+   "kind": "variant",
+   "note": "illustrative: the black PP spoon from the 3/1 card with spork tines cut in; no spork photo supplied"
+  },
+  "TC-130-PS-SPORK-W": {
+   "image": "x-spork-black",
+   "kind": "variant",
+   "note": "illustrative: the black PP spoon from the 3/1 card with spork tines cut in; no spork photo supplied"
+  },
+  "TC-180-PS-SPORK-B": {
+   "image": "x-spork-black",
+   "kind": "variant",
+   "note": "illustrative: the black PP spoon from the 3/1 card with spork tines cut in; no spork photo supplied"
+  },
+  "TC-180-PS-SPORK-W": {
+   "image": "x-spork-black",
+   "kind": "variant",
+   "note": "illustrative: the black PP spoon from the 3/1 card with spork tines cut in; no spork photo supplied"
   }
  }
 }

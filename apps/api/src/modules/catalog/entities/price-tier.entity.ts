@@ -14,8 +14,7 @@ import { Product } from './product.entity';
 /**
  * B2B volume pricing: "from N cases, the unit price is X".
  *
- * LOCAL-ONLY in full — Salla has no tier-pricing concept, so no salla_id here
- * and the sync must never delete or rewrite these rows.
+ * Local data only.
  */
 @Entity({ name: 'price_tiers' })
 @Index('idx_price_tiers_product_id_min_quantity', ['productId', 'minQuantity'])

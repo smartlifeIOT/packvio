@@ -9,6 +9,7 @@ import { FaqJsonLd } from '@/components/faq/faq-json-ld';
 import { CONTACT } from '@/components/layout/nav-links';
 import { Button, Icon, Section } from '@/components/ui';
 import { isLocale } from '@/i18n/routing';
+import { staticAlternates } from '@/lib/seo';
 
 type PageProps = { params: Promise<{ locale: string }> };
 
@@ -16,7 +17,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const t = await getTranslations({ locale, namespace: 'faq' });
-  return { title: t('title'), description: t('lead') };
+  return {
+    title: t('title'),
+    description: t('lead'),
+    alternates: staticAlternates(locale, '/faq'),
+  };
 }
 
 /**

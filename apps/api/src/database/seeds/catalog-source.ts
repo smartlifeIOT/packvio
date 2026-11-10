@@ -3,8 +3,7 @@ import { join } from 'node:path';
 
 /**
  * Shape of docs/catalog.json — the extraction of the printed company profile,
- * and the seed's only input. Prices and stock are deliberately absent: Salla
- * owns those.
+ * and the seed's only input. Prices and stock are deliberately absent.
  */
 export interface CatalogSourceCategory {
   slug: string;
@@ -60,7 +59,7 @@ export interface CatalogSourceProduct {
    * correct for ordering and wrong for browsing: seven Leaf Spoon colours filled
    * seven cards in a grid. These keys let the listing collapse a family to one
    * card while every SKU keeps its own code, slug and product page — none of
-   * which may change, because `code` is what the Salla sync joins on and the
+   * which may change, because `code` is the SKU quotes refer to and the
    * slugs are public URLs.
    *
    * Absent on the 41 products that have no siblings. A product with no

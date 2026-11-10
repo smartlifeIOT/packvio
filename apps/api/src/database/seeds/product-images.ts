@@ -174,8 +174,8 @@ export interface ImageSeedCounts {
 /**
  * Upserts seeded gallery rows, keyed on (productId, url).
  *
- * Only ever touches rows under SEEDED_IMAGE_PREFIX with a null sallaId: a photo
- * that came from Salla is Salla's to manage, and a re-seed must not disturb it.
+ * Only ever touches rows under SEEDED_IMAGE_PREFIX — the pictures this seed
+ * owns. Anything else attached to a product is left alone.
  */
 export async function syncSeededProductImages(
   manager: EntityManager,
@@ -208,27 +208,17 @@ export async function syncSeededProductImages(
     }
 
     const existing = await repository.find({ where: { productId: product.id } });
-    const seeded = existing.filter(
-      (image) => image.sallaId === null && image.url.startsWith(SEEDED_IMAGE_PREFIX),
-    );
+    const seeded = existing.filter((image) => image.url.startsWith(SEEDED_IMAGE_PREFIX));
     const bySeededUrl = new Map(seeded.map((image) => [image.url, image]));
-
-    // A product that already carries Salla photography keeps it as primary; the
-    // seeded pictures fall in behind rather than fighting over the flag.
-    const hasSallaImages = existing.some((image) => image.sallaId !== null);
-    const offset = hasSallaImages
-      ? Math.max(0, ...existing.filter((i) => i.sallaId !== null).map((i) => i.sortOrder + 1))
-      : 0;
 
     for (const image of planned) {
       const row = bySeededUrl.get(image.url);
-      const sortOrder = image.sortOrder + offset;
-      const isPrimary = image.isPrimary && !hasSallaImages;
+      const sortOrder = image.sortOrder;
+      const isPrimary = image.isPrimary;
       if (!row) {
         await repository.save(
           repository.create({
             productId: product.id,
-            sallaId: null,
             url: image.url,
             altEn: image.altEn,
             altAr: image.altAr,
@@ -255,7 +245,7 @@ export async function syncSeededProductImages(
     }
 
     // Seeded rows the manifest no longer lists — the picture was reassigned or
-    // withdrawn. Salla-sourced rows are never in this set.
+    // withdrawn.
     const stale = [...bySeededUrl.values()].map((image) => image.id);
     if (stale.length > 0) {
       await repository.delete({ id: In(stale) });

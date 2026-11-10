@@ -65,18 +65,9 @@ POSTGRES_USER=packvio
 POSTGRES_PASSWORD=localdev
 POSTGRES_DB=packvio
 # Throwaway values with the right SHAPE, so the API's Joi validation is
-# genuinely exercised: the key must be base64 decoding to 32 bytes, and the salt
-# must be 32+ characters. A weaker placeholder would fail at boot, which is the
-# validation working.
-SALLA_TOKEN_ENC_KEY=bG9jYWx2ZXJpZnlrZXlub3RhcmVhbHNlY3JldDEyMzQ=
+# genuinely exercised: the salt must be 32+ characters. A weaker placeholder
+# would fail at boot, which is the validation working.
 QUOTE_IP_HASH_SALT=local-verification-salt-not-a-real-secret-000
-SALLA_CLIENT_ID=
-SALLA_CLIENT_SECRET=
-SALLA_WEBHOOK_SECRET=local-webhook-secret
-SALLA_API_BASE=https://api.salla.dev/admin/v2
-SALLA_OAUTH_TOKEN_URL=https://accounts.salla.sa/oauth2/token
-SALLA_STORE_LOCALE=ar
-ADMIN_API_KEY=
 REVALIDATE_SECRET=local-revalidate-secret
 QUOTE_RATE_LIMIT=5
 BACKUP_RETENTION_DAYS=7

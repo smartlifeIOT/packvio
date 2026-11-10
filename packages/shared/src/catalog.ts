@@ -119,8 +119,8 @@ export interface CatalogVariantRefDto extends LocalizedEntity {
  * returns the SKU that was asked for, with the same array, so the product page
  * can offer the other colours.
  *
- * Every member keeps its own slug and its own page: `code` is the key the Salla
- * sync joins on and the slugs are public URLs, so grouping is a presentation
+ * Every member keeps its own slug and its own page: `code` is the SKU quotes
+ * refer to and the slugs are public URLs, so grouping is a presentation
  * layer over unchanged rows, never a merge of them.
  */
 export interface CatalogVariantGroupDto {
@@ -218,8 +218,6 @@ export interface CatalogProductDetailDto extends CatalogProductSummaryDto {
   slugMatchedOtherLocale: boolean;
   stockQuantity: number | null;
   isStockUnlimited: boolean;
-  /** Salla storefront URL, for the cart handoff. Null until Salla sync runs. */
-  sallaUrl: string | null;
   metaTitle: string | null;
   metaDescription: string | null;
   images: CatalogImageDto[];

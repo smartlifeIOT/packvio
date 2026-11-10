@@ -71,49 +71,16 @@ CODE=$(curl -sk -o /dev/null -w '%{http_code}' -m 15 -u "$AUTH" "$BASE/ar")
 [ "$CODE" = "200" ] && ok "/ar serves 200 with credentials" || bad "/ar with credentials" "got $CODE"
 
 # ---------------------------------------------------------------------------
-# The exception that matters.
-#
-# A STATUS CODE ALONE CANNOT ANSWER THIS, which is worth stating because the
-# obvious check gets it backwards. The webhook endpoint authenticates its own
-# callers with an HMAC signature and answers 401 to an unsigned request — so
-# "did nginx let this through" and "did the API reject the signature" are the
-# same number. The discriminator is the WWW-Authenticate header: nginx's
-# challenge carries one, the application's 401 does not.
+# The former Salla webhook path is no longer an exception: with the integration
+# removed, it must sit behind the gate like everything else.
 # ---------------------------------------------------------------------------
 challenged() {
   curl -sk -o /dev/null -D - -m 10 "$@" | grep -qi '^www-authenticate:'
 }
 
-if challenged -X POST -H 'content-type: application/json' -d '{}' "$BASE/api/v1/webhooks/salla"; then
-  bad "Salla webhook bypasses Basic Auth" "nginx sent a WWW-Authenticate challenge — Salla could never deliver"
-else
-  ok "Salla webhook bypasses Basic Auth (no WWW-Authenticate; the API answers for itself)"
-fi
-
-if challenged -X POST -H 'content-type: application/json' -d '{}' "$BASE/api/v1/webhooks/salla/"; then
-  bad "webhook with a trailing slash bypasses auth" "nginx challenged it"
-else
-  ok "webhook with a trailing slash also bypasses auth"
-fi
-
-# End to end, with a signature the API will actually accept. This is the check
-# that proves the open path is USABLE and not merely unauthenticated.
-WEBHOOK_SECRET=$(grep '^SALLA_WEBHOOK_SECRET=' deploy/nginx/local/env.local | cut -d= -f2-)
-BODY='{"event":"app.store.authorize","merchant":1,"created_at":"2026-01-01T00:00:00Z","data":{}}'
-SIG=$(printf '%s' "$BODY" | openssl dgst -sha256 -hmac "$WEBHOOK_SECRET" -r | cut -d' ' -f1)
-SIGNED=$(curl -sk -o /dev/null -w '%{http_code}' -m 15 -X POST \
-  -H 'content-type: application/json' -H "x-salla-signature: $SIG" \
-  -d "$BODY" "$BASE/api/v1/webhooks/salla")
-case "$SIGNED" in
-  2*) ok "a correctly signed webhook is accepted through nginx ($SIGNED)" ;;
-  *)  bad "a correctly signed webhook is accepted" "got $SIGNED" ;;
-esac
-
-# Nothing NEAR the exception may be open. An exact-match location opens exactly
-# one path; these confirm it did not open a prefix.
-for probe in /api/v1/webhooks/sallax /api/v1/webhooks /api/v1/quotes; do
+for probe in /api/v1/webhooks/salla /api/v1/quotes; do
   if challenged "$BASE$probe"; then
-    ok "$probe is still behind auth"
+    ok "$probe is behind auth"
   else
     bad "$probe should require auth" "no WWW-Authenticate — it is open"
   fi

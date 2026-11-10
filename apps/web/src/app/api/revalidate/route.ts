@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import { timingSafeEqual } from 'node:crypto';
 
 /**
- * On-demand cache purge, called by the Nest API after a Salla sync writes.
+ * On-demand cache purge, called by `npm run deploy:purge` after a seed.
  *
  * The site renders from the catalog API with `revalidate: 300` and meaningful
  * cache tags (see lib/api/client.ts). Without this endpoint a merchant's price

@@ -12,26 +12,13 @@ import {
 import { ProductCategory } from './product-category.entity';
 
 /**
- * A catalog category. Mirrored from Salla where a matching Salla category
- * exists (`sallaId` set), but the seeded taxonomy from docs/catalog.json comes
- * first, so `sallaId` stays NULL until the sync links the two.
- *
- * Sync ownership:
- *   - MIRRORED (sync may overwrite): nameEn/nameAr, descriptionEn/descriptionAr,
- *     imageUrl, sortOrder, isActive, salla* columns.
- *   - LOCAL-ONLY (sync must never touch): slugEn, slugAr, iconKey and every
- *     meta* column. Slugs are URL surface — Salla renaming a category must not
- *     break our indexed URLs.
+ * A catalog category, seeded from docs/catalog.json. Slugs are URL surface and
+ * frozen at insert; names re-sync on every seed.
  */
 @Entity({ name: 'categories' })
 export class Category {
   @PrimaryGeneratedColumn('uuid', { name: 'id' })
   id!: string;
-
-  /** Salla's category id. bigint is exposed as string to avoid 2^53 truncation. */
-  @Index('uq_categories_salla_id', { unique: true })
-  @Column({ name: 'salla_id', type: 'bigint', nullable: true })
-  sallaId!: string | null;
 
   @Index('idx_categories_parent_id')
   @Column({ name: 'parent_id', type: 'uuid', nullable: true })
@@ -72,7 +59,7 @@ export class Category {
   @Column({ name: 'image_url', type: 'text', nullable: true })
   imageUrl!: string | null;
 
-  /** Key into the front-end icon map — LOCAL-ONLY, Salla has no equivalent. */
+  /** Key into the front-end icon map — local only. */
   @Column({ name: 'icon_key', type: 'varchar', length: 64, nullable: true })
   iconKey!: string | null;
 
@@ -97,17 +84,6 @@ export class Category {
 
   @Column({ name: 'meta_description_ar', type: 'varchar', length: 320, nullable: true })
   metaDescriptionAr!: string | null;
-
-  // --- reconciliation bookkeeping ---
-
-  /** Salla's own updated_at, so a reconcile can diff without fetching detail. */
-  @Column({ name: 'salla_updated_at', type: 'timestamptz', nullable: true })
-  sallaUpdatedAt!: Date | null;
-
-  /** When our sync last wrote this row. */
-  @Index('idx_categories_synced_at')
-  @Column({ name: 'synced_at', type: 'timestamptz', nullable: true })
-  syncedAt!: Date | null;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt!: Date;

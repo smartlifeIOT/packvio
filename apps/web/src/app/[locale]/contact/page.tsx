@@ -5,10 +5,12 @@ import { Clock, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 import { Breadcrumbs } from '@/components/catalog/breadcrumbs';
 import { CONTACT } from '@/components/layout/nav-links';
 import { LocationMap } from '@/components/contact/location-map';
+import { SocialLinks } from '@/components/layout/social-links';
 import { QuoteFunnel } from '@/components/quote/quote-funnel';
 import { Icon, Section } from '@/components/ui';
 import { isLocale } from '@/i18n/routing';
 import { cx } from '@/lib/cx';
+import { staticAlternates } from '@/lib/seo';
 
 type PageProps = { params: Promise<{ locale: string }> };
 
@@ -18,7 +20,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const t = await getTranslations({ locale, namespace: 'contact' });
-  return { title: t('title'), description: t('lead') };
+  return {
+    title: t('title'),
+    description: t('lead'),
+    alternates: staticAlternates(locale, '/contact'),
+  };
 }
 
 /**
@@ -125,6 +131,12 @@ export default async function ContactPage({ params }: PageProps) {
 
             <p className="mt-3 text-caption text-ink-muted">{t('hoursNote')}</p>
           </div>
+
+          <div className="rounded-md border border-border bg-surface-alt p-lg">
+            <h2 className="text-h3 font-semibold text-brand-purple">{t('socialHeading')}</h2>
+            <SocialLinks label={t('socialHeading')} className="mt-4" />
+          </div>
+
           <LocationMap locale={locale} />
         </aside>
       </div>

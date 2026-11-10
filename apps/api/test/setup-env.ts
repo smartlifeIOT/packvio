@@ -14,10 +14,4 @@ import { join } from 'node:path';
  */
 loadEnv({ path: join(__dirname, '..', '..', '..', '.env'), quiet: true });
 
-/**
- * A fixed, obviously-fake encryption key so the Salla token crypto path is
- * exercised for real in every suite rather than being stubbed out.
- * 32 bytes of 0xAB, base64-encoded.
- */
-process.env.SALLA_TOKEN_ENC_KEY = Buffer.alloc(32, 0xab).toString('base64');
 process.env.NODE_ENV = process.env.NODE_ENV ?? 'test';

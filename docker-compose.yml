@@ -30,18 +30,12 @@ name: packvio-dev
 x-api-env: &api-env
   NODE_ENV: development
   DATABASE_URL: postgres://${POSTGRES_USER:-packvio}:${POSTGRES_PASSWORD:-packvio}@postgres:5432/${POSTGRES_DB:-packvio}
-  # Dev throwaways. The API validates the SHAPE of both at boot — 32 bytes of
-  # base64, and 32+ characters — so a placeholder has to be a real one.
+  # Dev throwaway. The API validates its SHAPE at boot (32+ characters), so a
+  # placeholder has to be a real one.
   # Production generates its own; see deploy/env.prod.example.
-  SALLA_TOKEN_ENC_KEY: ${SALLA_TOKEN_ENC_KEY:-ZGV2LW9ubHkta2V5LW5vdC1mb3ItcHJvZHVjdGlvbiEhIQ==}
   QUOTE_IP_HASH_SALT: ${QUOTE_IP_HASH_SALT:-dev-only-salt-not-for-production-0123456789}
-  ADMIN_API_KEY: ${ADMIN_API_KEY:-dev-admin-key}
   REVALIDATE_SECRET: ${REVALIDATE_SECRET:-dev-revalidate-secret}
   QUOTE_RATE_LIMIT: ${QUOTE_RATE_LIMIT:-50}
-  SALLA_CLIENT_ID: ${SALLA_CLIENT_ID:-}
-  SALLA_CLIENT_SECRET: ${SALLA_CLIENT_SECRET:-}
-  SALLA_WEBHOOK_SECRET: ${SALLA_WEBHOOK_SECRET:-}
-  SALLA_STORE_LOCALE: ${SALLA_STORE_LOCALE:-ar}
 
 services:
   # -------------------------------------------------------------------------

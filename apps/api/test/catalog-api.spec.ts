@@ -345,7 +345,7 @@ describeWithDb('Catalog API', () => {
     /**
      * The catalog lists every colour and size as its own SKU. Listings collapse
      * a family to one card; the SKUs themselves are untouched, because `code`
-     * is the key the Salla sync joins on and every slug is a public URL.
+     * is the SKU a quote refers to and every slug is a public URL.
      *
      * These run against the real seeded catalog rather than fixtures: the
      * grouping lives in hand-written SQL — a window function over a CTE — and a
@@ -394,19 +394,19 @@ describeWithDb('Catalog API', () => {
     });
 
     it('pages over FAMILIES, so the pager does not promise cards it cannot show', async () => {
-      const first = await get('/catalog/products?category=cutlery&perPage=10&locale=en').expect(200);
+      const first = await get('/catalog/products?category=cutlery&perPage=6&locale=en').expect(200);
 
-      // 56 SKUs in Cutlery & Tableware collapse to 11 cards: spoons, forks,
-      // knives, sporks, straws, stirrers, napkins, cake servers, face masks,
-      // cutlery packs, and chopsticks on their own.
-      expect(first.body.total).toBe(11);
+      // 54 SKUs in Cutlery & Tableware collapse to 10 cards: spoons, forks,
+      // knives, sporks, straws, stirrers, napkins, face masks, cutlery packs,
+      // and chopsticks on their own.
+      expect(first.body.total).toBe(10);
       expect(first.body.totalPages).toBe(2);
-      expect(first.body.items).toHaveLength(10);
+      expect(first.body.items).toHaveLength(6);
 
       // The last page must not be empty, which is what a SKU-based count would
-      // have caused: 56/10 would advertise 6 pages over 11 cards.
-      const last = await get('/catalog/products?category=cutlery&perPage=10&page=2&locale=en').expect(200);
-      expect(last.body.items.length).toBeGreaterThan(0);
+      // have caused: 54/6 would advertise 9 pages over 10 cards.
+      const last = await get('/catalog/products?category=cutlery&perPage=6&page=2&locale=en').expect(200);
+      expect(last.body.items).toHaveLength(4);
       expect(last.body.hasMore).toBe(false);
     });
 
@@ -414,14 +414,14 @@ describeWithDb('Catalog API', () => {
       const seen: string[] = [];
       for (let page = 1; page <= 2; page++) {
         const response = await get(
-          `/catalog/products?category=cutlery&perPage=10&page=${page}&locale=en`,
+          `/catalog/products?category=cutlery&perPage=6&page=${page}&locale=en`,
         ).expect(200);
         for (const item of response.body.items as Array<{ id: string; variantGroup: null | { key: string } }>) {
           seen.push(item.variantGroup?.key ?? item.id);
         }
       }
-      expect(seen).toHaveLength(11);
-      expect(new Set(seen).size).toBe(11);
+      expect(seen).toHaveLength(10);
+      expect(new Set(seen).size).toBe(10);
     });
 
     it('prefers a representative that has a photograph', async () => {

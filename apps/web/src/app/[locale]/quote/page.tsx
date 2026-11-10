@@ -8,6 +8,7 @@ import { Icon, Section } from '@/components/ui';
 import { Link } from '@/i18n/navigation';
 import { isLocale } from '@/i18n/routing';
 import { findProductByCode } from '@/lib/api';
+import { staticAlternates } from '@/lib/seo';
 
 type QuotePageProps = {
   params: Promise<{ locale: string }>;
@@ -21,6 +22,7 @@ export async function generateMetadata({ params }: QuotePageProps): Promise<Meta
   return {
     title: t('title'),
     description: t('lead'),
+    alternates: staticAlternates(locale, '/quote'),
     // A prefilled quote form is a step in a funnel, not a landing page.
     robots: { index: true, follow: true },
   };

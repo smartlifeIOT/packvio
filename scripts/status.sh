@@ -35,7 +35,6 @@ exp=$(echo | openssl s_client -servername "$DOMAIN" -connect "$DOMAIN":443 2>/de
 step "Catalog"
 $C exec -T postgres psql -U "${POSTGRES_USER:-packvio}" -d "${POSTGRES_DB:-packvio}" -tAc \
   "select 'products ' || count(*) filter (where deleted_at is null) ||
-          ' · with salla_id ' || count(*) filter (where salla_id is not null) ||
           ' · images ' || (select count(*) from product_images) from products" 2>/dev/null \
   | sed 's/^/  /' || echo "  ${Y}[!]${N} could not query postgres"
 

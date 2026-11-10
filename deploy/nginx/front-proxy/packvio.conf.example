@@ -83,9 +83,7 @@ server {
     # blocking its own scripts for a reason that appears nowhere in its config.
     #
     # Also deliberately absent: auth_basic. Packvio's nginx runs the staging
-    # gate, including the exception that leaves the Salla webhook path open. A
-    # second password here would sit in front of that exception and Salla's
-    # deliveries would meet a 401 they cannot answer.
+    # gate; a second password here would make visitors log in twice.
 
     # The RFQ body plus a long message. Must be at least as large as the
     # client_max_body_size inside Packvio's nginx (2m) or this proxy rejects

@@ -14,7 +14,7 @@ export type VariantPickerProps = {
  *
  * EVERY VARIANT IS ITS OWN PAGE, so this is a row of links, not a client-side
  * state widget. That falls out of the data rather than being a styling choice:
- * each SKU keeps its own `code` — the key the Salla sync joins on — and its own
+ * each SKU keeps its own `code` — the SKU a quote refers to — and its own
  * slug, which is a public URL. Making the colours a `useState` toggle would
  * mean one URL for seven products, which costs six indexable pages and leaves
  * a buyer unable to send a colleague a link to the colour they meant.

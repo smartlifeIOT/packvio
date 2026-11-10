@@ -32,7 +32,7 @@ export type ProductCardProps = {
  * The single product card used by the home rails, the listing grid and the
  * related rail.
  *
- * Deliberately shows NO price. Every row's price is null until the Salla sync
+ * Deliberately shows NO price. Every row's price is null until a price is set
  * runs, and an empty price slot on a card reads as a bug rather than as
  * "priced on request" — which is the truth, since this is a quote-first
  * wholesale catalog. The case quantity carries the commercial information

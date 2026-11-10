@@ -103,8 +103,8 @@ else
   info "  cp src/deploy/env.prod.example .env && chmod 600 .env && nano .env"
   info ""
   info "Generate the secrets ON the server:"
-  info "  openssl rand -base64 32   # SALLA_TOKEN_ENC_KEY, QUOTE_IP_HASH_SALT"
-  info "  openssl rand -hex 24      # ADMIN_API_KEY, REVALIDATE_SECRET"
+  info "  openssl rand -base64 32   # QUOTE_IP_HASH_SALT"
+  info "  openssl rand -hex 24      # REVALIDATE_SECRET"
 fi
 
 echo ""

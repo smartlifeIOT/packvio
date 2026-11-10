@@ -7,6 +7,7 @@ import { Icon } from '@/components/ui';
 import { Link } from '@/i18n/navigation';
 import { topLevelCategories } from '@/lib/category-tree';
 import { CONTACT } from './nav-links';
+import { SocialLinks } from './social-links';
 
 export type SiteFooterProps = {
   locale: Locale;
@@ -72,6 +73,7 @@ export async function SiteFooter({ locale, categories }: SiteFooterProps) {
               className="h-10 w-auto self-start"
             />
             <p className="text-body-sm leading-relaxed text-surface/80">{t('blurb')}</p>
+            <SocialLinks tone="dark" label={t('followUs')} className="mt-1" />
           </div>
 
           {/* Categories */}

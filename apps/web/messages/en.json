@@ -41,7 +41,6 @@
     "viewDetails": "View Details",
     "imageComingSoon": "Photo coming soon",
     "quoteOnly": "Quote only",
-    "buyOnline": "Order on our store",
     "orderOnWhatsapp": "Order now on WhatsApp",
     "breadcrumb": "Breadcrumb",
     "allProducts": "All products",
@@ -136,8 +135,8 @@
   "home": {
     "meta": {
       "siteName": "Packvio",
-      "title": "Packvio — Wholesale Food & Beverage Packaging in Saudi Arabia",
-      "description": "Wholesale paper and plastic cups,apaer and plastic soup bowls lids, kraft boxes,and bags supplied by the case, with custom logo printing. Request a quote from Packvio, Riyadh."
+      "title": "Packvio | Wholesale Food Packaging Supplier in Riyadh, Saudi Arabia",
+      "description": "Wholesale food packaging in Saudi Arabia: paper and plastic cups, soup cups and lids, kraft bowls and boxes, lunch boxes, trays, bags, straws and cutlery — supplied by the carton, with custom logo printing. Request a quote from Packvio, Riyadh."
     },
     "hero": {
       "eyebrow": "Packaging and more · Riyadh",
@@ -233,7 +232,7 @@
     },
     "company": {
       "heading": "The company",
-      "body": "Packvio is a trading name of Smavio Limited Trading Co., registered in Riyadh, Kingdom of Saudi Arabia. Orders, invoicing and VAT are handled under that entity, and our online store is operated on Salla.",
+      "body": "Packvio is a trading name of Smavio Limited Trading Co., registered in Riyadh, Kingdom of Saudi Arabia. Orders, invoicing and VAT are handled under that entity.",
       "registered": "Smavio Limited Trading Co. — Riyadh, Saudi Arabia"
     }
   },
@@ -324,13 +323,13 @@
     },
     "map": {
       "frameTitle": "Map showing Packvio's location in Riyadh",
-      "addressLine": "Riyadh, Kingdom of Saudi Arabia",
-      "directions": "Get directions",
-      "pendingNote": "The pin marks central Riyadh. Our exact street address is being confirmed — message us on WhatsApp for directions or to arrange a collection."
+      "addressLine": "Packvio office — Riyadh, Kingdom of Saudi Arabia",
+      "directions": "Open in Google Maps"
     },
     "whatsappLabel": "Contact us on WhatsApp",
     "whatsappCta": "Message on WhatsApp",
-    "whatsappPrefill": "Hello Packvio — I'd like a quote for packaging."
+    "whatsappPrefill": "Hello Packvio — I'd like a quote for packaging.",
+    "socialHeading": "Follow us"
   },
   "quote": {
     "title": "Request a Quote",
@@ -415,7 +414,8 @@
     "contactHeading": "Contact",
     "address": "Riyadh, Saudi Arabia",
     "vision2030Alt": "Saudi Vision 2030",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "followUs": "Follow Packvio"
   },
   "notFound": {
     "heading": "We couldn't find that page",

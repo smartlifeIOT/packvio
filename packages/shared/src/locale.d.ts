@@ -8,8 +8,7 @@ export declare const DEFAULT_LOCALE: Locale;
 /** Text direction implied by a locale — drives <html dir> and logical CSS. */
 export type Direction = 'rtl' | 'ltr';
 /**
- * A string that exists in both locales. Every user-facing field mirrored from
- * Salla is stored this way so the web app can render either direction.
+ * A string that exists in both locales. Every user-facing field is stored this way so the web app can render either direction.
  */
 export interface LocalizedText {
     ar: string;

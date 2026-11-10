@@ -78,11 +78,37 @@ case "$GATE" in
     printf '# STAGING_GATE=off - no Basic Auth. The site is publicly reachable.\n' \
       > /etc/nginx/gate/gate.conf
     echo "[entrypoint] staging gate: OFF - this site is PUBLIC to anyone with the URL"
-    echo "[entrypoint]   (X-Robots-Tag noindex and robots.txt Disallow are still set,"
-    echo "[entrypoint]    so it stays out of search engines - those are separate.)"
+    echo "[entrypoint]   (search engines are a separate switch: SEARCH_INDEXING)"
     ;;
   *)
     echo "[entrypoint] PACKVIO_STAGING_GATE='$GATE' is not valid. Use 'on' or 'off'." >&2
+    exit 1
+    ;;
+esac
+
+# --- search indexing ----------------------------------------------------------
+# Two generated fragments, both in the writable gate/ directory:
+#   indexing.conf — the X-Robots-Tag header (included by security-headers.conf)
+#   robots.conf   — the body of /robots.txt
+INDEXING="${PACKVIO_SEARCH_INDEXING:-off}"
+case "$INDEXING" in
+  on)
+    printf '# SEARCH_INDEXING=on - no X-Robots-Tag; search engines may index the site.\n' \
+      > /etc/nginx/gate/indexing.conf
+    # $host is nginx's variable, resolved per request — so the Sitemap line
+    # always names the domain the crawler actually asked for.
+    printf 'return 200 "User-agent: *\\nAllow: /\\nDisallow: /api/\\nDisallow: /_next/\\nDisallow: /*?*sort=\\n\\nSitemap: https://$host/sitemap.xml\\n";\n' \
+      > /etc/nginx/gate/robots.conf
+    echo "[entrypoint] search indexing: ON (robots.txt allows crawling, sitemap advertised)"
+    ;;
+  off)
+    printf 'add_header X-Robots-Tag "noindex, nofollow, noarchive, nosnippet" always;\n' \
+      > /etc/nginx/gate/indexing.conf
+    printf 'return 200 "User-agent: *\\nDisallow: /\\n";\n' > /etc/nginx/gate/robots.conf
+    echo "[entrypoint] search indexing: OFF (noindex header + robots.txt Disallow)"
+    ;;
+  *)
+    echo "[entrypoint] PACKVIO_SEARCH_INDEXING='$INDEXING' is not valid. Use 'on' or 'off'." >&2
     exit 1
     ;;
 esac

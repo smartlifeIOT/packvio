@@ -10,7 +10,7 @@
 # a seed that did nothing. A rebuild hid it: a new container has an empty cache,
 # so the problem only showed up when data changed on its own.
 #
-# This calls the same /api/revalidate endpoint the Salla sync uses, with the
+# This calls the site's /api/revalidate endpoint with the
 # `catalog` tag, which every catalog fetch carries — so one call purges the lot.
 source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 load_config

@@ -44,7 +44,6 @@ function buildProduct(overrides: Partial<Product> = {}): Product {
     status: ProductStatus.Active,
     fulfilmentMode: FulfilmentMode.Both,
     isFeatured: false,
-    sallaUrl: null,
     metaTitleAr: null,
     metaTitleEn: null,
     metaDescriptionAr: null,

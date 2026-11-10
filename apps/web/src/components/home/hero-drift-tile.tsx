@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { canOptimizeImage } from '@/lib/image-src';
 import type { CatalogProductSummaryDto } from '@packvio/shared';
 import { categoryIcon } from '@/components/icons/categories';
 import { cx } from '@/lib/cx';
@@ -57,7 +56,6 @@ export function HeroDriftTile({ product, iconSize, className }: HeroDriftTilePro
         {image ? (
           <Image
             src={image.url}
-          unoptimized={!canOptimizeImage(image.url)}
             alt=""
             fill
             sizes="(min-width: 1024px) 15vw, (min-width: 640px) 22vw, 45vw"

@@ -19,6 +19,7 @@ import {
   type ListingTarget,
   type RawSearchParams,
 } from '@/lib/product-query';
+import { staticAlternates } from '@/lib/seo';
 
 /** This page's own route, for every filter, chip, sort and page link. */
 const LISTING_TARGET: ListingTarget = { pathname: '/products' };
@@ -67,6 +68,7 @@ export async function generateMetadata({
   return {
     title: t('title'),
     description: t('intro'),
+    alternates: staticAlternates(locale, '/products'),
     // Filtered permutations are near-duplicates of the listing; only the clean
     // URL should compete for it.
     ...(hasActiveFilters(listing) || listing.page > 1

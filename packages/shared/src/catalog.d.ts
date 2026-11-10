@@ -117,8 +117,6 @@ export interface CatalogProductDetailDto extends CatalogProductSummaryDto {
     slugMatchedOtherLocale: boolean;
     stockQuantity: number | null;
     isStockUnlimited: boolean;
-    /** Salla storefront URL, for the cart handoff. Null until Salla sync runs. */
-    sallaUrl: string | null;
     metaTitle: string | null;
     metaDescription: string | null;
     images: CatalogImageDto[];

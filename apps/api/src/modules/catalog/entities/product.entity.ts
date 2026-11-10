@@ -22,7 +22,7 @@ export enum ProductStatus {
 
 /**
  * Which conversion path a product offers on the site: the secondary cart
- * handoff to Salla, the primary RFQ, or both.
+ * order (via WhatsApp), the primary RFQ, or both.
  */
 export enum FulfilmentMode {
   Cart = 'cart',
@@ -31,29 +31,15 @@ export enum FulfilmentMode {
 }
 
 /**
- * A catalog product.
- *
- * Sync ownership:
- *   - MIRRORED (sync may overwrite): nameEn/nameAr, short/long descriptions,
- *     size, material, caseQuantity, price, salePrice, currency, stockQuantity,
- *     isStockUnlimited, status, sallaUrl, salla* columns.
- *   - LOCAL-ONLY (sync must NEVER write): slugEn, slugAr, fulfilmentMode,
- *     isFeatured, sortOrder and every meta* column.
- *
- * `code` is the join key: Salla's product SKU field carries the same value, so
- * the sync can match a Salla product to a seeded row before any sallaId exists.
+ * A catalog product. Every row comes from docs/catalog.json via the seed;
+ * `code` (the SKU) is its identity across seeds.
  */
 @Entity({ name: 'products' })
 export class Product {
   @PrimaryGeneratedColumn('uuid', { name: 'id' })
   id!: string;
 
-  /** Salla's product id. bigint is exposed as string to avoid 2^53 truncation. */
-  @Index('uq_products_salla_id', { unique: true })
-  @Column({ name: 'salla_id', type: 'bigint', nullable: true })
-  sallaId!: string | null;
-
-  /** SKU, e.g. "PCS/08". Stable identity across the seed and Salla. */
+  /** SKU, e.g. "PCS/08". Stable identity across seeds. */
   @Index('uq_products_code', { unique: true })
   @Column({ name: 'code', type: 'varchar', length: 64 })
   code!: string;
@@ -162,7 +148,7 @@ export class Product {
 
   /**
    * Drives whether the product page shows Add to Cart, Request Quote, or both.
-   * LOCAL-ONLY — Salla has no concept of an RFQ, so sync must never write this.
+   * Owned by docs/catalog.json.
    */
   @Index('idx_products_fulfilment_mode')
   @Column({
@@ -181,7 +167,7 @@ export class Product {
   /**
    * Whether the buyer's logo can be printed on this product.
    *
-   * LOCAL-ONLY — Salla does not model it. It is a real commercial attribute
+   * Owned by docs/catalog.json. It is a real commercial attribute
    * (a sealing machine cannot be logo-printed; a paper cup is the whole point),
    * and the listing exposes it as a filter, so it has to be a column rather
    * than something inferred at read time from the category name.
@@ -206,12 +192,10 @@ export class Product {
   // right for ordering and wrong for browsing: the Leaf Spoon filled seven
   // cards in a grid with seven near-identical tiles. These columns let the
   // LISTING collapse a family to one card while every SKU keeps its own code,
-  // slug, product page and Salla identity.
+  // slug and product page.
   //
   // All of them are LOCAL-ONLY and derived from docs/catalog.json by
-  // `scripts/derive-variants.mjs`. They are deliberately absent from
-  // WRITABLE_PRODUCT_COLUMNS: Salla has no concept of this grouping, and a
-  // field that merely looked like one would silently re-shuffle the grid.
+  // `scripts/derive-variants.mjs` (and hand-edited for tableware).
 
   /**
    * Family key, e.g. "spoons-leaf-spoon-11-5-cm". NULL for the 41 products
@@ -254,10 +238,6 @@ export class Product {
   @Column({ name: 'variant_swatch', type: 'varchar', length: 9, nullable: true })
   variantSwatch!: string | null;
 
-  /** Product page on the Salla storefront, used for the cart handoff. */
-  @Column({ name: 'salla_url', type: 'text', nullable: true })
-  sallaUrl!: string | null;
-
   // --- SEO overrides, LOCAL-ONLY ---
 
   @Column({ name: 'meta_title_en', type: 'varchar', length: 200, nullable: true })
@@ -272,18 +252,9 @@ export class Product {
   @Column({ name: 'meta_description_ar', type: 'varchar', length: 320, nullable: true })
   metaDescriptionAr!: string | null;
 
-  // --- reconciliation bookkeeping ---
-
-  @Column({ name: 'salla_updated_at', type: 'timestamptz', nullable: true })
-  sallaUpdatedAt!: Date | null;
-
-  @Index('idx_products_synced_at')
-  @Column({ name: 'synced_at', type: 'timestamptz', nullable: true })
-  syncedAt!: Date | null;
-
   /**
-   * Soft delete: a product pulled from Salla must stay resolvable, because
-   * historical quote requests still point at it.
+   * Soft delete: a product removed from the catalogue must stay resolvable,
+   * because historical quote requests still point at it.
    */
   @Index('idx_products_deleted_at')
   @DeleteDateColumn({ name: 'deleted_at', type: 'timestamptz', nullable: true })

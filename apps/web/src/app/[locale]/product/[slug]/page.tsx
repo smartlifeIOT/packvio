@@ -54,8 +54,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 /**
  * Product detail.
  *
- * NO PRICE ANYWHERE, on purpose. Price is null on every row until the Salla
- * sync runs, and this is a quote-first wholesale catalog: the specs and the
+ * NO PRICE ANYWHERE, on purpose. Price is null on every row, and this is a quote-first wholesale catalog: the specs and the
  * case quantity carry the commercial detail, and the page's job is to get the
  * reader into the RFQ.
  */
@@ -173,7 +172,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 slug={product.slug}
                 caseQuantity={product.caseQuantity}
                 fulfilmentMode={product.fulfilmentMode}
-                sallaUrl={product.sallaUrl}
               />
             </div>
           </div>
@@ -191,7 +189,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
           {/*
             Price tiers: the whole block disappears when there are none, which
-            today is always — no row has tiers until the Salla sync fills them.
+            today is always — no row has tiers yet.
             An empty "Pricing" heading over nothing reads as a broken page, and
             inventing a placeholder price would be worse than either.
           */}
@@ -262,7 +260,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
  * Product structured data, WITHOUT `offers`.
  *
  * schema.org/Product allows a product with no offer, and that is the honest
- * description of every row here: price is null until the Salla sync runs.
+ * description of every row here: price is null today.
  * Emitting an `offers` block with a zero, a placeholder, or an invented
  * currency amount is fabricated pricing in a machine-readable format — Google
  * Merchant treats mismatched or fake price data as a policy violation and can

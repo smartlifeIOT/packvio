@@ -31,3 +31,35 @@ export const CONTACT = {
   email: 'nedhal@smavioltd.com',
   emailHref: 'mailto:nedhal@smavioltd.com',
 } as const;
+
+/**
+ * Packvio's social accounts — one place, used by the footer, the contact page
+ * and the Organization structured data (`sameAs`), so a handle changed here
+ * changes everywhere search engines and AI assistants read it.
+ */
+export const SOCIAL_LINKS = [
+  { network: 'instagram', label: 'Instagram', href: 'https://www.instagram.com/packvio.sa' },
+  { network: 'tiktok', label: 'TikTok', href: 'https://www.tiktok.com/@packvio.sa' },
+  { network: 'x', label: 'X', href: 'https://x.com/packvio.sa' },
+  { network: 'snapchat', label: 'Snapchat', href: 'https://www.snapchat.com/add/packvio.sa' },
+  { network: 'facebook', label: 'Facebook', href: 'https://www.facebook.com/packvio.sa' },
+] as const;
+
+export type SocialNetwork = (typeof SOCIAL_LINKS)[number]['network'];
+
+/**
+ * The office location.
+ *
+ * `mapsUrl` is Packvio's own Google Maps share link, so "Open in Google Maps"
+ * lands on the exact pin. `lat`/`lng` drive the embedded map and the GeoCoordinates
+ * in the structured data; until they are filled in from that pin, the map shows
+ * Riyadh and the structured data omits coordinates rather than inventing them.
+ * To fill them: open the link, press and hold the red pin, copy the two numbers.
+ */
+export const LOCATION = {
+  mapsUrl: 'https://maps.app.goo.gl/aeqbm2NfD7TU2Xck7',
+  lat: null as number | null,
+  lng: null as number | null,
+  city: { en: 'Riyadh', ar: 'الرياض' },
+  country: 'SA',
+} as const;

@@ -11,6 +11,7 @@ import { UtmCapture } from '@/components/quote/utm-capture';
 import { isLocale, localeDirections, routing } from '@/i18n/routing';
 import { getCategories } from '@/lib/api';
 import { resolveAlternateHref } from '@/lib/locale-alternates';
+import { jsonLdHtml, OG_LOCALE, organizationJsonLd, SEO_KEYWORDS, SITE_URL } from '@/lib/seo';
 import { fontVariables } from '../fonts';
 import '../globals.css';
 
@@ -61,12 +62,39 @@ export async function generateMetadata({
 
   const t = await getTranslations({ locale, namespace: 'home.meta' });
 
+  const otherLocale = locale === 'ar' ? 'en' : 'ar';
+
   return {
     title: { default: t('title'), template: `%s · ${t('siteName')}` },
     description: t('description'),
-    metadataBase: process.env.NEXT_PUBLIC_SITE_URL
-      ? new URL(process.env.NEXT_PUBLIC_SITE_URL)
-      : undefined,
+    applicationName: t('siteName'),
+    keywords: SEO_KEYWORDS[locale],
+    category: 'business',
+    metadataBase: new URL(SITE_URL),
+    openGraph: {
+      type: 'website',
+      siteName: t('siteName'),
+      title: t('title'),
+      description: t('description'),
+      locale: OG_LOCALE[locale],
+      alternateLocale: [OG_LOCALE[otherLocale]],
+      url: `/${locale}`,
+      images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: t('title') }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t('title'),
+      description: t('description'),
+      images: ['/og-image.jpg'],
+    },
+    // Search Console / Bing verification: set these env vars to the codes the
+    // two consoles give you; nothing is emitted while they are empty.
+    verification: {
+      google: process.env.GOOGLE_SITE_VERIFICATION || undefined,
+      other: process.env.BING_SITE_VERIFICATION
+        ? { 'msvalidate.01': process.env.BING_SITE_VERIFICATION }
+        : undefined,
+    },
   };
 }
 
@@ -87,6 +115,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
    */
   const categories = await getCategories(locale);
   const t = await getTranslations({ locale, namespace: 'common' });
+  const tMeta = await getTranslations({ locale, namespace: 'home.meta' });
 
   /**
    * Where the language switcher points, resolved HERE rather than in a client
@@ -100,6 +129,14 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   return (
     <html lang={locale} dir={localeDirections[locale]} className={fontVariables}>
       <body className="flex min-h-screen flex-col">
+        {/* Who Packvio is, on every page — read by search engines for local
+            results and by AI assistants answering "packaging supplier in Riyadh". */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={jsonLdHtml(
+            organizationJsonLd(locale, { name: tMeta('siteName'), description: tMeta('description') }),
+          )}
+        />
         {/* v4: the provider inherits locale + messages from the server context. */}
         <NextIntlClientProvider>
           <QuoteBasketProvider>

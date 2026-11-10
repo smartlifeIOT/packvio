@@ -416,7 +416,7 @@ export class ProductQueryService {
      * Siblings are loaded even though the detail page is per-SKU: the page has
      * to offer the other colours, and each chip links to that sibling's OWN
      * slug. Grouping is presentation over unchanged rows — every variant keeps
-     * its page, because the slugs are public URLs and `code` is what the Salla
+     * its page, because the slugs are public URLs and `code` is the SKU quotes
      * sync joins on.
      */
     const [related, members] = await Promise.all([
@@ -612,7 +612,7 @@ function sortColumns(sort: CatalogProductSort, locale: Locale): string[] {
     case 'newest':
       return ['p.created_at DESC'];
     case 'price_asc':
-      // NULLS LAST because price is null until the Salla sync fills it, and a
+      // NULLS LAST because price is null until one is set, and a
       // wall of priceless products is not the top of a cheapest-first list.
       return ['p.price ASC NULLS LAST'];
     case 'price_desc':

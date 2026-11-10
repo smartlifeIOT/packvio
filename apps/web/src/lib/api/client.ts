@@ -17,7 +17,7 @@ export const CATALOG_REVALIDATE_SECONDS = 300;
 /**
  * Cache tags.
  *
- * Nest will call Next's on-demand revalidation after a Salla sync writes, so the
+ * `deploy:purge` calls Next's on-demand revalidation after a seed, so the
  * tags have to be things the API can name from its side without knowing which
  * pages exist. `catalog` is the blunt instrument for a full reconcile;
  * `product:<slug>` and `category:<slug>` let a single webhook invalidate exactly

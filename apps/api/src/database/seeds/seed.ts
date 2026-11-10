@@ -18,14 +18,15 @@ import {
   loadProductImageSource,
   syncSeededProductImages,
 } from './product-images';
+import { autoPrune } from './prune';
 import { planProductSlugs, slugSuffixFromCode, slugifyAr, slugifyEn } from './slugify';
 
 /**
  * Seeds the catalog taxonomy and SKUs from docs/catalog.json.
  *
  * Idempotent: categories upsert on slugEn, products on code. Re-running only
- * refreshes the columns the printed catalog owns. It never writes price,
- * stockQuantity, sallaId or sallaUrl — those stay NULL for Salla to fill — and
+ * refreshes the columns the printed catalog owns. It never writes price or
+ * stockQuantity — those stay NULL until real prices exist — and
  * never touches editorial columns (meta*, descriptions) after the first insert,
  * so a re-seed cannot clobber copy written in the admin. The one exception is
  * `isFeatured`, which catalog.json owns outright — see below.
@@ -342,7 +343,7 @@ async function upsertProducts(
       });
     }
 
-    // price, salePrice, stockQuantity, sallaId, sallaUrl: deliberately untouched.
+    // price, salePrice, stockQuantity: deliberately untouched.
 
     result.set(item.code, await repository.save(product));
     if (found) summary.products.updated += 1;
@@ -508,6 +509,20 @@ async function run(): Promise<void> {
         summary.productsWithRepresentative = counts.productsWithRepresentative;
       }
     });
+
+    // Products removed from catalog.json and categories left empty disappear
+    // from the site on the same run — see autoPrune() for why and the guard.
+    if (process.env.SEED_PRUNE !== 'off') {
+      await connection.transaction(async (manager) => {
+        const result = await autoPrune(manager, source);
+        if (!result.blocked) {
+          console.log(
+            `Cleanup: ${result.archived} product(s) no longer in catalog.json archived, ` +
+              `${result.hidden} empty categor${result.hidden === 1 ? 'y' : 'ies'} hidden.`,
+          );
+        }
+      });
+    }
   } finally {
     await connection.destroy();
   }

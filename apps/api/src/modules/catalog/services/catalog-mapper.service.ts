@@ -321,7 +321,6 @@ export class CatalogMapperService {
       slugMatchedOtherLocale: false,
       stockQuantity: entity.stockQuantity,
       isStockUnlimited: entity.isStockUnlimited,
-      sallaUrl: entity.sallaUrl,
       metaTitle: this.pickNullable(entity.metaTitleAr, entity.metaTitleEn, locale),
       metaDescription: this.pickNullable(entity.metaDescriptionAr, entity.metaDescriptionEn, locale),
       images: this.toImages(entity.images ?? [], locale),

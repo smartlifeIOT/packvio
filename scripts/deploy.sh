@@ -188,7 +188,7 @@ echo "   ${DISK}MB free on the deploy volume"
 # The whole set is reported at once, so one pass through .env fixes all of it.
 say "Checking $DEPLOY/.env"
 REQUIRED="PACKVIO_DOMAIN SITE_URL POSTGRES_USER POSTGRES_PASSWORD POSTGRES_DB
-          SALLA_TOKEN_ENC_KEY QUOTE_IP_HASH_SALT"
+          QUOTE_IP_HASH_SALT"
 MISSING=""
 for key in $REQUIRED; do
   eval "v=\${$key:-}"
@@ -400,7 +400,7 @@ STAGING_GATE="${STAGING_GATE:-on}"
 HTPASSWD="$DEPLOY/deploy/nginx/htpasswd"
 if [ "$STAGING_GATE" = "off" ]; then
   echo "   ${Y}!${N} STAGING_GATE=off — the site will be reachable by anyone with the URL."
-  echo "     (noindex and robots.txt Disallow are separate and still apply.)"
+  echo "     (search engines are a separate switch: SEARCH_INDEXING=on in .env.)"
   [ -e "$HTPASSWD" ] || : > "$HTPASSWD"
 elif [ -s "$HTPASSWD" ]; then
   :

@@ -4,20 +4,20 @@
 
 Bilingual (ar default / en) wholesale food & beverage packaging website. Brand: Packvio, owned by
 Smavio Limited Trading Co., Riyadh, KSA. B2B wholesale: case quantities of 200–6000 units, plus
-custom logo printing. The primary conversion is a QUOTE REQUEST (RFQ), not the cart. Cart checkout
-is secondary and hands off to Salla.
+custom logo printing. The primary conversion is a QUOTE REQUEST (RFQ); the product page's order
+button opens WhatsApp. There is no cart and no external store (Salla was removed Nov 10 2026).
 
 ## Architecture
 
 Monorepo, npm workspaces:
 
-- apps/api — NestJS 11 + TypeORM + PostgreSQL. Owns Salla integration and is the site's data source.
-- apps/web — Next.js 15 App Router + next-intl + Tailwind v4. Reads from apps/api. No direct Salla calls.
+- apps/api — NestJS 11 + TypeORM + PostgreSQL. The site's data source; catalog comes from the seed.
+- apps/web — Next.js 15 App Router + next-intl + Tailwind v4. Reads from apps/api.
 - packages/shared — shared TypeScript types (DTOs) consumed by both.
 
-Salla = merchant back office (products, payments, ZATCA invoicing, shipping).
-Nest mirrors Salla's catalog into Postgres via webhooks + a nightly reconcile job.
-Next renders from Nest with ISR; Nest triggers on-demand revalidation after writes.
+docs/catalog.json + docs/product-images.json → seed → Postgres → Nest catalog API → Next (ISR).
+NOTE: older entries below that describe the Salla sync, webhooks, tokens and `salla_*` columns
+are HISTORICAL — that code, those tables and columns were removed on Nov 10 2026.
 
 ## Non-negotiable rules
 
@@ -1418,3 +1418,33 @@ deploy: abc1234 → def5678` or a loud SAME COMMIT warning. It does NOT
      `**.salla.sa` / `**.salla.network` were added to remotePatterns and CSP.
   5. Chopsticks, face masks and straws got the photos Packvio supplied (straws
      as a caveated representative, plus the straws subcategory tile).
+
+- **Nov 10 2026: Salla removed, SEO/GEO, socials, office map.**
+  1. **Salla is gone entirely**: `modules/sync`, webhooks, tokens, `SALLA_*` /
+     `ADMIN_API_KEY` env, the `salla_*` / `synced_at` columns and the
+     `salla_events` / `salla_tokens` / `sync_runs` tables. Migration
+     `1787400000000-RemoveSallaIntegration` first archives every Salla-synced
+     product (soft delete + `archived-salla-` slug) and hides Salla-created
+     categories, then drops the schema. The order button is WhatsApp only.
+  2. **The seed now prunes automatically** (`autoPrune` in `seeds/prune.ts`):
+     products no longer in catalog.json are archived and empty non-catalog
+     categories hidden, on every seed, behind the same 25% blast-radius guard.
+     `SEED_PRUNE=off` skips it. `deploy:prune` still exists for dry runs.
+  3. Catalog: soup cups AR "علب / زبديات الشوربة", kraft bowls AR
+     "علب / زبديات كرافت ورقية"; cake servers deleted (210 products). Sporks use
+     `cut-spork-black-card.webp` — ILLUSTRATIVE, made from Packvio's black
+     spoon photo (caveated representative), until a real spork photo exists.
+  4. **Socials** in `nav-links.ts` `SOCIAL_LINKS` (footer + contact page) and in
+     the Organization JSON-LD `sameAs`. **Office** in `LOCATION`: the share link
+     drives the "Open in Google Maps" button; `lat`/`lng` are null until the
+     owner supplies the pin — the keyless Google embed then shows Riyadh, and
+     JSON-LD omits `geo` rather than inventing it.
+  5. **SEO/GEO** (`lib/seo.ts`): keywords per locale, canonical + hreflang
+     (x-default = ar) on static pages, OG/Twitter with `/og-image.jpg`,
+     Organization + WholesaleStore + WebSite JSON-LD in the locale layout,
+     `/sitemap.xml` (every category and SKU, both locales), `/llms.txt`.
+     Optional `GOOGLE_SITE_VERIFICATION` / `BING_SITE_VERIFICATION` (web env).
+  6. **Search indexing is its own switch**: `SEARCH_INDEXING=on|off` (default
+     off) → nginx entrypoint writes `gate/indexing.conf` (X-Robots-Tag) and
+     `gate/robots.conf` (robots.txt; `on` advertises the sitemap). Going
+     public = `STAGING_GATE=off` + `SEARCH_INDEXING=on`.

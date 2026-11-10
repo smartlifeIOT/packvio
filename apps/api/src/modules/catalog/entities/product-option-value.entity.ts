@@ -11,7 +11,7 @@ import {
 import { numericTransformer } from '../../../database/transformers/numeric.transformer';
 import { ProductOption } from './product-option.entity';
 
-/** One choice inside a ProductOption. Mirrored from Salla. */
+/** One choice inside a ProductOption. */
 @Entity({ name: 'product_option_values' })
 export class ProductOptionValue {
   @PrimaryGeneratedColumn('uuid', { name: 'id' })
@@ -24,10 +24,6 @@ export class ProductOptionValue {
   @ManyToOne(() => ProductOption, (option) => option.values, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'option_id' })
   option!: ProductOption;
-
-  @Index('uq_product_option_values_salla_id', { unique: true })
-  @Column({ name: 'salla_id', type: 'bigint', nullable: true })
-  sallaId!: string | null;
 
   @Column({ name: 'value_en', type: 'varchar', length: 250 })
   valueEn!: string;

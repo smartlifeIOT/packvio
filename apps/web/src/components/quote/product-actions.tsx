@@ -1,7 +1,7 @@
 'use client';
 
 import { useLocale, useTranslations } from 'next-intl';
-import { ArrowUpRight, Check, FileText, ListPlus, MessageCircle } from 'lucide-react';
+import { Check, FileText, ListPlus, MessageCircle } from 'lucide-react';
 import { useState } from 'react';
 import type { CatalogFulfilmentMode, Locale } from '@packvio/shared';
 import { Button, Icon } from '@/components/ui';
@@ -18,8 +18,6 @@ export type ProductActionsProps = {
   slug: string;
   caseQuantity: number | null;
   fulfilmentMode: CatalogFulfilmentMode;
-  /** Salla storefront URL. Null until the Salla sync fills it. */
-  sallaUrl: string | null;
 };
 
 /**
@@ -35,25 +33,10 @@ export type ProductActionsProps = {
  *                                buy, where a quote round-trip is friction, not
  *                                service.
  *
- * The second one used to be invisible. It was gated on `sallaUrl`, which is
- * NULL on every row until the Salla catalogue is uploaded and the sync runs —
- * so in practice no product on the site offered any way to just place an order,
- * and a buyer who already knew their SKU had nowhere to go but a form.
- *
- * So "order now" is now always offered for a product that can be ordered
- * (`fulfilmentMode` 'cart' or 'both' — 210 of 213), and the DESTINATION
- * upgrades on its own:
- *
- *   sallaUrl present → the Salla storefront. Card, Mada, Apple Pay, Tabby,
- *                      ZATCA invoice: a real checkout, handled by the back
- *                      office that is built for it.
- *   sallaUrl null    → WhatsApp, pre-filled with the product, its code and the
- *                      exact quantity. In Saudi B2B this is not a downgrade —
- *                      it is how a large share of reorders are actually placed,
- *                      and it works today rather than after the store goes live.
- *
- * Nothing needs changing when the sync lands: the row gains a `sallaUrl` and
- * the same button starts pointing at checkout instead.
+ * "Order now" opens WhatsApp, pre-filled with the product, its code and the
+ * exact quantity — in Saudi B2B that is how a large share of reorders are
+ * placed. It is offered for every product that can be ordered
+ * (`fulfilmentMode` 'cart' or 'both').
  */
 export function ProductActions({
   code,
@@ -61,7 +44,6 @@ export function ProductActions({
   slug,
   caseQuantity,
   fulfilmentMode,
-  sallaUrl,
 }: ProductActionsProps) {
   const t = useTranslations('product');
   const rawLocale = useLocale();
@@ -78,7 +60,7 @@ export function ProductActions({
   const units = caseQuantity ? caseQuantity * cases : null;
 
   /**
-   * The WhatsApp fallback. Everything the merchant needs to price and pick the
+   * The WhatsApp order. Everything the merchant needs to price and pick the
    * order is in the message itself — code, name, cases and total units — so the
    * first reply can be a confirmation rather than three questions.
    *
@@ -95,8 +77,6 @@ export function ProductActions({
     }),
   )}`;
 
-  const orderHref = sallaUrl ?? whatsappHref;
-  const orderLabel = sallaUrl ? t('buyOnline') : t('orderOnWhatsapp');
 
   const addToBasket = () => {
     basket.add({ code, name, slug, caseQuantity, quantity: cases });
@@ -138,15 +118,14 @@ export function ProductActions({
         {canOrder && (
           <Button
             as="external"
-            href={orderHref}
+            href={whatsappHref}
             target="_blank"
             size="lg"
             block
             variant="secondary"
-            icon={<Icon icon={sallaUrl ? ArrowUpRight : MessageCircle} size={20} />}
-            iconEnd={sallaUrl ? <Icon icon={ArrowUpRight} size={18} /> : undefined}
+            icon={<Icon icon={MessageCircle} size={20} />}
           >
-            {orderLabel}
+            {t('orderOnWhatsapp')}
           </Button>
         )}
 

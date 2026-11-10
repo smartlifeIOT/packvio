@@ -2,7 +2,7 @@
   "name": "@packvio/api",
   "version": "0.1.0",
   "private": true,
-  "description": "Packvio API — NestJS + TypeORM + PostgreSQL. Owns the Salla integration.",
+  "description": "Packvio API — NestJS + TypeORM + PostgreSQL. Catalogue and quote requests.",
   "scripts": {
     "build": "nest build -p tsconfig.build.json",
     "start": "nest start -p tsconfig.build.json",

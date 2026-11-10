@@ -16,7 +16,7 @@ import { CategoryQueryService } from './services/category-query.service';
 import { ProductQueryService } from './services/product-query.service';
 
 /**
- * The public read API. No writes, no Salla — the catalog mirror in Postgres is
+ * The public read API. No writes — the catalog in Postgres is
  * the only source, and everything here is cacheable by construction.
  */
 @Module({

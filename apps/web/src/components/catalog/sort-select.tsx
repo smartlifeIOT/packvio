@@ -30,7 +30,7 @@ export type SortSelectProps = {
  * pasted `?sort=newest` shows "Newest" here without any state to synchronise.
  *
  * Prices are absent from the options on purpose. The API supports `price_asc`
- * and `price_desc`, but every row's price is null until the Salla sync runs, so
+ * and `price_desc`, but every row's price is null today, so
  * both would return the catalog in an order the reader cannot see the reason
  * for. They come back when prices do.
  */

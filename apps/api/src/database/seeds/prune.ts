@@ -45,8 +45,8 @@ import { planProductSlugs, slugSuffixFromCode, type SluggableProduct } from './s
  * still held by a live product, is left alone.
  *
  * DRY RUN BY DEFAULT. It prints the full plan and writes nothing unless given
- * `--apply` (or PRUNE_APPLY=1). Same convention as the Salla reconcile: a
- * destructive data operation should have to be asked for twice.
+ * `--apply` (or PRUNE_APPLY=1): a destructive data operation should have to
+ * be asked for twice.
  *
  *   node dist/database/seeds/prune.js            # report only
  *   node dist/database/seeds/prune.js --apply    # do it
@@ -99,7 +99,6 @@ type StaleCategory = {
   id: string;
   slugEn: string;
   nameEn: string;
-  fromSalla: boolean;
 };
 
 type Reclaim = {
@@ -227,7 +226,7 @@ async function plan(
  *     upserts on slug, so it CREATED a second, empty category and left the old
  *     one (with every product) in place — "Shakers" and "Shakers or noodles"
  *     side by side, one of them showing 0.
- *   - categories created by the Salla sync from a DEMO store (dresses, skirts…),
+ *   - categories created by the former Salla sync from a DEMO store (dresses…),
  *     whose sample products are orphans by the same rule as any other.
  *
  * Hidden, not deleted: a category row is cheap, its URL may be bookmarked, and
@@ -242,7 +241,7 @@ async function planCategories(
 ): Promise<StaleCategory[]> {
   const categories = await manager.getRepository(Category).find({
     where: { isActive: true },
-    select: ['id', 'slugEn', 'nameEn', 'parentId', 'sallaId'],
+    select: ['id', 'slugEn', 'nameEn', 'parentId'],
   });
   const liveIds = (
     await manager.getRepository(Product).find({ where: { deletedAt: IsNull() }, select: ['id'] })
@@ -275,7 +274,6 @@ async function planCategories(
       id: category.id,
       slugEn: category.slugEn,
       nameEn: category.nameEn,
-      fromSalla: category.sallaId !== null,
     }));
 }
 
@@ -318,7 +316,7 @@ function reportCategories(stale: StaleCategory[]): void {
         'hold no live product — to be hidden (is_active = false):',
     );
     for (const category of stale) {
-      console.log(`  - ${category.slugEn}  ${category.nameEn}${category.fromSalla ? '  (from Salla)' : ''}`);
+      console.log(`  - ${category.slugEn}  ${category.nameEn}`);
     }
   }
   console.log('');
@@ -428,6 +426,42 @@ async function run(): Promise<void> {
   } finally {
     await connection.destroy();
   }
+}
+
+/**
+ * The prune, as the seed runs it after every seed (`SEED_PRUNE=off` to skip).
+ *
+ * Why automatically: removing a product or renaming a category's slug in
+ * docs/catalog.json used to need a second, manual `deploy:prune -- --apply`,
+ * and when it was forgotten the site kept showing the old product and an empty
+ * duplicate category. The blast-radius guard still applies — if the catalogue
+ * would lose more than a quarter of its products this does NOTHING and says
+ * so, because that is a stale or truncated catalog.json, not a cleanup.
+ */
+export async function autoPrune(
+  manager: EntityManager,
+  source: { products: readonly SluggableProduct[]; categories: readonly { slug: string }[] },
+): Promise<{ archived: number; hidden: number; blocked: boolean }> {
+  const { orphans, reclaims } = await plan(manager, source.products);
+  const stale = await planCategories(
+    manager,
+    new Set(source.categories.map((category) => category.slug)),
+    new Set(orphans.map((orphan) => orphan.id)),
+  );
+  const live = await manager.getRepository(Product).count();
+  if (pruneExceedsBlastRadius(orphans.length, live)) {
+    console.warn('');
+    console.warn(
+      `  !! Auto-prune SKIPPED: ${orphans.length} of ${live} products are missing from catalog.json.`,
+    );
+    console.warn('     That is too many to be a cleanup. Check docs/catalog.json, then run');
+    console.warn('     `npm run deploy:prune` to see the list.');
+    console.warn('');
+    return { archived: 0, hidden: 0, blocked: true };
+  }
+  await apply(manager, orphans, reclaims);
+  await applyCategories(manager, stale);
+  return { archived: orphans.length, hidden: stale.length, blocked: false };
 }
 
 export type { Orphan, Reclaim, StaleCategory };

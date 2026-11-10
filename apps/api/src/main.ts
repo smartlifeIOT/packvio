@@ -51,14 +51,6 @@ function setupSwagger(app: INestApplication, config: ConfigService): void {
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     bufferLogs: false,
-    /**
-     * Keeps the untouched request bytes on `req.rawBody` alongside the parsed
-     * `req.body`. Salla signs the exact bytes it sent, so the webhook HMAC must
-     * be computed over those bytes — re-serialising the parsed JSON produces a
-     * different byte string (key order, whitespace, unicode escaping) and the
-     * signature will never match.
-     */
-    rawBody: true,
   });
   const config = app.get(ConfigService);
 

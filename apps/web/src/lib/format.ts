@@ -6,7 +6,7 @@ import type { Locale } from '@packvio/shared';
  * NOTE THE `-u-nu-latn` ON ARABIC. Plain `ar-SA` renders digits in Arabic-Indic
  * form (١٬٠٠٠), which is correct for some Saudi contexts — government forms,
  * religious material — but is not what Saudi commercial sites use. Every major
- * KSA storefront, Salla included, shows Latin digits. It also has to sit
+ * KSA storefront shows Latin digits. It also has to sit
  * millimetres from a Latin product code ("PCS/08") and a Latin size ("8 OZ") on
  * the same card, and switching numeral systems between those three makes the
  * card read as a mistake.

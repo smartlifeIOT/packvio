@@ -16,6 +16,7 @@ import { isLocale } from '@/i18n/routing';
 import { getProducts } from '@/lib/api';
 import { cx } from '@/lib/cx';
 import { formatNumber } from '@/lib/format';
+import { staticAlternates } from '@/lib/seo';
 
 type PageProps = { params: Promise<{ locale: string }> };
 
@@ -33,7 +34,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const t = await getTranslations({ locale, namespace: 'customPrinting' });
-  return { title: t('title'), description: t('lead') };
+  return {
+    title: t('title'),
+    description: t('lead'),
+    alternates: staticAlternates(locale, '/custom-printing'),
+  };
 }
 
 /**

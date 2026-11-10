@@ -20,8 +20,7 @@ export enum QuoteRequestStatus {
 export type SiteLocale = 'ar' | 'en';
 
 /**
- * An RFQ — the site's primary conversion. Owned entirely by us; Salla has no
- * concept of a quote request, so nothing here is ever touched by the sync.
+ * An RFQ — the site's primary conversion. Owned entirely by us.
  */
 @Entity({ name: 'quote_requests' })
 export class QuoteRequest {

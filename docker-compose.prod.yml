@@ -81,8 +81,7 @@ services:
       NODE_ENV: production
       DATABASE_URL: postgres://${POSTGRES_USER:?POSTGRES_USER is required}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}@postgres:5432/${POSTGRES_DB:?POSTGRES_DB is required}
       # Joi validates the whole schema at import time even for the CLI, so the
-      # required secrets have to be present even though a migration uses neither.
-      SALLA_TOKEN_ENC_KEY: ${SALLA_TOKEN_ENC_KEY:?SALLA_TOKEN_ENC_KEY is required - generate it with openssl rand -base64 32}
+      # required secret has to be present even though a migration does not use it.
       QUOTE_IP_HASH_SALT: ${QUOTE_IP_HASH_SALT:?QUOTE_IP_HASH_SALT is required - generate it with openssl rand -base64 32}
     depends_on:
       postgres:
@@ -117,7 +116,6 @@ services:
     environment:
       NODE_ENV: production
       DATABASE_URL: postgres://${POSTGRES_USER:?POSTGRES_USER is required}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}@postgres:5432/${POSTGRES_DB:?POSTGRES_DB is required}
-      SALLA_TOKEN_ENC_KEY: ${SALLA_TOKEN_ENC_KEY:?SALLA_TOKEN_ENC_KEY is required - generate it with openssl rand -base64 32}
       QUOTE_IP_HASH_SALT: ${QUOTE_IP_HASH_SALT:?QUOTE_IP_HASH_SALT is required - generate it with openssl rand -base64 32}
     depends_on:
       postgres:
@@ -143,7 +141,6 @@ services:
     environment:
       NODE_ENV: production
       DATABASE_URL: postgres://${POSTGRES_USER:?POSTGRES_USER is required}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}@postgres:5432/${POSTGRES_DB:?POSTGRES_DB is required}
-      SALLA_TOKEN_ENC_KEY: ${SALLA_TOKEN_ENC_KEY:?SALLA_TOKEN_ENC_KEY is required - generate it with openssl rand -base64 32}
       QUOTE_IP_HASH_SALT: ${QUOTE_IP_HASH_SALT:?QUOTE_IP_HASH_SALT is required - generate it with openssl rand -base64 32}
     depends_on:
       postgres:
@@ -168,14 +165,6 @@ services:
       # might call the API cross-origin later, and costs nothing.
       WEB_ORIGIN: ${SITE_URL:?SITE_URL is required - the API rejects an empty WEB_ORIGIN/NEXT_PUBLIC_SITE_URL at boot}
       NEXT_PUBLIC_SITE_URL: ${SITE_URL:?SITE_URL is required - the API rejects an empty WEB_ORIGIN/NEXT_PUBLIC_SITE_URL at boot}
-      SALLA_CLIENT_ID: ${SALLA_CLIENT_ID-}
-      SALLA_CLIENT_SECRET: ${SALLA_CLIENT_SECRET-}
-      SALLA_WEBHOOK_SECRET: ${SALLA_WEBHOOK_SECRET-}
-      SALLA_API_BASE: ${SALLA_API_BASE:-https://api.salla.dev/admin/v2}
-      SALLA_OAUTH_TOKEN_URL: ${SALLA_OAUTH_TOKEN_URL:-https://accounts.salla.sa/oauth2/token}
-      SALLA_STORE_LOCALE: ${SALLA_STORE_LOCALE:-ar}
-      SALLA_TOKEN_ENC_KEY: ${SALLA_TOKEN_ENC_KEY:?SALLA_TOKEN_ENC_KEY is required - generate it with openssl rand -base64 32}
-      ADMIN_API_KEY: ${ADMIN_API_KEY-}
       QUOTE_IP_HASH_SALT: ${QUOTE_IP_HASH_SALT:?QUOTE_IP_HASH_SALT is required - generate it with openssl rand -base64 32}
       QUOTE_RATE_LIMIT: ${QUOTE_RATE_LIMIT:-5}
       REVALIDATE_SECRET: ${REVALIDATE_SECRET-}
@@ -231,6 +220,9 @@ services:
       # would do nothing at all.
       API_INTERNAL_URL: http://api:4000/api/v1
       REVALIDATE_SECRET: ${REVALIDATE_SECRET-}
+      # Search Console / Bing Webmaster verification codes (optional, see env.prod.example).
+      GOOGLE_SITE_VERIFICATION: ${GOOGLE_SITE_VERIFICATION-}
+      BING_SITE_VERIFICATION: ${BING_SITE_VERIFICATION-}
     depends_on:
       api:
         # service_HEALTHY, not service_started — this is the fix for the
@@ -264,6 +256,9 @@ services:
       # docker-entrypoint.sh generates /etc/nginx/gate/gate.conf from this and
       # refuses to start with the gate on and an empty password file.
       PACKVIO_STAGING_GATE: ${STAGING_GATE:-on}
+      # off (default) = noindex header + robots.txt Disallow; on = search
+      # engines may index the site and robots.txt points them at the sitemap.
+      PACKVIO_SEARCH_INDEXING: ${SEARCH_INDEXING:-off}
       # Only PACKVIO_-prefixed names are substituted into the config templates.
       # Without this filter envsubst would also eat nginx's own $host,
       # $remote_addr and $upstream_addr, producing a config full of empty
