@@ -58,8 +58,8 @@ export type SocialNetwork = (typeof SOCIAL_LINKS)[number]['network'];
  */
 export const LOCATION = {
   mapsUrl: 'https://maps.app.goo.gl/aeqbm2NfD7TU2Xck7',
-  lat: null as number | null,
-  lng: null as number | null,
+  lat: 24.814159660498632 as number | null,
+  lng: 46.79884730981973 as number | null,
   city: { en: 'Riyadh', ar: 'الرياض' },
   country: 'SA',
 } as const;
