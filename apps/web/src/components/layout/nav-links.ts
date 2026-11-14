@@ -42,7 +42,7 @@ export const SOCIAL_LINKS = [
   { network: 'tiktok', label: 'TikTok', href: 'https://www.tiktok.com/@packvio.sa' },
   { network: 'x', label: 'X', href: 'https://x.com/packviosa' },
   { network: 'snapchat', label: 'Snapchat', href: 'https://www.snapchat.com/add/packvio.sa' },
-  { network: 'facebook', label: 'Facebook', href: 'https://www.facebook.com/packviosa' },
+  { network: 'facebook', label: 'Facebook', href: 'https://www.facebook.com/people/Packviosa/61596530999405' },
 ] as const;
 
 export type SocialNetwork = (typeof SOCIAL_LINKS)[number]['network'];
