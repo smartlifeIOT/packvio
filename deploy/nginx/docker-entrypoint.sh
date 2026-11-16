@@ -97,7 +97,7 @@ case "$INDEXING" in
       > /etc/nginx/gate/indexing.conf
     # $host is nginx's variable, resolved per request — so the Sitemap line
     # always names the domain the crawler actually asked for.
-    printf 'return 200 "User-agent: *\\nAllow: /\\nDisallow: /api/\\nDisallow: /_next/\\nDisallow: /*?*sort=\\n\\nSitemap: https://$host/sitemap.xml\\n";\n' \
+    printf 'return 200 "User-agent: *\\nAllow: /\\nDisallow: /api/\\n\\nDisallow: /*?*sort=\\n\\nSitemap: https://$host/sitemap.xml\\n";\n' \
       > /etc/nginx/gate/robots.conf
     echo "[entrypoint] search indexing: ON (robots.txt allows crawling, sitemap advertised)"
     ;;
